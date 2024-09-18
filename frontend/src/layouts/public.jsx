@@ -1,19 +1,31 @@
-// Layout.jsx
-import { Outlet, Link } from "react-router-dom";
+import { useEffect } from 'react'
+import Footer from './components/Footer'
+import Header from './components/Header'
+import { Outlet } from "react-router-dom"
+
+import './../styles/css/style.css'
 
 const Layout = () => {
-  return (
-    <div>
-      <nav>
-        <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/about">About</Link></li>
-        </ul>
-      </nav>
-      {/* The Outlet renders the matched child route */}
-      <Outlet />
-    </div>
-  );
-};
+  useEffect(() => {
+    document.body.classList.add('theme-1');
+    document.body.classList.add('vsc-initialized');
 
-export default Layout;
+    return () => {
+      document.body.classList.remove('theme-1');
+      document.body.classList.remove('vsc-initialized');
+    };
+  }, [])
+
+  
+  return (
+    <div className='theme-1'>
+      <Header />
+      <main>
+        <Outlet /> {/* Renders the nested route components */}
+      </main>
+      <Footer />
+    </div>
+  )
+}
+
+export default Layout
