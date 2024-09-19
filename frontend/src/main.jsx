@@ -1,9 +1,9 @@
 // main.jsx
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import App from './pages/public/App.jsx';
+import App from './pages/public/Welcome/index.jsx';
 import About from './pages/public/About.jsx';  // Example of another page component
-import PublicLayout from './layouts/public.jsx';  // The layout you just created
+import PublicLayout from './layouts/Public.jsx';  // The layout you just created
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const router = createBrowserRouter([
