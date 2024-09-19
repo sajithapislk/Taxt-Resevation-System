@@ -44,7 +44,7 @@ function WhoWeAre() {
                 </div>
                 <div className="col-12 col-lg-6">
                     <div className=" who-we-are-right-content">
-                        <img className="who-we-are-blob" src="assets/images/home/yellow-blob.svg" alt="Yellow blob" />
+                        <img className="who-we-are-blob" src={yellowBlob} alt="Yellow blob" />
                         <img className="who-we-are-image-1" width="500" src={whoWeAre1}
                             alt="Group of people" />
                         <img className="who-we-are-image-2" width="300" src={whoWeAre2}
