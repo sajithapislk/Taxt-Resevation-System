@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import logo from "./../../assets/images/logo-main.webp";
+import logo from "./../../../assets/images/logo-main.webp";
 
 const Header = () => {
   const [bodyClass, setBodyClass] = useState("");

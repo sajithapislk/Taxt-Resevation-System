@@ -1,6 +1,6 @@
-import logo from "./../../assets/images/logo.webp";
-import appleLogo from "./../../assets/images/icon/apple-store.webp";
-import googlePlayLogo from "./../../assets/images/icon/google-play.webp";
+import logo from "./../../../assets/images/logo.webp";
+import appleLogo from "./../../../assets/images/icon/apple-store.webp";
+import googlePlayLogo from "./../../../assets/images/icon/google-play.webp";
 const Footer = () => {
   return (
     <footer className="footer-div theme-1">
