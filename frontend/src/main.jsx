@@ -1,23 +1,35 @@
 // main.jsx
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import App from './pages/public/Welcome.jsx';
-import About from './pages/public/About.jsx';  // Example of another page component
-import PublicLayout from './layouts/Public.jsx';  // The layout you just created
+import PublicLayout from './layouts/Public.jsx';
+import UserLayout from './layouts/User.jsx';
+import Welcome from './pages/public/Welcome.jsx';
+import About from './pages/public/About.jsx'; 
+import TakeRide from './pages/user/TakeRide.jsx';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <PublicLayout />,  // Use Layout here
+    element: <PublicLayout />,
     children: [
       {
-        path: "/",  // Default route
-        element: <App />,
+        path: "/",
+        element: <Welcome />,
       },
       {
-        path: "about",  // Nested route for the About page
+        path: "about",
         element: <About />,
+      },
+    ],
+  },
+  {
+    path: "/user",
+    element: <UserLayout />,
+    children: [
+      {
+        path: "take-ride",
+        element: <TakeRide />,
       },
     ],
   },
