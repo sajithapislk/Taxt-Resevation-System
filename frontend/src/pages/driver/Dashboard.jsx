@@ -6,6 +6,7 @@ import ourVehicles21 from './../../assets/images/21_our_vehicles.webp';
 import ourVehicles22 from './../../assets/images/22_our_vehicles.webp';
 import ourVehicles23 from './../../assets/images/23_our_vehicles.webp';
 import vehicle1 from './../../assets/images/dashboard/vehicle-1.webp';
+import React, { useEffect, useState } from 'react';
 
 function TakeRide() {
     // const [activeClass, setActiveClass] = useState("");
@@ -22,6 +23,64 @@ function TakeRide() {
     // const handleButtonClick = () => {
     //     setActiveClass((prevClass) => (prevClass === "active" ? "" : "active"));
     // };
+
+    const [messages, setMessages] = useState([]);
+    const [isConnected, setIsConnected] = useState(false);
+    
+    useEffect(() => {
+      // Create WebSocket connection to your backend
+      const ws = new WebSocket('ws://localhost:5070/ws'); // Replace with your actual WebSocket URL
+  
+      // When the WebSocket connection opens
+      ws.onopen = () => {
+        console.log('Connected to WebSocket');
+        setIsConnected(true);
+      };
+  
+      // When a message is received from the WebSocket server
+      ws.onmessage = (event) => {
+        const newMessage = event.data;
+        console.log('Received message:', newMessage);
+        setMessages((prevMessages) => [...prevMessages, newMessage]);
+  
+        // Show browser notification
+        showNotification(newMessage);
+      };
+  
+      // When the WebSocket connection is closed
+      ws.onclose = () => {
+        console.log('Disconnected from WebSocket');
+        setIsConnected(false);
+      };
+  
+      return () => {
+        ws.close(); // Clean up WebSocket connection on component unmount
+      };
+    }, []);
+  
+    // Function to show browser notification
+    const showNotification = (message) => {
+      if (Notification.permission === 'granted') {
+        new Notification('New WebSocket Message', {
+          body: message,
+        });
+      } else {
+        console.log('Notification permission not granted');
+      }
+    };
+  
+    // Request notification permission when the component mounts
+    useEffect(() => {
+      if (Notification.permission !== 'granted') {
+        Notification.requestPermission().then((permission) => {
+          if (permission === 'granted') {
+            console.log('Notification permission granted');
+          } else {
+            console.log('Notification permission denied');
+          }
+        });
+      }
+    }, []);
   return (
     <>
       <Breadcrumb title="Let's Ride" path="Ride with Carrgo" />
