@@ -43,6 +43,16 @@ const router = createBrowserRouter([
     ],
   },
   {
+    path: "/driver",
+    element: <DriverLayout />,
+    children: [
+      {
+        path: "dashboard",
+        element: <DriverDashboard />,
+      },
+    ],
+  },
+  {
     path:"/admin",
     element: <Admin />,
     children:[
