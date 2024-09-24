@@ -8,6 +8,20 @@ import ourVehicles23 from './../../assets/images/23_our_vehicles.webp';
 import vehicle1 from './../../assets/images/dashboard/vehicle-1.webp';
 
 function TakeRide() {
+    // const [activeClass, setActiveClass] = useState("");
+    // useEffect(() => {
+    //     if (activeClass) {
+    //     document.body.classList.add(activeClass);
+    //     }
+    //     return () => {
+    //     if (activeClass) {
+    //         document.body.classList.remove(activeClass);
+    //     }
+    //     };
+    // }, [activeClass]);
+    // const handleButtonClick = () => {
+    //     setActiveClass((prevClass) => (prevClass === "active" ? "" : "active"));
+    // };
   return (
     <>
       <Breadcrumb title="Let's Ride" path="Ride with Carrgo" />

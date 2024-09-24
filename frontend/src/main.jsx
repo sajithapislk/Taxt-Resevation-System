@@ -7,7 +7,7 @@ import DriverLayout from './layouts/User.jsx';
 import Welcome from './pages/public/Welcome.jsx';
 import About from './pages/public/About.jsx'; 
 import TakeRide from './pages/user/TakeRide.jsx';
-import DriverDashboard from './pages/driver/TakeRide.jsx';
+import DriverDashboard from './pages/driver/Dashboard.jsx';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const router = createBrowserRouter([
