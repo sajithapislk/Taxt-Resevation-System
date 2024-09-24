@@ -10,7 +10,7 @@ function Welcome() {
       <Hero />
       <HowWorkArea />
       <WhoWeAre />
-      <AboutUs />
+     <AboutUs />
     </>
   );
 }
