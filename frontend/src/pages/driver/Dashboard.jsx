@@ -1,13 +1,12 @@
 import Breadcrumb from "./components/Breadcrumb";
 import partner from "./../../assets/images/partner-img.webp";
 import React, { useEffect, useState } from 'react';
-import TabPanel1 from "./components/Dashboard/TabPanel1";
-import TabPanel2 from "./components/Dashboard/TabPanel2";
-import TabPanel3 from "./components/Dashboard/TabPanel3";
-import TabPanel4 from "./components/Dashboard/TabPanel4";
-import TabPanel5 from "./components/Dashboard/TabPanel5";
-import TabPanel6 from "./components/Dashboard/TabPanel6";
-import TabPanel7 from "./components/Dashboard/TabPanel7";
+import DashboardTabPanel from "./components/Dashboard/DashboardTabPanel";
+import PersonalInfoTabPanel from "./components/Dashboard/PersonalInfoTabPanel";
+import MessageTabPanel from "./components/Dashboard/MessageTabPanel";
+import VehicleTabPanel from "./components/Dashboard/VehicleTabPanel";
+import RidesTabPanel from "./components/Dashboard/RidesTabPanel";
+import SettingsTabPanel from "./components/Dashboard/SettingsTabPanel";
 
 function TakeRide() {
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -153,19 +152,6 @@ function TakeRide() {
                   </li>
                   <li
                     role="presentation"
-                    className={activeTab === "drivers" ? "active" : ""}
-                  >
-                    <a
-                      href="#drivers"
-                      aria-controls="drivers"
-                      role="tab"
-                      onClick={() => handleTabClick("drivers")}
-                    >
-                      Drivers
-                    </a>
-                  </li>
-                  <li
-                    role="presentation"
                     className={activeTab === "rides" ? "active" : ""}
                   >
                     <a
@@ -198,12 +184,12 @@ function TakeRide() {
                       className="tab-pane active"
                       id="dashboard"
                     >
-                      <TabPanel1 />
+                      <DashboardTabPanel />
                     </div>
                   )}
                   {activeTab === "info" && (
                     <div role="tabpanel" className="tab-pane active" id="info">
-                      <TabPanel2 />
+                      <PersonalInfoTabPanel />
                     </div>
                   )}
                   {activeTab === "message" && (
@@ -212,7 +198,7 @@ function TakeRide() {
                       className="tab-pane active"
                       id="message"
                     >
-                      <TabPanel3 />
+                      <MessageTabPanel />
                     </div>
                   )}
                   {activeTab === "vehicles" && (
@@ -221,21 +207,12 @@ function TakeRide() {
                       className="tab-pane active"
                       id="vehicles"
                     >
-                      <TabPanel4 />
-                    </div>
-                  )}
-                  {activeTab === "drivers" && (
-                    <div
-                      role="tabpanel"
-                      className="tab-pane active"
-                      id="drivers"
-                    >
-                      <TabPanel5 />
+                      <VehicleTabPanel />
                     </div>
                   )}
                   {activeTab === "rides" && (
                     <div role="tabpanel" className="tab-pane active" id="rides">
-                      <TabPanel6 />
+                      <RidesTabPanel />
                     </div>
                   )}
                   {activeTab === "settings" && (
@@ -244,7 +221,7 @@ function TakeRide() {
                       className="tab-pane active"
                       id="settings"
                     >
-                      <TabPanel7 />
+                      <SettingsTabPanel />
                     </div>
                   )}
                 </div>
