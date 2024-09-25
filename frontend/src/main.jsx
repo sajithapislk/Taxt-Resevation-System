@@ -14,6 +14,9 @@ import Users from './pages/adminDashboard/components/Users.jsx';
 import Dashboard from './pages/adminDashboard/components/Dashboard.jsx';
 import Trips from './pages/adminDashboard/components/Trips.jsx';
 import Payments from './pages/adminDashboard/components/Payments.jsx';
+import AdminProfile from './pages/adminDashboard/components/AdminProfile.jsx';
+import Settings from './pages/adminDashboard/components/Settings.jsx';
+import AdminLayout from './layouts/AdminDashboard.jsx';
 
 
 
@@ -53,8 +56,8 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path:"/admin",
-    element: <Admin />,
+    path:"/admin/*",
+    element: <AdminLayout />,
     children:[
       {
         path:"dashboard",
@@ -71,6 +74,14 @@ const router = createBrowserRouter([
       {
         path:"payments",
         element:<Payments/>,
+      },
+      {
+        path:"profile",
+        element: <AdminProfile/>,
+      },
+      {
+        path:"setting",
+        element: <Settings/>,
       },
      
     ]

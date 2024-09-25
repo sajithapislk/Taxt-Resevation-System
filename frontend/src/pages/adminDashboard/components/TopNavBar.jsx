@@ -1,9 +1,10 @@
 import React from 'react'
+import { Link } from 'react-router-dom'; // Import Link for navigation
 
 function TopNavBar() {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-      <button className="btn btn-primary" id="menu-toggle">Toggle Menu</button>
+    <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom container-fluid">
+     <Link className="btn btn-primary" id="menu-toggle" to="/admin/menu">Toggle Menu</Link>
       <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
         <span className="navbar-toggler-icon"></span>
       </button>
@@ -11,10 +12,10 @@ function TopNavBar() {
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
           <li className="nav-item active">
-            <a className="nav-link" href="#">Admin Profile</a>
+          <Link className="nav-link" to="/admin/profile">Admin Profile</Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#">Settings</a>
+          <Link className="nav-link" to="/admin/settings">Settings</Link>
           </li>
         </ul>
       </div>

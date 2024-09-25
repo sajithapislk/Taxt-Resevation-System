@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-export const StatsCard = () => {
+export const StatsCard = ({title, value}) => {
   return (
     <div className="col-md-4">
     <div className="card text-white bg-primary mb-3">

@@ -1,5 +1,5 @@
 import React from 'react'
-// import { StatsCard } from './StatsCard'
+import { StatsCard } from './StatsCard'
 import { Table } from 'react-bootstrap'; // Import Bootstrap Table
 
 
@@ -8,9 +8,9 @@ function Dashboard(){
   return (
     <div className="container-fluid">
       <div className="row">
-        {/* <StatsCard title="Total Trips" value="1500"/>
+        <StatsCard title="Total Trips" value="1500"/>
         <StatsCard title="ActiveDrivers" value="200" />
-        <StatsCard title="Active Users" value="500"/> */}
+        <StatsCard title="Active Users" value="500"/>
       </div>
 
       <div className="row mt-4">
