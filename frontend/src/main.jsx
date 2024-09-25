@@ -9,16 +9,8 @@ import About from './pages/public/About.jsx';
 import TakeRide from './pages/user/TakeRide.jsx';
 import DriverDashboard from './pages/driver/Dashboard.jsx';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Admin } from './pages/adminDashboard/Admin.jsx';
-import Users from './pages/adminDashboard/components/Users.jsx';
-import Dashboard from './pages/adminDashboard/components/Dashboard.jsx';
-import Trips from './pages/adminDashboard/components/Trips.jsx';
-import Payments from './pages/adminDashboard/components/Payments.jsx';
-import AdminProfile from './pages/adminDashboard/components/AdminProfile.jsx';
-import Settings from './pages/adminDashboard/components/Settings.jsx';
-import AdminLayout from './layouts/AdminDashboard.jsx';
-import VehicleCategory from './pages/adminDashboard/components/VehicleCategory.jsx';
-import Booking from './pages/adminDashboard/components/Booking.jsx';
+import AdminLayout from './layouts/Admin.jsx';
+import AdminDashboard from './pages/admin/Dashboard.jsx';
 
 
 
@@ -58,42 +50,13 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path:"/admin/*",
+    path:"/admin",
     element: <AdminLayout />,
     children:[
       {
         path:"dashboard",
-        element: <Dashboard/>,
+        element: <AdminDashboard/>,
       },
-      {
-        path:"users",
-        element: <Users/>,
-      },
-      {
-        path:"trips",
-        element: <Trips/>,
-      },
-      {
-        path:"payments",
-        element:<Payments/>,
-      },
-      {
-        path:"profile",
-        element: <AdminProfile/>,
-      },
-      {
-        path:"setting",
-        element: <Settings/>,
-      },
-      {
-        path:"vehicle",
-        element:<VehicleCategory/>,
-      },
-      {
-        path:"booking",
-        element:<Booking/>,
-      },
-     
     ]
   }
  
