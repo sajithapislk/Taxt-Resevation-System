@@ -4,10 +4,10 @@ import axios from 'axios';
 const API_URL = import.meta.env.REACT_APP_API_URL;
 
 // Service object to handle authentication-related API requests
-const AuthService = {
-  UserLogin: async (credentials) => {
+const VehicleService = {
+  List: async () => {
     try {
-      const response = await axios.post(`${API_URL}/user/login`, credentials);
+      const response = await axios.get(`${API_URL}/admin/vehicle`);
       return response.data; // Return the response data (e.g., token)
     } catch (error) {
       if (error.response && error.response.data) {
@@ -17,9 +17,9 @@ const AuthService = {
       }
     }
   },
-  DriverLogin: async (credentials) => {
+  Update: async (data) => {
     try {
-      const response = await axios.post(`${API_URL}/driver/login`, credentials);
+      const response = await axios.post(`${API_URL}/admin/vehicle`, data);
       return response.data; // Return the response data (e.g., token)
     } catch (error) {
       if (error.response && error.response.data) {
@@ -29,9 +29,9 @@ const AuthService = {
       }
     }
   },
-  AdminLogin: async (credentials) => {
+  Delete: async (data) => {
     try {
-      const response = await axios.post(`${API_URL}/admin/login`, credentials);
+      const response = await axios.post(`${API_URL}/admin/vehicle/delete`, data);
       return response.data; // Return the response data (e.g., token)
     } catch (error) {
       if (error.response && error.response.data) {
@@ -43,4 +43,4 @@ const AuthService = {
   },
 };
 
-export default AuthService;
+export default VehicleService;

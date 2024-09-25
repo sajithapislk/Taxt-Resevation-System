@@ -3,11 +3,11 @@ import axios from 'axios';
 // Get the API URL from the environment variable
 const API_URL = import.meta.env.REACT_APP_API_URL;
 
-// Service object to handle authentication-related API requests
-const AuthService = {
-  UserLogin: async (credentials) => {
+// Service object to handle API requests related to user
+const UserService = {
+  List: async () => {
     try {
-      const response = await axios.post(`${API_URL}/user/login`, credentials);
+      const response = await axios.get(`${API_URL}/admin/user`);
       return response.data; // Return the response data (e.g., token)
     } catch (error) {
       if (error.response && error.response.data) {
@@ -17,21 +17,24 @@ const AuthService = {
       }
     }
   },
-  DriverLogin: async (credentials) => {
+  UserUpdate: async (userData) => {
     try {
-      const response = await axios.post(`${API_URL}/driver/login`, credentials);
-      return response.data; // Return the response data (e.g., token)
+      const response = await axios.post(`${API_URL}/admin/user/update`, userData);
+      return response.data; // Return the response data (success message)
     } catch (error) {
+      // Handle the error response
       if (error.response && error.response.data) {
+        // If the backend returned an error response
         return { error: error.response.data.message };
       } else {
+        // If the error is something else (e.g., network issue)
         return { error: 'An error occurred. Please try again.' };
       }
     }
   },
-  AdminLogin: async (credentials) => {
+  Delete: async (data) => {
     try {
-      const response = await axios.post(`${API_URL}/admin/login`, credentials);
+      const response = await axios.post(`${API_URL}/admin/user/delete`, data);
       return response.data; // Return the response data (e.g., token)
     } catch (error) {
       if (error.response && error.response.data) {
@@ -43,4 +46,4 @@ const AuthService = {
   },
 };
 
-export default AuthService;
+export default UserService;

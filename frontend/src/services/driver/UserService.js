@@ -3,11 +3,11 @@ import axios from 'axios';
 // Get the API URL from the environment variable
 const API_URL = import.meta.env.REACT_APP_API_URL;
 
-// Service object to handle authentication-related API requests
-const AuthService = {
-  UserLogin: async (credentials) => {
+// Service object to handle API requests related to user
+const UserService = {
+  Info: async () => {
     try {
-      const response = await axios.post(`${API_URL}/user/login`, credentials);
+      const response = await axios.get(`${API_URL}/driver/profile`);
       return response.data; // Return the response data (e.g., token)
     } catch (error) {
       if (error.response && error.response.data) {
@@ -17,11 +17,12 @@ const AuthService = {
       }
     }
   },
-  DriverLogin: async (credentials) => {
+  Register: async (userData) => {
     try {
-      const response = await axios.post(`${API_URL}/driver/login`, credentials);
-      return response.data; // Return the response data (e.g., token)
+      const response = await axios.post(`${API_URL}/driver/register`, userData);
+      return response.data; // Return the response data (success message)
     } catch (error) {
+      // Handle the error response
       if (error.response && error.response.data) {
         return { error: error.response.data.message };
       } else {
@@ -29,18 +30,21 @@ const AuthService = {
       }
     }
   },
-  AdminLogin: async (credentials) => {
+  Update: async (userData) => {
     try {
-      const response = await axios.post(`${API_URL}/admin/login`, credentials);
-      return response.data; // Return the response data (e.g., token)
+      const response = await axios.post(`${API_URL}/driver/update`, userData);
+      return response.data; // Return the response data (success message)
     } catch (error) {
+      // Handle the error response
       if (error.response && error.response.data) {
+        // If the backend returned an error response
         return { error: error.response.data.message };
       } else {
+        // If the error is something else (e.g., network issue)
         return { error: 'An error occurred. Please try again.' };
       }
     }
   },
 };
 
-export default AuthService;
+export default UserService;
