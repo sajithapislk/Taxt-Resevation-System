@@ -11,13 +11,15 @@ function HowWorkArea() {
             <div>
               <h2 className="how-it-works-title pb-4">How It Works</h2>
               <p className="how-it-works-text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                sunt in culpa qui officia deserunt mollit anim id est laborum.
+             <b>Book a Ride:</b>  Simply enter your pick-up and drop-off locations in the app or website, and select the vehicle that fits your needs.
+
+<b>Get Matched with a Driver:</b> Once you've confirmed your booking, Carrgo instantly matches you with a nearby driver for a quick and convenient ride.
+
+<b>Track Your Ride:</b> Stay updated with real-time tracking, knowing exactly when your driver will arrive and following your trip as it happens.
+
+<b>Enjoy Your Journey:</b> Sit back and relax in our well-maintained vehicles while our professional drivers ensure a safe and comfortable ride to your destination.
+
+<b>Pay with Ease:</b> Choose from multiple secure payment options, including card payments, mobile wallets, or cash, to complete your ride.
               </p>
               <a href="#" className="how-it-works-btn button button-dark">
                 Read More

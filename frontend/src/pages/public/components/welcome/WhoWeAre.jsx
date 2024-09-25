@@ -12,31 +12,27 @@ function WhoWeAre() {
                     <div className="who-we-are-left-content">
                         <h2 className="who-we-are-title pb-4">About CarrGo</h2>
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                            enim ad minim veniam, quis nostrud exercitation ullamco
+                        Carrgo offers a seamless and reliable taxi service platform designed to make your transportation experience easy and efficient. 
+                        With user-friendly features, a secure booking system, and real-time updates, Carrgo connects riders with trusted drivers, 
+                        ensuring convenience and safety for all your journeys
                         </p>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                            enim ad minim veniam, quis nostrud exercitation ullamco
-                        </p>
+                        
                         <ul className="who-we-are-list">
                             <li className="who-we-are-list-item">
                                 <img width="30" src={doneIcon} />
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing</p>
+                                <p>Where ever We Go</p>
                             </li>
                             <li className="who-we-are-list-item">
                                 <img width="30" src={doneIcon} />
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing</p>
+                                <p>Wish to go to favourite places</p>
                             </li>
                             <li className="who-we-are-list-item">
                                 <img width="30" src={doneIcon} />
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing</p>
+                                <p>We are ready to pick up</p>
                             </li>
                             <li className="who-we-are-list-item">
                                 <img width="30" src={doneIcon} />
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing</p>
+                                <p>We are closed to you</p>
                             </li>
                         </ul>
                         <a href="#" className="who-we-are-btn button button-dark">Read More</a>
