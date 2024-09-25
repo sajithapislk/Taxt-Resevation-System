@@ -18,7 +18,7 @@ function TopNavBar() {
           <Link className="nav-link" to="/admin/setting">Settings</Link>
           </li>
         </ul>
-      </div>
+      </div> 
     </nav>
   )
 }

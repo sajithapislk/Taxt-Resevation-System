@@ -42,7 +42,7 @@ const Header = () => {
                     </div>
                     <div className="d-none d-lg-block col-lg-6">
                         <div className="header__upper--right">
-                            <nav className="navigation">
+                            {/* <nav className="navigation">
                                 <ul>
                                     <li className="m-0">
                                         <div className="dropdown">
@@ -102,8 +102,8 @@ const Header = () => {
                                     <li className="m-0"><a href="contact-us.html">Help</a></li>
                                     <li className="m-0"><a href="contact-us.html"><i className="far fa-envelope"></i></a></li>
                                 </ul>
-                            </nav>
-                            <div className="dropdown">
+                            </nav> */}
+                            {/* <div className="dropdown">
                                 <a href="#" className="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false">
                                     <div className="media">
@@ -120,7 +120,7 @@ const Header = () => {
                                     <a className="dropdown-item" href="#">Sign out</a>
                                     <a className="dropdown-item" href="#">Something else here</a>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>
