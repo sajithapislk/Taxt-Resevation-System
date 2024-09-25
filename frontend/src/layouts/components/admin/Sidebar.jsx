@@ -276,15 +276,7 @@ const Sidebar = () => {
                     </a>
                     <ul className="submenu" style={{ display: "block" }}>
                       <li>
-                        <a href="index.html">Dashboard style 1</a>
-                      </li>
-                      <li>
-                        <a href="index2.html">Dashboard style 2</a>
-                      </li>
-                      <li>
-                        <a href="index3.html" className="active">
-                          Dashboard style 3
-                        </a>
+                        <a href="index.html">Dashboard</a>
                       </li>
                     </ul>
                   </li>
