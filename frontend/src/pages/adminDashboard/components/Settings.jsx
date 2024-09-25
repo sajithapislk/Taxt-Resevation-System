@@ -10,7 +10,7 @@ function Settings() {
   };
 
   return (
-    <div className="container mt-4">
+    <div className="container-fluid">
       <h2>Settings</h2>
       <div className="card">
         <div className="card-body">

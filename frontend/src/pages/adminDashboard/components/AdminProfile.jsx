@@ -2,7 +2,7 @@ import React from 'react'
 
 function AdminProfile()  {
   return (
-    <div className="container mt-4">
+    <div className="container mt-5">
     <h2>Admin Profile</h2>
     <div className="card">
       <div className="card-body">

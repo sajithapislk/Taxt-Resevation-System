@@ -17,6 +17,8 @@ import Payments from './pages/adminDashboard/components/Payments.jsx';
 import AdminProfile from './pages/adminDashboard/components/AdminProfile.jsx';
 import Settings from './pages/adminDashboard/components/Settings.jsx';
 import AdminLayout from './layouts/AdminDashboard.jsx';
+import VehicleCategory from './pages/adminDashboard/components/VehicleCategory.jsx';
+import Booking from './pages/adminDashboard/components/Booking.jsx';
 
 
 
@@ -82,6 +84,14 @@ const router = createBrowserRouter([
       {
         path:"setting",
         element: <Settings/>,
+      },
+      {
+        path:"vehicle",
+        element:<VehicleCategory/>,
+      },
+      {
+        path:"booking",
+        element:<Booking/>,
       },
      
     ]

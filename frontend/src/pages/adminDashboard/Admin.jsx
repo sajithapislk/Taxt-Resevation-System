@@ -8,6 +8,8 @@ import Payments from "./components/Payments";
 import { Route, Routes } from "react-router-dom";
 import AdminProfile from "./components/AdminProfile";
 import Settings from "./components/Settings";
+import VehicleCategory from "./components/VehicleCategory";
+import Booking from "./components/Booking";
 
 export const Admin = () => {
   return (
@@ -25,6 +27,8 @@ export const Admin = () => {
               <Route path="/users" element={<Users />} />
               <Route path="/trips" element={<Trips />} />
               <Route path="/payments" element={<Payments />} />
+              <Route path="/vehicle" element={<VehicleCategory/>}/>
+              <Route path="/booking" element={<Booking/>} />
               <Route path="/admin/profile" element={<AdminProfile/>} />
               <Route path="/admin/setting" element={<Settings/>}/>
             </Routes>
