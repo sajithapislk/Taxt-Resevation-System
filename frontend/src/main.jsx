@@ -11,6 +11,10 @@ import DriverDashboard from './pages/driver/Dashboard.jsx';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AdminLayout from './layouts/Admin.jsx';
 import AdminDashboard from './pages/admin/Dashboard.jsx';
+import User from './pages/admin/User.jsx';
+import Booking from './pages/admin/Booking.jsx';
+import VehicleCategory from './pages/admin/VehicleCategory.jsx';
+import Payments from './pages/admin/Payments.jsx';
 
 
 
@@ -57,6 +61,22 @@ const router = createBrowserRouter([
         path:"dashboard",
         element: <AdminDashboard/>,
       },
+      {
+        path:"user",
+        element:<User/>,
+      },
+      {
+        path:"booking",
+        element:<Booking/>,
+      },
+      {
+        path:"vehicle-category",
+        element:<VehicleCategory/>,
+      },
+      {
+        path:"payment",
+        element:<Payments/>,
+      }
     ]
   }
  
