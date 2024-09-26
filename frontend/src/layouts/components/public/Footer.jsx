@@ -157,7 +157,7 @@ const Footer = () => {
           <div className="row">
             <div className="col-lg-6">
               <p>
-                &copy; Copyright 2023 by Tortoiz Themes. All Right Reserved.
+                &copy; Copyright 2024 by Texi Service. All Right Reserved.
               </p>
             </div>
             <div className="col-lg-6">

@@ -35,7 +35,7 @@ const Footer = () => {
         <div className="container">
             <div className="row">
                 <div className="col-lg-6">
-                    <p>&copy; Copyright 2022 by Tortoiz. All Right Reserved.</p>
+                    <p>&copy; Copyright 2024 by Texi Service. All Right Reserved.</p>
                 </div>
                 <div className="col-lg-6">
                     <ul className="social-nav">
