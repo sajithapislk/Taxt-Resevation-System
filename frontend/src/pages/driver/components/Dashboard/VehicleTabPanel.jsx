@@ -13,11 +13,6 @@ function TabPanel4() {
   const handleShow = () => setShow(true);
 
   // State to handle form input and message
-  const [formData, setFormData] = useState({
-    username: '',
-    password: '',
-    email: '',
-  });
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false); // Loading state during request
 
@@ -47,6 +42,25 @@ function TabPanel4() {
 
     setIsLoading(false); // Set loading to false after the request
   };
+  const [formData, setFormData] = useState({
+    driver_id: '',
+    vehicle_type_id: '',
+    cost_per_km: '',
+    description: '',
+    color: '',
+    vehicle_number: '',
+    passenger_seat: '',
+    is_available_ac: 'false',
+    max_load: '',
+    created_at: '',
+    updated_at: '',
+    deleted_at: ''
+  });
+
+  // const handleChange = (e) => {
+  //   const { id, value } = e.target;
+  //   setFormData({ ...formData, [id]: value });
+  // };
 
   return (
     <>
@@ -111,12 +125,36 @@ function TabPanel4() {
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Woohoo, you are reading this text in a modal!</Modal.Body>
+        <Modal.Body>
+        {Object.keys(formData).map((key) => (
+          <div className="form-group" key={key}>
+            <label htmlFor={key}>{key.replace(/_/g, ' ').toUpperCase()}</label>
+            {key === 'description' ? (
+              <textarea className="form-control" id={key} value={formData[key]} onChange={handleChange} />
+            ) : key === 'is_available_ac' ? (
+              <select className="form-control" id={key} value={formData[key]} onChange={handleChange}>
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+              </select>
+            ) : (key.includes('at')) ? (
+              <input type="datetime-local" className="form-control" id={key} value={formData[key]} onChange={handleChange} />
+            ) : (
+              <input
+                type={['cost_per_km', 'max_load', 'passenger_seat', 'driver_id', 'vehicle_type_id'].includes(key) ? 'number' : 'text'}
+                className="form-control"
+                id={key}
+                value={formData[key]}
+                onChange={handleChange}
+              />
+            )}
+          </div>
+        ))}
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" onClick={handleSubmit}>
             Save Changes
           </Button>
         </Modal.Footer>

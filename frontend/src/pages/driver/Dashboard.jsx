@@ -3,7 +3,6 @@ import partner from "./../../assets/images/partner-img.webp";
 import React, { useEffect, useState } from 'react';
 import DashboardTabPanel from "./components/Dashboard/DashboardTabPanel";
 import PersonalInfoTabPanel from "./components/Dashboard/PersonalInfoTabPanel";
-import MessageTabPanel from "./components/Dashboard/MessageTabPanel";
 import VehicleTabPanel from "./components/Dashboard/VehicleTabPanel";
 import RidesTabPanel from "./components/Dashboard/RidesTabPanel";
 import SettingsTabPanel from "./components/Dashboard/SettingsTabPanel";
@@ -126,19 +125,6 @@ function TakeRide() {
                   </li>
                   <li
                     role="presentation"
-                    className={activeTab === "message" ? "active" : ""}
-                  >
-                    <a
-                      href="#message"
-                      aria-controls="message"
-                      role="tab"
-                      onClick={() => handleTabClick("message")}
-                    >
-                      Message
-                    </a>
-                  </li>
-                  <li
-                    role="presentation"
                     className={activeTab === "vehicles" ? "active" : ""}
                   >
                     <a
@@ -190,15 +176,6 @@ function TakeRide() {
                   {activeTab === "info" && (
                     <div role="tabpanel" className="tab-pane active" id="info">
                       <PersonalInfoTabPanel />
-                    </div>
-                  )}
-                  {activeTab === "message" && (
-                    <div
-                      role="tabpanel"
-                      className="tab-pane active"
-                      id="message"
-                    >
-                      <MessageTabPanel />
                     </div>
                   )}
                   {activeTab === "vehicles" && (
