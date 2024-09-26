@@ -70,7 +70,7 @@ const router = createBrowserRouter([
         element:<Booking/>,
       },
       {
-        path:"vehiclecategory",
+        path:"vehicle-category",
         element:<VehicleCategory/>,
       },
       {
