@@ -1,16 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 
 const User = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  // Function to open the modal
+  const openModal = () => setIsOpen(true);
+
+  // Function to close the modal
+  const closeModal = () => setIsOpen(false);
+
   return (
     <div class="main-container">
       <div class="pd-ltr-20 xs-pd-20-10">
         <div class="min-height-200px">
-          {/* <div class="page-header">
+          <div class="page-header">
             <div class="row">
               <div class="col-md-6 col-sm-12">
                 <div class="title">
-                  <h4>Basic Tables</h4>
+                  <h4>User</h4>
                 </div>
                 <nav aria-label="breadcrumb" role="navigation">
                   <ol class="breadcrumb">
@@ -18,36 +26,22 @@ const User = () => {
                       <a href="index.html">Home</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                      Basic Tables
+                      User
                     </li>
                   </ol>
                 </nav>
               </div>
               <div class="col-md-6 col-sm-12 text-right">
-                <div class="dropdown">
-                  <a
-                    class="btn btn-primary dropdown-toggle"
-                    href="#"
-                    role="button"
-                    data-toggle="dropdown"
-                  >
-                    January 2018
-                  </a>
-                  <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="#">
-                      Export List
-                    </a>
-                    <a class="dropdown-item" href="#">
-                      Policies
-                    </a>
-                    <a class="dropdown-item" href="#">
-                      View Assets
-                    </a>
-                  </div>
-                </div>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={openModal}
+                >
+                  Create
+                </button>
               </div>
             </div>
-          </div> */}
+          </div>
           <div class="pd-20 card-box mb-30">
             {/* <div class="clearfix mb-20">
               <div class="pull-left">
@@ -106,6 +100,125 @@ const User = () => {
           </a>
         </div>
       </div>
+      {/* Modal */}
+      {isOpen && (
+        <div
+          className="modal fade show"
+          tabIndex="-1"
+          role="dialog"
+          style={{ display: "block", backgroundColor: "rgba(0, 0, 0, 0.5)" }}
+          aria-labelledby="myLargeModalLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog modal-lg modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h4 className="modal-title" id="myLargeModalLabel">
+                  Large modal
+                </h4>
+                <button
+                  type="button"
+                  className="close"
+                  aria-label="Close"
+                  onClick={closeModal}
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                <form>
+                  <div class="select-role">
+                    <div
+                      class="btn-group btn-group-toggle"
+                      data-toggle="buttons"
+                    >
+                      <label class="btn">
+                        <input type="radio" name="options" id="admin" />
+                        <div class="icon">
+                          <img
+                            src="vendors/images/briefcase.svg"
+                            class="svg"
+                            alt=""
+                          />
+                        </div>
+                        <span>I'm</span>
+                        Manager
+                      </label>
+                      <label class="btn">
+                        <input type="radio" name="options" id="user" />
+                        <div class="icon">
+                          <img
+                            src="vendors/images/person.svg"
+                            class="svg"
+                            alt=""
+                          />
+                        </div>
+                        <span>I'm</span>
+                        Employee
+                      </label>
+                    </div>
+                  </div>
+                  <div class="input-group custom">
+                    <input
+                      type="text"
+                      class="form-control form-control-lg"
+                      placeholder="Username"
+                    />
+                    <div class="input-group-append custom">
+                      <span class="input-group-text">
+                        <i class="icon-copy dw dw-user1"></i>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="input-group custom">
+                    <input
+                      type="password"
+                      class="form-control form-control-lg"
+                      placeholder="**********"
+                    />
+                    <div class="input-group-append custom">
+                      <span class="input-group-text">
+                        <i class="dw dw-padlock1"></i>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="row pb-30">
+                    <div class="col-6">
+                      <div class="custom-control custom-checkbox">
+                        <input
+                          type="checkbox"
+                          class="custom-control-input"
+                          id="customCheck1"
+                        />
+                        <label class="custom-control-label" for="customCheck1">
+                          Remember
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="forgot-password">
+                        <a href="forgot-password.html">Forgot Password</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="modal-footer">
+                    <button
+                      type="button"
+                      className="btn btn-secondary"
+                      onClick={closeModal}
+                    >
+                      Close
+                    </button>
+                    <button type="button" className="btn btn-primary">
+                      Save changes
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
