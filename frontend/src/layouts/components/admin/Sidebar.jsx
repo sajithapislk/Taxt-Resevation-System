@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Sidebar = () => {
   return (
     <>
@@ -276,7 +278,12 @@ const Sidebar = () => {
                     </a>
                     <ul className="submenu" style={{ display: "block" }}>
                       <li>
-                        <a href="index.html">Dashboard</a>
+                        {/* <a href="index.html">Dashboard</a> */}
+                        <Link to="/admin/dashboard" className="">DashBoard</Link>
+                        <Link to="/admin/user" className="">User</Link>
+                        <Link to="/admin/booking" className="">Booking</Link>
+                        <Link to="/admin/vehiclecategory" className="">Vehicle Category</Link>
+                        <Link to="/admin/payment" className="">Payments</Link>
                       </li>
                     </ul>
                   </li>
