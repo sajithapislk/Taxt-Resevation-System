@@ -273,8 +273,7 @@ const Sidebar = () => {
                       className="dropdown-toggle"
                       data-option="on"
                     >
-                      <span className="micon bi bi-house"></span>
-                      <span className="mtext">Home</span>
+                     <span>Admin Dashboard</span>
                     </a>
                     <ul className="submenu" style={{ display: "block" }}>
                       <li>
