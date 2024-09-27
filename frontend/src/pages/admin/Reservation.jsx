@@ -16,7 +16,14 @@ const Reservation = () => {
   // Function to search for the user
   const searchUser = async () => {
     setError("");
-    const result = await UnregisterUserService.FilterByTp(searchTerm);
+    // const result = await UnregisterUserService.FilterByTp(searchTerm);
+    result = {
+      user: {
+        id: 123,
+        name: "John Doe",
+        tp: "0123456789",
+      },
+    };
 
     if (result.error) {
       setUser(null);
@@ -49,19 +56,19 @@ const Reservation = () => {
   };
 
   return (
-    <div class="main-container">
-      <div class="pd-ltr-20 xs-pd-20-10">
-        <div class="min-height-200px">
-          <div class="page-header">
-            <div class="row">
-              <div class="col-md-6 col-sm-12">
-                <div class="title">
+    <div className="main-container">
+      <div className="pd-ltr-20 xs-pd-20-10">
+        <div className="min-height-200px">
+          <div className="page-header">
+            <div className="row">
+              <div className="col-md-6 col-sm-12">
+                <div className="title">
                   <h4>Reservation</h4>
                 </div>
               </div>
             </div>
           </div>
-          <div class="pd-20 card-box mb-30">
+          <div className="pd-20 card-box mb-30">
             {/* Search User Form */}
             <Form>
               <Form.Group>

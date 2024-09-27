@@ -16,13 +16,13 @@ function TakeRide() {
                     <div className="booking-form">
                         <form action="#">
                             <div className="from-group destination">
-                                <label for="inputFrom">From</label>
+                                <label htmlFor="inputFrom">From</label>
                                 <i className="fas fa-map-marker-alt"></i>
                                 <input type="text" name="frominputDestination" placeholder="Select Pickup"
                                     id="inputFrom" className="form-control" />
                             </div>
                             <div className="from-group destination">
-                                <label for="inputDestination">Where to?</label>
+                                <label htmlFor="inputDestination">Where to?</label>
                                 <i className="fas fa-map-marker-alt"></i>
                                 <input type="text" name="desctination" placeholder="Select Destination"
                                     id="inputDestination" className="form-control" />
@@ -33,17 +33,17 @@ function TakeRide() {
                                     <div className="form-check form-check-inline">
                                         <input className="form-check-input" type="radio" name="payment-opts" id="cash-pay"
                                             value="option1" />
-                                        <label className="form-check-label" for="cash-pay">Cash</label>
+                                        <label className="form-check-label" htmlFor="cash-pay">Cash</label>
                                     </div>
                                     <div className="form-check form-check-inline">
                                         <input className="form-check-input" type="radio" name="payment-opts"
                                             id="banking-pay" value="option2" />
-                                        <label className="form-check-label" for="banking-pay">Net Banking</label>
+                                        <label className="form-check-label" htmlFor="banking-pay">Net Banking</label>
                                     </div>
                                     <div className="form-check form-check-inline">
                                         <input className="form-check-input" type="radio" name="payment-opts" id="card-pay"
                                             value="option3" />
-                                        <label className="form-check-label" for="card-pay">Debit Card</label>
+                                        <label className="form-check-label" htmlFor="card-pay">Debit Card</label>
                                     </div>
                                 </div>
                             </div>
@@ -54,7 +54,7 @@ function TakeRide() {
                                         <div className="form-check form-check-inline">
                                             <input className="form-check-input" type="radio" name="car-opts" id="scooter"
                                                 value="option1" />
-                                            <label className="form-check-label" for="scooter">
+                                            <label className="form-check-label" htmlFor="scooter">
                                                 <img src={car1} alt="car" />
                                             </label>
                                             <div className="car-details">
@@ -65,7 +65,7 @@ function TakeRide() {
                                         <div className="form-check form-check-inline">
                                             <input className="form-check-input" type="radio" name="car-opts" id="alto"
                                                 value="option2" />
-                                            <label className="form-check-label" for="alto">
+                                            <label className="form-check-label" htmlFor="alto">
                                                 <img src={car2} alt="Car" />
                                             </label>
                                             <div className="car-details">
@@ -76,7 +76,7 @@ function TakeRide() {
                                         <div className="form-check form-check-inline">
                                             <input className="form-check-input" type="radio" name="car-opts" id="swift"
                                                 value="option3" />
-                                            <label className="form-check-label" for="swift">
+                                            <label className="form-check-label" htmlFor="swift">
                                                 <img src={car3} alt="Car" />
                                             </label>
                                             <div className="car-details">
@@ -87,7 +87,7 @@ function TakeRide() {
                                         <div className="form-check form-check-inline">
                                             <input className="form-check-input" type="radio" name="car-opts" id="luxury"
                                                 value="option3" />
-                                            <label className="form-check-label" for="luxury">
+                                            <label className="form-check-label" htmlFor="luxury">
                                                 <img src={car4} alt="Car" />
                                             </label>
                                             <div className="car-details">
@@ -98,7 +98,7 @@ function TakeRide() {
                                         <div className="form-check form-check-inline">
                                             <input className="form-check-input" type="radio" name="car-opts" id="tourist"
                                                 value="option3" />
-                                            <label className="form-check-label" for="tourist">
+                                            <label className="form-check-label" htmlFor="tourist">
                                                 <img src={car5} alt="Car" />
                                             </label>
                                             <div className="car-details">

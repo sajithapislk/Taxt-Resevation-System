@@ -19,7 +19,7 @@ const Sidebar = () => {
           <div
             id="mCSB_2"
             className="mCustomScrollBox mCS-dark-2 mCSB_vertical mCSB_inside"
-            tabindex="0"
+            tabIndex="0"
             style={{ maxHeight: "none" }}
           >
             <div
@@ -72,7 +72,7 @@ const Sidebar = () => {
                       value="icon-style-1"
                       checked=""
                     />
-                    <label className="custom-control-label" for="sidebaricon-1">
+                    <label className="custom-control-label" htmlFor="sidebaricon-1">
                       <i className="fa fa-angle-down"></i>
                     </label>
                   </div>
@@ -84,7 +84,7 @@ const Sidebar = () => {
                       className="custom-control-input"
                       value="icon-style-2"
                     />
-                    <label className="custom-control-label" for="sidebaricon-2">
+                    <label className="custom-control-label" htmlFor="sidebaricon-2">
                       <i className="ion-plus-round"></i>
                     </label>
                   </div>
@@ -96,7 +96,7 @@ const Sidebar = () => {
                       className="custom-control-input"
                       value="icon-style-3"
                     />
-                    <label className="custom-control-label" for="sidebaricon-3">
+                    <label className="custom-control-label" htmlFor="sidebaricon-3">
                       <i className="fa fa-angle-double-right"></i>
                     </label>
                   </div>
@@ -115,7 +115,7 @@ const Sidebar = () => {
                     />
                     <label
                       className="custom-control-label"
-                      for="sidebariconlist-1"
+                      htmlFor="sidebariconlist-1"
                     >
                       <i className="ion-minus-round"></i>
                     </label>
@@ -130,7 +130,7 @@ const Sidebar = () => {
                     />
                     <label
                       className="custom-control-label"
-                      for="sidebariconlist-2"
+                      htmlFor="sidebariconlist-2"
                     >
                       <i className="fa fa-circle-o" aria-hidden="true"></i>
                     </label>
@@ -145,7 +145,7 @@ const Sidebar = () => {
                     />
                     <label
                       className="custom-control-label"
-                      for="sidebariconlist-3"
+                      htmlFor="sidebariconlist-3"
                     >
                       <i className="dw dw-check"></i>
                     </label>
@@ -161,7 +161,7 @@ const Sidebar = () => {
                     />
                     <label
                       className="custom-control-label"
-                      for="sidebariconlist-4"
+                      htmlFor="sidebariconlist-4"
                     >
                       <i className="icon-copy dw dw-next-2"></i>
                     </label>
@@ -176,7 +176,7 @@ const Sidebar = () => {
                     />
                     <label
                       className="custom-control-label"
-                      for="sidebariconlist-5"
+                      htmlFor="sidebariconlist-5"
                     >
                       <i className="dw dw-fast-forward-1"></i>
                     </label>
@@ -191,7 +191,7 @@ const Sidebar = () => {
                     />
                     <label
                       className="custom-control-label"
-                      for="sidebariconlist-6"
+                      htmlFor="sidebariconlist-6"
                     >
                       <i className="dw dw-next"></i>
                     </label>
@@ -256,7 +256,7 @@ const Sidebar = () => {
           <div
             id="mCSB_3"
             className="mCustomScrollBox mCS-dark-2 mCSB_vertical mCSB_inside"
-            tabindex="0"
+            tabIndex="0"
             style={{ maxHeight: "none" }}
           >
             <div
