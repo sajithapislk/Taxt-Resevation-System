@@ -8,21 +8,27 @@ const Reservation = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [user, setUser] = useState(null);
   const [error, setError] = useState("");
-  const [picked, setPicked] = useState("");
-  const [pickOut, setPickOut] = useState("");
-  const [vehicleType, setVehicleType] = useState("");
   const [bookingSuccess, setBookingSuccess] = useState(false);
+
+  const [formData, setFormData] = useState({
+    type: "",
+    unregistered_user_id: "",
+    picked: "",
+    pick_at: "",
+  });
+
+  const handleChange = (e) => {
+    
+  };
 
   // Function to search for the user
   const searchUser = async () => {
     setError("");
     // const result = await UnregisterUserService.FilterByTp(searchTerm);
-    result = {
-      user: {
-        id: 123,
-        name: "John Doe",
-        tp: "0123456789",
-      },
+    const result = {
+      id: 123,
+      name: "John Doe",
+      tp: "0123456789",
     };
 
     if (result.error) {
