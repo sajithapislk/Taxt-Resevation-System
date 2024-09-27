@@ -6,6 +6,8 @@ import PersonalInfoTabPanel from "./components/Dashboard/PersonalInfoTabPanel";
 import VehicleTabPanel from "./components/Dashboard/VehicleTabPanel";
 import RidesTabPanel from "./components/Dashboard/RidesTabPanel";
 import SettingsTabPanel from "./components/Dashboard/SettingsTabPanel";
+import BookingRequestTabPanel from "./components/Dashboard/BookingRequestTabPanel";
+import ContinueRideTabPanel from "./components/Dashboard/ContinueRideTabPanel";
 
 function TakeRide() {
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -111,6 +113,32 @@ function TakeRide() {
                     </a>
                   </li>
                   <li
+                    role="continue-ride"
+                    className={activeTab === "continue-ride" ? "active" : ""}
+                  >
+                    <a
+                      href="#continue-ride"
+                      aria-controls="continue-ride"
+                      role="tab"
+                      onClick={() => handleTabClick("continue-ride")}
+                    >
+                      Request
+                    </a>
+                  </li>
+                  <li
+                    role="request"
+                    className={activeTab === "request" ? "active" : ""}
+                  >
+                    <a
+                      href="#request"
+                      aria-controls="request"
+                      role="tab"
+                      onClick={() => handleTabClick("request")}
+                    >
+                      Request
+                    </a>
+                  </li>
+                  <li
                     role="presentation"
                     className={activeTab === "info" ? "active" : ""}
                   >
@@ -171,6 +199,20 @@ function TakeRide() {
                       id="dashboard"
                     >
                       <DashboardTabPanel />
+                    </div>
+                  )}
+                  {activeTab === "continue-ride" && (
+                    <div
+                      role="continue-ride"
+                      className="tab-pane active"
+                      id="dashboard"
+                    >
+                      <ContinueRideTabPanel />
+                    </div>
+                  )}
+                  {activeTab === "request" && (
+                    <div role="tabpanel" className="tab-pane active" id="request">
+                      <BookingRequestTabPanel />
                     </div>
                   )}
                   {activeTab === "info" && (

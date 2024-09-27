@@ -97,7 +97,7 @@ const Header = () => {
                   id="mCSB_1"
                   className="mCustomScrollBox mCS-dark-2 mCSB_vertical mCSB_inside"
                   style={{ maxHeight: "0px" }}
-                  tabindex="0"
+                  tabIndex="0"
                 >
                   <div
                     id="mCSB_1_container"

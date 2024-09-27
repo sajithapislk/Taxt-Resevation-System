@@ -190,7 +190,7 @@ const User = () => {
                           class="custom-control-input"
                           id="customCheck1"
                         />
-                        <label class="custom-control-label" for="customCheck1">
+                        <label class="custom-control-label" htmlFor="customCheck1">
                           Remember
                         </label>
                       </div>

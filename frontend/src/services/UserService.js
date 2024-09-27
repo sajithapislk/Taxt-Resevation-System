@@ -33,6 +33,19 @@ const UserService = {
       }
     }
   },
+  AdminRegister: async (userData) => {
+    try {
+      const response = await axios.post(`${API_URL}/admin/register`, userData);
+      return response.data; // Return the response data (success message)
+    } catch (error) {
+      // Handle the error response
+      if (error.response && error.response.data) {
+        return { error: error.response.data.message };
+      } else {
+        return { error: 'An error occurred. Please try again.' };
+      }
+    }
+  },
 };
 
 export default UserService;
