@@ -5,23 +5,41 @@ import UnregisterUserService from "../../services/admin/UnregisterUserService";
 import ReservationService from "../../services/admin/ReservationService";
 
 const Reservation = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [user, setUser] = useState(null);
   const [error, setError] = useState("");
+  const [newUser, setNewUser] = useState(false);
   const [bookingSuccess, setBookingSuccess] = useState(false);
 
-  const [formData, setFormData] = useState({
-    type: "",
+  const [reservationData, setReservationData] = useState({
+    vehicle_type_id: "",
     unregistered_user_id: "",
     picked: "",
     pick_at: "",
   });
+  const [userData, setUserData] = useState({
+    id: "",
+    name: "",
+    tp: "",
+  });
 
-  const handleChange = (e) => {
-    
+  const handleChangeReservation = (e) => {
+    const { name, value } = e.target;
+
+    setReservationData({
+      ...reservationData,
+      [name]: value,
+    });
   };
 
-  // Function to search for the user
+  const handleChangeUser = (e) => {
+    const { name, value } = e.target;
+    console.log(name);
+
+    setUserData({
+      ...userData,
+      [name]: value,
+    });
+  };
+
   const searchUser = async () => {
     setError("");
     // const result = await UnregisterUserService.FilterByTp(searchTerm);
@@ -32,35 +50,49 @@ const Reservation = () => {
     };
 
     if (result.error) {
-      setUser(null);
+      setNewUser(true);
     } else {
-      setUser(result);
+      setUserData(result);
     }
   };
 
-  // Function to handle booking submission
   const handleBooking = async () => {
-    if (!picked || !pickOut || !vehicleType) {
+    if (
+      !reservationData.picked ||
+      !reservationData.pick_at ||
+      !reservationData.vehicle_type_id
+    ) {
       setError("Please fill in all booking fields");
       return;
     }
 
-    const bookingData = {
-      type: vehicleType,
-      unregistered_user_id: user.id,
-      picked,
-      pick_out: pickOut,
-    };
-
-    const result = await ReservationService.Booking(bookingData);
+    const result = await ReservationService.Booking(reservationData);
 
     if (result.error) {
       setError("Error creating booking");
     } else {
       setBookingSuccess(true);
+      setError("");
     }
   };
+  const handleUser = async () => {
+    if (
+      !userData.name ||
+      !userData.tp 
+    ) {
+      setError("Please fill in all user fields");
+      return;
+    }
 
+    const result = await UnregisterUserService.Register(userData);
+
+    if (result.error) {
+      setError("Error creating booking");
+    } else {
+      setUserData(result.user);
+      setError("");
+    }
+  };
   return (
     <div className="main-container">
       <div className="pd-ltr-20 xs-pd-20-10">
@@ -78,12 +110,13 @@ const Reservation = () => {
             {/* Search User Form */}
             <Form>
               <Form.Group>
-                <Form.Label>Search User (by Name or TP)</Form.Label>
+                <Form.Label>Search User (by TP)</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Enter user name or TP"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  placeholder="Enter user TP"
+                  value={userData.tp}
+                  name="tp"
+                  onChange={handleChangeUser}
                 />
               </Form.Group>
               <Button variant="primary" onClick={searchUser}>
@@ -97,24 +130,61 @@ const Reservation = () => {
                 {error}
               </Alert>
             )}
-            {user && (
+            {userData.id && (
               <Alert variant="success" className="mt-3">
-                <strong>Found User:</strong> {user.name} (TP: {user.tp}), ID:{" "}
-                {user.id}
+                <strong>Found User:</strong> {userData.name} (TP: {userData.tp}
+                ), ID: {userData.id}
               </Alert>
             )}
-
+            {newUser && (
+              <Form className="mt-4">
+                <Row>
+                  <Col>
+                    <Form.Group>
+                      <Form.Label>Name</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="name"
+                        value={userData.name}
+                        onChange={handleChangeUser}
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col>
+                    <Form.Group>
+                      <Form.Label>Contact Number</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="tp"
+                        value={userData.tp}
+                        onChange={handleChangeUser}
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col>
+                    <Button
+                      variant="success"
+                      className="mt-4 "
+                      onClick={handleUser}
+                    >
+                      Create User
+                    </Button>
+                  </Col>
+                </Row>
+              </Form>
+            )}
             {/* Booking Form (if user is found) */}
-            {user && (
+            {userData.id && (
               <Form className="mt-4">
                 <Row>
                   <Col>
                     <Form.Group>
                       <Form.Label>Pick-up Date & Time</Form.Label>
                       <Form.Control
-                        type="datetime-local"
-                        value={picked}
-                        onChange={(e) => setPicked(e.target.value)}
+                        type="text"
+                        name="picked"
+                        value={reservationData.picked}
+                        onChange={handleChangeReservation}
                       />
                     </Form.Group>
                   </Col>
@@ -123,8 +193,9 @@ const Reservation = () => {
                       <Form.Label>Pick-out Date & Time</Form.Label>
                       <Form.Control
                         type="datetime-local"
-                        value={pickOut}
-                        onChange={(e) => setPickOut(e.target.value)}
+                        name="pick_at"
+                        value={reservationData.pick_at}
+                        onChange={handleChangeReservation}
                       />
                     </Form.Group>
                   </Col>
@@ -134,13 +205,14 @@ const Reservation = () => {
                   <Form.Label>Vehicle Type</Form.Label>
                   <Form.Control
                     as="select"
-                    value={vehicleType}
-                    onChange={(e) => setVehicleType(e.target.value)}
+                    name="vehicle_type_id"
+                    value={reservationData.vehicle_type_id}
+                    onChange={handleChangeReservation}
                   >
                     <option value="">Select vehicle type</option>
-                    <option value="Car">Car</option>
-                    <option value="Truck">Truck</option>
-                    <option value="Bike">Bike</option>
+                    <option value="1">Car</option>
+                    <option value="2">Truck</option>
+                    <option value="3">Bike</option>
                   </Form.Control>
                 </Form.Group>
 

@@ -9,7 +9,7 @@ const ReservationService = {
     try {
       const response = await axios.post(
         `${API_URL}/admin/user/booking`,
-        data
+        JSON.stringify(data)
       );
       return response.data; // Return the response data (success message)
     } catch (error) {

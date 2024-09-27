@@ -17,6 +17,18 @@ const UnregisterUserService = {
       }
     }
   },
+  UnregisterUserRegister: async (userData) => {
+    try {
+      const response = await axios.post(`${API_URL}/admin/unregister`, userData);
+      return response.data; 
+    } catch (error) {
+      if (error.response && error.response.data) {
+        return { error: error.response.data.message };
+      } else {
+        return { error: 'An error occurred. Please try again.' };
+      }
+    }
+  },
 };
 
 export default UnregisterUserService;
