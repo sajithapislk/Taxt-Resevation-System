@@ -16,6 +16,7 @@ import User from './pages/admin/User.jsx';
 import Booking from './pages/admin/Booking.jsx';
 import VehicleCategory from './pages/admin/VehicleCategory.jsx';
 import Payments from './pages/admin/Payments.jsx';
+import Reservation from './pages/admin/Reservation.jsx';
 
 
 
@@ -81,6 +82,10 @@ const router = createBrowserRouter([
       {
         path:"payment",
         element:<Payments/>,
+      },
+      {
+        path:"reservation",
+        element:<Reservation/>,
       }
     ]
   }
