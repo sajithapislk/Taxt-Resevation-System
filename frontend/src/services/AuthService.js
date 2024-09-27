@@ -7,7 +7,7 @@ const API_URL = import.meta.env.REACT_APP_API_URL;
 const AuthService = {
   UserLogin: async (credentials) => {
     try {
-      const response = await axios.post(`${API_URL}/user/login`, credentials);
+      const response = await axios.post(`${API_URL}/users/login`, credentials);
       return response.data; // Return the response data (e.g., token)
     } catch (error) {
       if (error.response && error.response.data) {
@@ -19,7 +19,7 @@ const AuthService = {
   },
   DriverLogin: async (credentials) => {
     try {
-      const response = await axios.post(`${API_URL}/driver/login`, credentials);
+      const response = await axios.post(`${API_URL}/drivers/login`, credentials);
       return response.data; // Return the response data (e.g., token)
     } catch (error) {
       if (error.response && error.response.data) {
@@ -31,7 +31,7 @@ const AuthService = {
   },
   AdminLogin: async (credentials) => {
     try {
-      const response = await axios.post(`${API_URL}/admin/login`, credentials);
+      const response = await axios.post(`${API_URL}/admins/login`, credentials);
       return response.data; // Return the response data (e.g., token)
     } catch (error) {
       if (error.response && error.response.data) {

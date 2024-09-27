@@ -7,7 +7,7 @@ const API_URL = import.meta.env.REACT_APP_API_URL;
 const UserService = {
   UserRegister: async (userData) => {
     try {
-      const response = await axios.post(`${API_URL}/user/register`, userData);
+      const response = await axios.post(`${API_URL}/users/register`, userData);
       return response.data; // Return the response data (success message)
     } catch (error) {
       // Handle the error response
@@ -22,7 +22,7 @@ const UserService = {
   },
   DriverRegister: async (userData) => {
     try {
-      const response = await axios.post(`${API_URL}/driver/register`, userData);
+      const response = await axios.post(`${API_URL}/drivers/register`, userData);
       return response.data; // Return the response data (success message)
     } catch (error) {
       // Handle the error response
@@ -35,7 +35,7 @@ const UserService = {
   },
   AdminRegister: async (userData) => {
     try {
-      const response = await axios.post(`${API_URL}/admin/register`, userData);
+      const response = await axios.post(`${API_URL}/admins/register`, userData);
       return response.data; // Return the response data (success message)
     } catch (error) {
       // Handle the error response
