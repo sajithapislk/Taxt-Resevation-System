@@ -47,6 +47,7 @@ const Reservation = () => {
       id: 123,
       name: "John Doe",
       tp: "0123456789",
+      // error: "asd"
     };
 
     if (result.error) {

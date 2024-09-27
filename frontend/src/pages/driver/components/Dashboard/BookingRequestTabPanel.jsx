@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-const BookingRequest = () => {
+const BookingRequestTabPanel = () => {
   const initialRequests = [
     {
       id: 1,
@@ -100,4 +100,4 @@ const BookingRequest = () => {
   );
 };
 
-export default BookingRequest;
+export default BookingRequestTabPanel;
