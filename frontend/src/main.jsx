@@ -8,6 +8,7 @@ import Welcome from './pages/public/Welcome.jsx';
 import About from './pages/public/About.jsx'; 
 import Login from './pages/public/Login.jsx'; 
 import TakeRide from './pages/user/TakeRide.jsx';
+import AvailableRide from './pages/user/AvailableRide.jsx';
 import DriverDashboard from './pages/driver/Dashboard.jsx';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AdminLayout from './layouts/Admin.jsx';
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
       {
         path: "take-ride",
         element: <TakeRide />,
+      },
+      {
+        path: "available-driver",
+        element: <AvailableRide />,
       },
     ],
   },
