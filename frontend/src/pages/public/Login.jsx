@@ -1,30 +1,57 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import AuthService from './../../services/AuthService'; // Assuming this is your axios service
 
 const Login = () => {
-  const [activeTab, setActiveTab] = useState('rider');
+  const [activeTab, setActiveTab] = useState('rider'); // To handle active tab (Rider/Driver)
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    rememberMe: false
+    rememberMe: false,
   });
+  const [loading, setLoading] = useState(false); // To handle loading state
+  const [errorMessage, setErrorMessage] = useState(''); // To handle error messages
+  const [successMessage, setSuccessMessage] = useState(''); // To handle success messages
 
+  // Handle tab switch between "Rider" and "Driver"
   const handleTabChange = (tab) => {
     setActiveTab(tab);
+    setErrorMessage(''); // Reset messages when switching tabs
+    setSuccessMessage('');
   };
 
+  // Handle input changes in the form
   const handleChange = (e) => {
     const { id, value, type, checked } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      [id]: type === 'checkbox' ? checked : value
+      [id]: type === 'checkbox' ? checked : value,
     }));
   };
 
-  const handleSubmit = (e) => {
+  // Handle form submission
+  const handleSubmit = async (e, type) => {
     e.preventDefault();
-    console.log(`Form submitted for ${activeTab}:`, formData);
-    // Add form submission logic here
+    setLoading(true);
+    setErrorMessage('');
+    setSuccessMessage('');
+
+    // Define the payload for form submission
+    const payload = {
+      email: formData.email,
+      password: formData.password,
+      rememberMe: formData.rememberMe,
+    };
+
+    try {
+      // Sending the form data to the backend
+      const response = await type === 'driver' ? AuthService.DriverLogin(payload) : AuthService.UserLogin(payload); // Assuming UserService has a login method
+      setSuccessMessage(`Successfully logged in as ${activeTab}!`);
+    } catch (error) {
+      setErrorMessage('Login failed. Please check your credentials.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -62,9 +89,11 @@ const Login = () => {
                   </a>
                 </li>
               </ul>
+
               <div className="tab-content">
-                <div role="tabpanel" className={`tab-pane ${activeTab === 'rider' ? 'active' : ''}`} id="rider">
-                  <form className="mb-4" onSubmit={handleSubmit}>
+                {/* Rider Login Form */}
+                <div className={`tab-pane ${activeTab === 'rider' ? 'active' : ''}`} id="rider" role="tabpanel">
+                  <form className="mb-4" onSubmit={(e) => handleSubmit(e, "rider")}>
                     <div className="form-floating">
                       <input
                         type="email"
@@ -73,6 +102,7 @@ const Login = () => {
                         placeholder="name@example.com"
                         value={formData.email}
                         onChange={handleChange}
+                        required
                       />
                       <label htmlFor="email">Email address</label>
                     </div>
@@ -84,18 +114,27 @@ const Login = () => {
                         placeholder="Password"
                         value={formData.password}
                         onChange={handleChange}
+                        required
                       />
                       <label htmlFor="password">Password</label>
                     </div>
                     <div className="checkbox mb-3">
                       <label>
-                        <input type="checkbox" id="rememberMe" checked={formData.rememberMe} onChange={handleChange} /> Remember me
+                        <input
+                          type="checkbox"
+                          id="rememberMe"
+                          checked={formData.rememberMe}
+                          onChange={handleChange}
+                        />{' '}
+                        Remember me
                       </label>
                     </div>
-                    <button className="w-100 btn btn-lg btn-dark" type="submit">
-                      Sign in
+                    <button className="w-100 btn btn-lg btn-dark" type="submit" disabled={loading}>
+                      {loading ? 'Signing in...' : 'Sign in'}
                     </button>
                   </form>
+                  {errorMessage && <p className="text-danger">{errorMessage}</p>}
+                  {successMessage && <p className="text-success">{successMessage}</p>}
                   <p className="acclink">
                     Don't have an account? <a href="sign-up.html">Sign up <i className="icofont">double_right</i></a>
                   </p>
@@ -108,8 +147,10 @@ const Login = () => {
                     </a>
                   </div>
                 </div>
-                <div role="tabpanel" className={`tab-pane ${activeTab === 'driver' ? 'active' : ''}`} id="driver">
-                  <form className="mb-4" onSubmit={handleSubmit}>
+
+                {/* Driver Login Form */}
+                <div className={`tab-pane ${activeTab === 'driver' ? 'active' : ''}`} id="driver" role="tabpanel">
+                  <form className="mb-4" onSubmit={(e) => handleSubmit(e, "driver")}>
                     <div className="form-floating">
                       <input
                         type="email"
@@ -118,6 +159,7 @@ const Login = () => {
                         placeholder="name@example.com"
                         value={formData.email}
                         onChange={handleChange}
+                        required
                       />
                       <label htmlFor="email">Email address</label>
                     </div>
@@ -129,18 +171,27 @@ const Login = () => {
                         placeholder="Password"
                         value={formData.password}
                         onChange={handleChange}
+                        required
                       />
                       <label htmlFor="password">Password</label>
                     </div>
                     <div className="checkbox mb-3">
                       <label>
-                        <input type="checkbox" id="rememberMe" checked={formData.rememberMe} onChange={handleChange} /> Remember me
+                        <input
+                          type="checkbox"
+                          id="rememberMe"
+                          checked={formData.rememberMe}
+                          onChange={handleChange}
+                        />{' '}
+                        Remember me
                       </label>
                     </div>
-                    <button className="w-100 btn btn-lg btn-dark" type="submit">
-                      Sign in
+                    <button className="w-100 btn btn-lg btn-dark" type="submit" disabled={loading}>
+                      {loading ? 'Signing in...' : 'Sign in'}
                     </button>
                   </form>
+                  {errorMessage && <p className="text-danger">{errorMessage}</p>}
+                  {successMessage && <p className="text-success">{successMessage}</p>}
                 </div>
               </div>
             </div>
