@@ -2,15 +2,61 @@ import React, { useState } from "react";
 import download1 from "./../../../../assets/images/download-1.webp";
 import download2 from "./../../../../assets/images/download-2.webp";
 import bgVideo2 from "./../../../../assets/bg-video-2.mp4";
+import UserService from "./../../../../services/UserService";
+
 function Hero() {
+  
   const [takeRide, setTakeRide] = useState(true);
+  const [rideForm, setRideForm] = useState({
+    name: "",
+    mobileNo: "",
+    email: "",
+  });
+  const [driveForm, setDriveForm] = useState({
+    name: "",
+    mobileNo: "",
+    email: "",
+  });
+  const [formMessage, setFormMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleButtonClick = (isTakeRide) => {
     setTakeRide(isTakeRide);
+    setFormMessage(""); // Reset form message on tab change
   };
+
+  // Handle input changes
+  const handleInputChange = (formType, e) => {
+    const { name, value } = e.target;
+    formType === "ride"
+      ? setRideForm({ ...rideForm, [name]: value })
+      : setDriveForm({ ...driveForm, [name]: value });
+  };
+
+  // Form submit handler
+  const handleSubmit = async (e, formType) => {
+    e.preventDefault();
+    setLoading(true);
+    setFormMessage("");
+
+    const formData = formType === "ride" ? rideForm : driveForm;
+
+    try {
+      const response =
+        (await formData) === "ride"
+          ? UserService.DriverRegister(formData)
+          : UserService.UserRegister(formData);
+      setFormMessage("Form submitted successfully!");
+    } catch (error) {
+      setFormMessage("There was an error submitting the form.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <section className="hero-area-v-2 p-0 dark-overlay-3">
-      <video autoPlay muted loop id="myVideo" width="100">
+      <video autoPlay muted loop id="myVideo" width="100%">
         <source src={bgVideo2} type="video/mp4" />
         Your browser does not support HTML5 video.
       </video>
@@ -32,10 +78,10 @@ function Hero() {
                 </p>
                 <div className="download-buttons">
                   <a href="#" aria-label="download-apple-btn">
-                    <img src={download1} />
+                    <img src={download1} alt="Download on Apple Store" />
                   </a>
                   <a href="#" aria-label="download-android-btn">
-                    <img src={download2} />
+                    <img src={download2} alt="Download on Android Store" />
                   </a>
                 </div>
               </div>
@@ -44,41 +90,44 @@ function Hero() {
                   <nav className="navigation">
                     <div className="nav nav-tabs form-tab" role="tablist">
                       <button
-                        className={"nav-link" + (takeRide ? " active" : "")}
+                        className={`nav-link ${takeRide ? "active" : ""}`}
                         id="nav-ride-tab"
-                        data-bs-toggle="tab"
-                        data-bs-target="#nav-ride"
                         type="button"
                         role="tab"
                         aria-controls="nav-ride"
-                        aria-selected={takeRide ? "true" : ""}
+                        aria-selected={takeRide ? "true" : "false"}
                         onClick={() => handleButtonClick(true)}
                       >
                         <i className="fas fa-car"></i> Take a Ride
                       </button>
                       <button
-                        className={"nav-link " + (!takeRide ? " active" : "")}
+                        className={`nav-link ${!takeRide ? "active" : ""}`}
                         id="nav-drive-tab"
-                        data-bs-toggle="tab"
-                        data-bs-target="#nav-drive"
                         type="button"
                         role="tab"
                         aria-controls="nav-drive"
-                        aria-selected={!takeRide ? "true" : ""}
+                        aria-selected={!takeRide ? "true" : "false"}
                         onClick={() => handleButtonClick(false)}
                       >
                         <i className="far fa-steering-wheel"></i> Apply to Drive
                       </button>
                     </div>
                   </nav>
+
                   <div className="tab-content">
+                    {/* Take a Ride Form */}
                     <div
-                      className={"tab-pane fade" + (takeRide ? " show active" : "")}
+                      className={`tab-pane fade ${
+                        takeRide ? "show active" : ""
+                      }`}
                       id="nav-ride"
                       role="tabpanel"
                       aria-labelledby="nav-ride-tab"
                     >
-                      <form action="#" className="form1">
+                      <form
+                        onSubmit={(e) => handleSubmit(e, "ride")}
+                        className="form1"
+                      >
                         <h2 className="form-title">
                           Get member exclusive rewards
                         </h2>
@@ -87,31 +136,24 @@ function Hero() {
                           Hac vulputate integer sapien et.
                         </p>
                         <div className="row">
-                          <div className="form-group col-md-6">
+                          <div className="form-group col-md-12">
                             <input
                               type="text"
                               className="form-control"
-                              name="firstName"
-                              id="firstName"
+                              name="name"
                               placeholder="First Name"
-                            />
-                          </div>
-                          <div className="form-group col-md-6">
-                            <input
-                              type="text"
-                              className="form-control"
-                              name="lastName"
-                              id="lastName"
-                              placeholder="Last Name"
+                              value={rideForm.name}
+                              onChange={(e) => handleInputChange("ride", e)}
                             />
                           </div>
                           <div className="form-group col-12">
                             <input
-                              type="number"
+                              type="text"
                               className="form-control"
-                              name="number"
-                              id="number"
-                              placeholder="Phone Number"
+                              name="mobileNo"
+                              placeholder="Phone mobileNo"
+                              value={rideForm.mobileNo}
+                              onChange={(e) => handleInputChange("ride", e)}
                             />
                           </div>
                           <div className="form-group col-12">
@@ -119,19 +161,23 @@ function Hero() {
                               type="email"
                               className="form-control"
                               name="email"
-                              id="email"
                               placeholder="Email Address"
+                              value={rideForm.email}
+                              onChange={(e) => handleInputChange("ride", e)}
                             />
                           </div>
+
                           <div className="form-group col-12">
                             <input
-                              type="text"
+                              type="password"
                               className="form-control"
-                              name="location"
-                              id="location"
-                              placeholder="City"
+                              name="password"
+                              placeholder="Password"
+                              value={rideForm.password}
+                              onChange={(e) => handleInputChange("ride", e)}
                             />
                           </div>
+
                           <div className="col-12 form-group mt-3">
                             <input type="checkbox" id="agree" />
                             <label htmlFor="agree">
@@ -141,21 +187,31 @@ function Hero() {
                             </label>
                           </div>
                           <div className="form-btn col-12">
-                            <button className="form-button button button-dark big">
-                              Sign up to Ride
+                            <button
+                              className="form-button button button-dark big"
+                              disabled={loading}
+                            >
+                              {loading ? "Submitting..." : "Sign up to Ride"}
                             </button>
                           </div>
                         </div>
-                        <p className="form-messages mb-0 mt-3"></p>
+                        <p className="form-messages mb-0 mt-3">{formMessage}</p>
                       </form>
                     </div>
+
+                    {/* Apply to Drive Form */}
                     <div
-                      className={"tab-pane fade" + (!takeRide ? " show active" : "")}
+                      className={`tab-pane fade ${
+                        !takeRide ? "show active" : ""
+                      }`}
                       id="nav-drive"
                       role="tabpanel"
                       aria-labelledby="nav-drive-tab"
                     >
-                      <form action="#" className="form1">
+                      <form
+                        onSubmit={(e) => handleSubmit(e, "drive")}
+                        className="form1"
+                      >
                         <h2 className="form-title">
                           Start driving now and get paid
                         </h2>
@@ -164,31 +220,24 @@ function Hero() {
                           Hac vulputate integer sapien et.
                         </p>
                         <div className="row">
-                          <div className="form-group col-md-6">
+                          <div className="form-group col-md-12">
                             <input
                               type="text"
                               className="form-control"
-                              name="firstName"
-                              id="firstName2"
+                              name="name"
                               placeholder="First Name"
-                            />
-                          </div>
-                          <div className="form-group col-md-6">
-                            <input
-                              type="text"
-                              className="form-control"
-                              name="lastName"
-                              id="lastName2"
-                              placeholder="Last Name"
+                              value={driveForm.name}
+                              onChange={(e) => handleInputChange("drive", e)}
                             />
                           </div>
                           <div className="form-group col-12">
                             <input
-                              type="number"
+                              type="text"
                               className="form-control"
-                              name="number"
-                              id="number2"
-                              placeholder="Phone Number"
+                              name="mobileNo"
+                              placeholder="Phone mobileNo"
+                              value={driveForm.mobileNo}
+                              onChange={(e) => handleInputChange("drive", e)}
                             />
                           </div>
                           <div className="form-group col-12">
@@ -196,17 +245,19 @@ function Hero() {
                               type="email"
                               className="form-control"
                               name="email"
-                              id="email2"
                               placeholder="Email Address"
+                              value={driveForm.email}
+                              onChange={(e) => handleInputChange("drive", e)}
                             />
                           </div>
                           <div className="form-group col-12">
                             <input
-                              type="text"
+                              type="password"
                               className="form-control"
-                              name="location"
-                              id="location2"
-                              placeholder="City"
+                              name="password"
+                              placeholder="Password"
+                              value={driveForm.password}
+                              onChange={(e) => handleInputChange("drive", e)}
                             />
                           </div>
                           <div className="col-12 form-group mt-3">
@@ -218,12 +269,15 @@ function Hero() {
                             </label>
                           </div>
                           <div className="form-btn col-12">
-                            <button className="form-button button button-dark big">
-                              Become a Driver
+                            <button
+                              className="form-button button button-dark big"
+                              disabled={loading}
+                            >
+                              {loading ? "Submitting..." : "Become a Driver"}
                             </button>
                           </div>
                         </div>
-                        <p className="form-messages mb-0 mt-3"></p>
+                        <p className="form-messages mb-0 mt-3">{formMessage}</p>
                       </form>
                     </div>
                   </div>
@@ -236,4 +290,5 @@ function Hero() {
     </section>
   );
 }
+
 export default Hero;

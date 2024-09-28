@@ -26,14 +26,16 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(connectionString, new MySqlServerVersion(new Version(11, 4, 0)))
 );
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowLocalhost",
-        builder => builder
-            .WithOrigins("http://localhost:4200", "https://localhost:4200", "http://localhost:3000", "https://localhost:3000")
-            .AllowAnyHeader()
-            .AllowAnyMethod());
-});
+// builder.Services.AddCors(options =>
+// {
+//     options.AddPolicy("AllowLocalhost5173", policy =>
+//     {
+//         policy.WithOrigins("http://localhost:5173")
+//               .AllowAnyHeader()
+//               .AllowAnyMethod()
+//               .AllowCredentials(); // Allows sending cookies and authentication headers if needed
+//     });
+// });
 
 var app = builder.Build();
 
@@ -78,5 +80,5 @@ app.Use(async (context, next) =>
         await next(); // Continue processing the HTTP pipeline for non-WebSocket requests
     }
 });
-
+app.UseCors("AllowLocalhost5173");
 app.Run();
