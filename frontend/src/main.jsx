@@ -52,6 +52,10 @@ const router = createBrowserRouter([
         path: "available-driver",
         element: <AvailableRide />,
       },
+      {
+        path: "rides",
+        element: <AvailableRide />,
+      },
     ],
   },
   {
