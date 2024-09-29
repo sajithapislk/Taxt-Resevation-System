@@ -22,7 +22,7 @@ const Footer = () => {
           <div className="row">
             <div className="col-lg-3 col-sm-6">
               <div className="footer-brand">
-                <a href="index.html">
+                <a href="/">
                   <img src={logo} alt="Logo" />
                 </a>
               </div>
@@ -63,7 +63,7 @@ const Footer = () => {
                     <a href="sign-up.html">Register</a>
                   </li>
                   <li>
-                    <a href="index.html">Latest News</a>
+                    <a href="/">Latest News</a>
                   </li>
                 </ul>
                 <ul>

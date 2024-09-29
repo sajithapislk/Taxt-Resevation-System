@@ -99,7 +99,7 @@ function TakeRide() {
                     </Autocomplete>
                   </div>
                   <div className="select-car-wrapper">
-                    <h2>Selected Car</h2>
+                    <h2>Selected Vehicle</h2>
                     <div className="selected-car">
                       <div className="from-group car-options">
                         <div className="form-check form-check-inline">
@@ -186,7 +186,7 @@ function TakeRide() {
                     </div>
                   </div>
                   <button type="submit" className="button button-dark">
-                    Show Route
+                    Next
                   </button>
                 </form>
               </div>

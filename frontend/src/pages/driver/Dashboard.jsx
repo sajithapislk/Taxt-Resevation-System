@@ -17,7 +17,7 @@ function TakeRide() {
 
   useEffect(() => {
     // Create WebSocket connection to your backend
-    const ws = new WebSocket("ws://localhost:5070/ws"); // Replace with your actual WebSocket URL
+    const ws = new WebSocket("ws://localhost:5000/ws"); // Replace with your actual WebSocket URL
 
     // When the WebSocket connection opens
     ws.onopen = () => {
@@ -122,7 +122,7 @@ function TakeRide() {
                       role="tab"
                       onClick={() => handleTabClick("continue-ride")}
                     >
-                      Request
+                      Continue Ride
                     </a>
                   </li>
                   <li
@@ -175,19 +175,6 @@ function TakeRide() {
                       onClick={() => handleTabClick("rides")}
                     >
                       Rides
-                    </a>
-                  </li>
-                  <li
-                    role="presentation"
-                    className={activeTab === "settings" ? "active" : ""}
-                  >
-                    <a
-                      href="#settings"
-                      aria-controls="settings"
-                      role="tab"
-                      onClick={() => handleTabClick("settings")}
-                    >
-                      Settings
                     </a>
                   </li>
                 </ul>

@@ -18,14 +18,6 @@ function TabPanel1() {
             <h2 className="counter-number">21785</h2>
             <p className="counter-text">Total Passengers</p>
           </div>
-          <div className="single-counter-box">
-            <h2 className="counter-number">150</h2>
-            <p className="counter-text">Drivers</p>
-          </div>
-          <div className="single-counter-box">
-            <h2 className="counter-number">75</h2>
-            <p className="counter-text">Today Rides</p>
-          </div>
         </div>
       </div>
       <div className="earning-details small-div">
@@ -116,11 +108,6 @@ function TabPanel1() {
             </tbody>
           </table>
         </div>
-      </div>
-      <div className="text-center">
-        <a href="#" className="button button-dark">
-          View More
-        </a>
       </div>
     </div>
   );

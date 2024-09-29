@@ -48,12 +48,10 @@ const ContinueRideTabPanel = () => {
 
   return (
     <div className="container my-5">
-      <h1 className="text-center mb-4">Driver Ride Management</h1>
+      <h1 className="text-center mb-4">Available Requests</h1>
 
       {/* Pending Requests List (if no active ride) */}
       {!activeRide && (
-        <div>
-          <h2>Pending Requests</h2>
           <div className="row">
             {requests.length === 0 ? (
               <p>No pending requests available.</p>
@@ -84,7 +82,6 @@ const ContinueRideTabPanel = () => {
               ))
             )}
           </div>
-        </div>
       )}
 
       {/* Active Ride Management (if ride is accepted) */}

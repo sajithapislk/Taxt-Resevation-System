@@ -5,7 +5,7 @@ function Breadcrumb(props) {
         <h1 className="page-title mb-0">{props.title}</h1>
         <ol className="breadcrumb">
           <li>
-            <a href="index.html">Home</a>
+            <a href="/">Home</a>
           </li>
           <li>{props.path}</li>
         </ol>

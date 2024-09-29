@@ -23,7 +23,7 @@ const AvailableRide = () => {
 
   return (
     <>
-      <Breadcrumb title="Let's Ride" path="Ride with Carrgo" />
+      <Breadcrumb title="Available Drivers" path="Available Drivers" />
       <div className="div-padding our-vehicles-div">
         <div className="container">
         <Row>
@@ -39,6 +39,8 @@ const AvailableRide = () => {
                 <Card.Title>{driver.driverName}</Card.Title>
                 <Card.Text>
                   <strong>Seats:</strong> {driver.seatCount} <br />
+                  <strong>Vehicle NO:</strong> {driver.vehicleNo} <br />
+                  <strong>Distance from current location:</strong> 1KM <br />
                   <strong>Price per km:</strong> ${driver.pricePerKm}
                 </Card.Text>
                 <Button
@@ -46,7 +48,7 @@ const AvailableRide = () => {
                   onClick={() => handleRequestDriver(driver.id)}
                   className="w-100"
                 >
-                  Request Driver
+                  Request for a Ride
                 </Button>
               </Card.Body>
             </Card>
