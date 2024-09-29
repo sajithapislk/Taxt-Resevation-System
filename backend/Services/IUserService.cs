@@ -5,6 +5,6 @@ namespace backend.Services
 {
     public interface IUserService : IAuthMgtService
     {
-         
+        Task<AuthenticateResponse?> RegisterGuestAsync(UserRegisterRequest model);
     }
 }

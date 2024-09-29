@@ -12,6 +12,13 @@ namespace backend.Schema
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<PasswordReset> PasswordResets { get; set; }
+        public DbSet<VehicleType> VehicleTypes { get; set; }
+        public DbSet<Vehicle> Vehicles { get; set; }
+        public DbSet<Booking> Bookings { get; set; }
+        public DbSet<UserFeedback> UserFeedbacks { get; set; }
+        public DbSet<DriverFeedback> DriverFeedbacks { get; set; }
+
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
@@ -27,17 +34,16 @@ namespace backend.Schema
                             break;
                         case EntityState.Deleted:
                             record.DeletedUserId = 1; // Set the user ID who deleted the record
-                            record.DeletedDate = DateTime.UtcNow; // Set the deletion time
+                            record.DeletedTime = DateTime.Now; // Set the deletion time
                             entityEntry.State = EntityState.Modified; // Change state to Modified to perform a soft delete
-                            //save it somewhere else
                             break;
                         case EntityState.Modified:
                             record.LastModifiedUserId = 1; // Set the user ID who modified the record
-                            record.LastModifiedDate = DateTime.UtcNow; // Set the modification time
+                            record.LastModifiedTime = DateTime.Now; // Set the modification time
                             break;
                         case EntityState.Added:
                             record.CreatedUserId = 1; // Set the user ID who created the record
-                            record.CreatedDate = DateTime.UtcNow; // Set the creation time
+                            record.CreatedTime = DateTime.Now; // Set the creation time
                             break;
                         default:
                             break;
@@ -49,7 +55,6 @@ namespace backend.Schema
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
             modelBuilder.Entity<User>().HasData(
                 new User
                 {
@@ -60,7 +65,6 @@ namespace backend.Schema
                     Password = PasswordHasher.HashPassword("1111"),
                     Name = "System",
                     MobileNo = "0712312312",
-                    IsRegistered = true,
                 },
                 new User
                 {
@@ -71,7 +75,6 @@ namespace backend.Schema
                     Password = PasswordHasher.HashPassword("2222"),
                     Name = "Sajith",
                     MobileNo = "0772193832",
-                    IsRegistered = true,
                 },
                 new User
                 {
@@ -82,7 +85,6 @@ namespace backend.Schema
                     Password = PasswordHasher.HashPassword("3333"),
                     Name = "Saheer",
                     MobileNo = "0712805509",
-                    IsRegistered = true,
                 },
                 new User
                 {
@@ -93,7 +95,6 @@ namespace backend.Schema
                     Password = PasswordHasher.HashPassword("4444"),
                     Name = "Abdul",
                     MobileNo = "0759424247",
-                    IsRegistered = true,
                 },
                 new User
                 {
@@ -104,7 +105,6 @@ namespace backend.Schema
                     Password = PasswordHasher.HashPassword("5555"),
                     Name = "Nifraz",
                     MobileNo = "0712319319",
-                    IsRegistered = true,
                 }
             );
         }

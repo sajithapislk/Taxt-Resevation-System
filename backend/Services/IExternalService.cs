@@ -2,8 +2,9 @@
 
 namespace backend.Services
 {
-    public interface IEmailService
+    public interface IExternalService
     {
         Task<bool> SendRegistrationEmailAsync(UserRegisterRequest model);
+        Task<bool> SendRegistrationSmsAsync(UserRegisterRequest model);
     }
 }

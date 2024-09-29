@@ -11,11 +11,13 @@ using Microsoft.Extensions.Hosting;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
+
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IDriverService, DriverService>();
 builder.Services.AddScoped<IAdminService, AdminService>();
-builder.Services.AddScoped<IEmailService, EmailService>();
+
+builder.Services.AddScoped<IExternalService, ExternalService>();
 
 // Add services to the container
 builder.Services.AddControllers();
@@ -26,25 +28,18 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(connectionString, new MySqlServerVersion(new Version(11, 4, 0)))
 );
 
-// builder.Services.AddCors(options =>
-// {
-//     options.AddPolicy("AllowLocalhost5173", policy =>
-//     {
-//         policy.WithOrigins("http://localhost:5173")
-//               .AllowAnyHeader()
-//               .AllowAnyMethod()
-//               .AllowCredentials(); // Allows sending cookies and authentication headers if needed
-//     });
-// });
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowLocalhost5173", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials(); // Allows sending cookies and authentication headers if needed
+    });
+});
 
 var app = builder.Build();
-
-// Ensure database is created
-//using (var scope = app.Services.CreateScope())
-//{
-//    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-//    await dbContext.Database.EnsureCreatedAsync();
-//}
 
 // Enable WebSockets
 var webSocketOptions = new WebSocketOptions
@@ -81,4 +76,5 @@ app.Use(async (context, next) =>
     }
 });
 app.UseCors("AllowLocalhost5173");
-app.Run();
+
+await app.RunAsync();

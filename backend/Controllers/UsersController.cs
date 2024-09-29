@@ -39,7 +39,7 @@ namespace backend.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(UserRegisterRequest model)
         {
-            if (model == null || string.IsNullOrWhiteSpace(model.Email) || string.IsNullOrWhiteSpace(model.Password))
+            if (model == null || string.IsNullOrWhiteSpace(model.Email) || string.IsNullOrWhiteSpace(model.Password) || string.IsNullOrWhiteSpace(model.MobileNo))
             {
                 return BadRequest();
             }
@@ -49,9 +49,44 @@ namespace backend.Controllers
                 return BadRequest(new ErrorResponse { Message = "Email already exists" });
             }
 
+            if (await authService.IsMobileNoRegistered(model.MobileNo))
+            {
+                return BadRequest(new ErrorResponse { Message = "Mobile No already exists" });
+            }
+
             try
             {
                 var response = await userService.RegisterAsync(model);
+
+                if (response == null)
+                {
+                    return BadRequest();
+                }
+
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500);
+            }
+        }
+
+        [HttpPost("register-guest")]
+        public async Task<IActionResult> RegisterGuest(UserRegisterRequest model)
+        {
+            if (model == null || string.IsNullOrWhiteSpace(model.MobileNo))
+            {
+                return BadRequest();
+            }
+
+            if (await authService.IsMobileNoRegistered(model.MobileNo))
+            {
+                return BadRequest(new ErrorResponse { Message = "Mobile No already exists" });
+            }
+
+            try
+            {
+                var response = await userService.RegisterGuestAsync(model);
 
                 if (response == null)
                 {

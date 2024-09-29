@@ -35,5 +35,11 @@ namespace backend.Services
             return authService.RegisterAsync(model);
         }
 
+        public Task<AuthenticateResponse?> RegisterGuestAsync(UserRegisterRequest model)
+        {
+            model.Role = UserRole.Guest;
+            return authService.RegisterAsync(model);
+        }
+
     }
 }

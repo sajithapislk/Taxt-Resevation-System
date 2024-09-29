@@ -16,17 +16,17 @@ namespace backend.Services
     {
         private readonly AppSettings appSettings;
         private readonly AppDbContext dbContext;
-        private readonly IEmailService emailService;
+        private readonly IExternalService externalService;
 
         public AuthService(
             IOptions<AppSettings> appSettings,
             AppDbContext dbContext,
-            IEmailService emailService
+            IExternalService externalService
         )
         {
             this.appSettings = appSettings.Value;
             this.dbContext = dbContext;
-            this.emailService = emailService;
+            this.externalService = externalService;
         }
 
         public async Task<AuthenticateResponse?> RegisterAsync(UserRegisterRequest model)
@@ -34,22 +34,27 @@ namespace backend.Services
             var user = new User
             {
                 Role = model.Role ?? UserRole.Guest,
-                Email = model.Email.ToLower(),
+                Email = model.Email?.ToLower(),
                 Name = model.Name,
                 MobileNo = model.MobileNo,
-                Password = PasswordHasher.HashPassword(model.Password),
+                Password = model.Password != null ? PasswordHasher.HashPassword(model.Password) : null,
             };
-
-            user.IsRegistered = user.Role != UserRole.Guest;
 
             await dbContext.Users.AddAsync(user);
             await dbContext.SaveChangesAsync();
 
-            var username = $"{EmailValidator.ExtractEmailId(model.Email)}_{user.Id}";
-            user.Username = username;
+            if (model.Email != null)
+            {
+                var username = $"{EmailValidator.ExtractEmailId(model.Email)}_{user.Id}";
+                user.Username = username;
+                await dbContext.SaveChangesAsync();
+                await externalService.SendRegistrationEmailAsync(model);
+            }
 
-            await dbContext.SaveChangesAsync();
-            await emailService.SendRegistrationEmailAsync(model);
+            if (model.MobileNo != null)
+            {
+                await externalService.SendRegistrationSmsAsync(model);
+            }
 
             var token = await GenerateJwtToken(user);
             return new AuthenticateResponse(user, token);
@@ -61,7 +66,7 @@ namespace backend.Services
                 .SingleOrDefaultAsync(x => 
                     x.Email == model.Email 
                     && x.Role == model.Role
-                    && x.IsRegistered);
+                    && x.DeletedTime == null);
 
             // return null if user not found or not registered
             if (user == null)
@@ -114,7 +119,9 @@ namespace backend.Services
         public async Task<User?> GetUserById(int id)
         {
             return await dbContext.Users
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .FirstOrDefaultAsync(x => 
+                    x.Id == id
+                    && x.DeletedTime == null);
         }
 
         //public async Task<User?> AddAndUpdateUser(User userObj)
@@ -161,5 +168,6 @@ namespace backend.Services
 
             return tokenHandler.WriteToken(token);
         }
+
     }
 }
