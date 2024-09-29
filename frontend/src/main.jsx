@@ -18,6 +18,8 @@ import Booking from './pages/admin/Booking.jsx';
 import VehicleCategory from './pages/admin/VehicleCategory.jsx';
 import Payments from './pages/admin/Payments.jsx';
 import Reservation from './pages/admin/Reservation.jsx';
+import NewVehicle from './pages/driver/vehicle/New.jsx';
+import EditVehicle from './pages/driver/vehicle/Edit.jsx';
 
 
 
@@ -65,6 +67,14 @@ const router = createBrowserRouter([
       {
         path: "dashboard",
         element: <DriverDashboard />,
+      },
+      {
+        path: "vehicle/create",
+        element: <NewVehicle />,
+      },
+      {
+        path: "vehicle/edit",
+        element: <EditVehicle />,
       },
     ],
   },
