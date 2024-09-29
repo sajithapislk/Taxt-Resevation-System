@@ -14,8 +14,15 @@ namespace backend.Schema.Entity
 
         public string? Name { get; set; }
         public string? MobileNo { get; set; }
+        public string? Image { get; set; }
+        public string? Website { get; set; }
+        public DateOnly? DateOfBirth { get; set; }
+        public Sex? Gender { get; set; }
+        public MaritalStatus? Status { get; set; }
+
 
         //location
+        public string? Location { get; set; }
         public decimal? Latitude { get; set; }
         public decimal? Longitude { get; set; }
 

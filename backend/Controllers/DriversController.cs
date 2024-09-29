@@ -27,15 +27,8 @@ namespace backend.Controllers
             return Ok();
         }
 
-        [HttpGet("auth")]
-        [Authorize]
-        public IActionResult Auth()
-        {
-            return Ok();
-        }
-
         [HttpPost("register")]
-        public async Task<IActionResult> Register(UserRegisterRequest model)
+        public async Task<IActionResult> Register([FromBody] UserRegisterRequest model)
         {
             if (model == null || string.IsNullOrWhiteSpace(model.Email) || string.IsNullOrWhiteSpace(model.Password))
             {
@@ -60,12 +53,12 @@ namespace backend.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500);
+                return StatusCode(500, ex.Message);
             }
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginRequest model)
+        public async Task<IActionResult> Login([FromBody] LoginRequest model)
         {
             if (model == null || string.IsNullOrWhiteSpace(model.Email) || string.IsNullOrWhiteSpace(model.Password))
             {
@@ -90,7 +83,7 @@ namespace backend.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500);
+                return StatusCode(500, ex.Message);
             }
         }
     }

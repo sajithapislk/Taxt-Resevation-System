@@ -63,10 +63,8 @@ namespace backend.Services
         public async Task<AuthenticateResponse?> LoginAsync(LoginRequest model)
         {
             var user = await dbContext.Users
-                .SingleOrDefaultAsync(x => 
-                    x.Email == model.Email 
-                    && x.Role == model.Role
-                    && x.DeletedTime == null);
+                .SingleOrDefaultAsync(x => x.Email == model.Email 
+                    && x.Role == model.Role);
 
             // return null if user not found or not registered
             if (user == null)
@@ -119,9 +117,7 @@ namespace backend.Services
         public async Task<User?> GetUserById(int id)
         {
             return await dbContext.Users
-                .FirstOrDefaultAsync(x => 
-                    x.Id == id
-                    && x.DeletedTime == null);
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         //public async Task<User?> AddAndUpdateUser(User userObj)

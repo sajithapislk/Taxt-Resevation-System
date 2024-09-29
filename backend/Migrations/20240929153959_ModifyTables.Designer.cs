@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using backend.Schema;
 
@@ -11,9 +12,11 @@ using backend.Schema;
 namespace backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240929153959_ModifyTables")]
+    partial class ModifyTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -240,7 +243,7 @@ namespace backend.Migrations
                         .HasColumnType("tinyint unsigned");
 
                     b.Property<string>("Image")
-                        .HasColumnType("MEDIUMTEXT");
+                        .HasColumnType("longtext");
 
                     b.Property<DateTime?>("LastModifiedTime")
                         .HasColumnType("datetime(6)");
@@ -295,7 +298,7 @@ namespace backend.Migrations
                             Email = "admin@system.com",
                             MobileNo = "0712312312",
                             Name = "System",
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$BB4FfcUxYl0eDvXDqLn7QA$5wiHWSbP+U0x9ko8bJwMBqolwozLHJ2YRUKrqJAQ4/o",
+                            Password = "$argon2id$v=19$m=65536,t=3,p=1$Jwb6H5ono3nxW4BTrjw74w$KnREGZsjtzCGnzqt0Jwrkk4f2xCb7lMl/ev/yDCl3UY",
                             Role = (byte)4,
                             Username = "admin_1"
                         },
@@ -305,7 +308,7 @@ namespace backend.Migrations
                             Email = "sajith@apis.lk",
                             MobileNo = "0772193832",
                             Name = "Sajith",
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$jyHfEk5ueV6rp7DGf8jgOQ$ffksl3Zia5ZuNzsqOcZCgJ3+lyPMJ4dwrXTzadZgX3o",
+                            Password = "$argon2id$v=19$m=65536,t=3,p=1$gufa49GoL9CUiQISVBjToQ$dqcnhrWm3/zjvQQ5kee83ORbzau6Aj1OCRQ1HDMd/tQ",
                             Role = (byte)3,
                             Username = "sajith_2"
                         },
@@ -315,7 +318,7 @@ namespace backend.Migrations
                             Email = "mohammedsaheer987@gmail.com",
                             MobileNo = "0712805509",
                             Name = "Saheer",
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$+iNoyLGZZXbdcidtp1bZnw$cXGNvMlmqqk9D23bIz9D1VqjRWV4jqbSjnhG//ZIZlg",
+                            Password = "$argon2id$v=19$m=65536,t=3,p=1$G72Xk/cf9iIw8JY9oMWF+g$723JN/zwqVV+7z/ycel3iufleygv+NexJU+kKQLNwpE",
                             Role = (byte)3,
                             Username = "mohammedsaheer987_3"
                         },
@@ -325,7 +328,7 @@ namespace backend.Migrations
                             Email = "abduljizzi@gmail.com",
                             MobileNo = "0759424247",
                             Name = "Abdul",
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$6JsKflXfegNsAAgAVEm5dg$h7l0KlePudQeWXeYlFnz++Sw9aM/SSiToZg//MMMReU",
+                            Password = "$argon2id$v=19$m=65536,t=3,p=1$mOUuIYzyVk5fjSV/UMvD1A$lgR4hdO7R+joLg7MzjGNEvM4ZvWvi6giFqJPfMLk7i0",
                             Role = (byte)2,
                             Username = "abduljizzi_4"
                         },
@@ -335,7 +338,7 @@ namespace backend.Migrations
                             Email = "nifraz@live.com",
                             MobileNo = "0712319319",
                             Name = "Nifraz",
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$2t8C4CovXCEnICaZvyvsig$cDBaPHW7jtu/mshVUZbIa9ywOpOPZusuhhfQjGFlsnU",
+                            Password = "$argon2id$v=19$m=65536,t=3,p=1$8ehXtBf8fQYra4DCZ3Yw4A$43cZP+w0ye/153OkXkU8QZgorkcsnkiGoY7dT4YDwUg",
                             Role = (byte)2,
                             Username = "nifraz_5"
                         });
@@ -424,7 +427,7 @@ namespace backend.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Image")
-                        .HasColumnType("MEDIUMTEXT");
+                        .HasColumnType("longtext");
 
                     b.Property<bool?>("IsAcAvailable")
                         .HasColumnType("tinyint(1)");
@@ -493,7 +496,7 @@ namespace backend.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Image")
-                        .HasColumnType("MEDIUMTEXT");
+                        .HasColumnType("longtext");
 
                     b.Property<DateTime?>("LastModifiedTime")
                         .HasColumnType("datetime(6)");

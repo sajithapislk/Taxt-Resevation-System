@@ -1,6 +1,8 @@
-﻿namespace backend.Services
+﻿using backend.Schema.Entity;
+
+namespace backend.Services
 {
-    public interface IDriverService : IAuthMgtService
+    public interface IDriverService : IAuthMgtService, IRepositoryService<User>
     {
 
     }

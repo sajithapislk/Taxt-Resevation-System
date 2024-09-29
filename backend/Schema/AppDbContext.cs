@@ -2,6 +2,7 @@
 using backend.Schema.Entity;
 using backend.Schema.Enum;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace backend.Schema
 {
@@ -55,59 +56,29 @@ namespace backend.Schema
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().HasData(
-                new User
+            //modelBuilder.Entity<User>().UseTptMappingStrategy();
+
+            // Apply global query filter for all entities that inherit from AbstractRecord
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                if (typeof(AbstractRecord).IsAssignableFrom(entityType.ClrType))
                 {
-                    Id = 1,
-                    Role = UserRole.Admin,
-                    Email = "admin@system.com",
-                    Username = "admin_1",
-                    Password = PasswordHasher.HashPassword("1111"),
-                    Name = "System",
-                    MobileNo = "0712312312",
-                },
-                new User
-                {
-                    Id = 2,
-                    Role = UserRole.Driver,
-                    Email = "sajith@apis.lk",
-                    Username = "sajith_2",
-                    Password = PasswordHasher.HashPassword("2222"),
-                    Name = "Sajith",
-                    MobileNo = "0772193832",
-                },
-                new User
-                {
-                    Id = 3,
-                    Role = UserRole.Driver,
-                    Email = "mohammedsaheer987@gmail.com",
-                    Username = "mohammedsaheer987_3",
-                    Password = PasswordHasher.HashPassword("3333"),
-                    Name = "Saheer",
-                    MobileNo = "0712805509",
-                },
-                new User
-                {
-                    Id = 4,
-                    Role = UserRole.User,
-                    Email = "abduljizzi@gmail.com",
-                    Username = "abduljizzi_4",
-                    Password = PasswordHasher.HashPassword("4444"),
-                    Name = "Abdul",
-                    MobileNo = "0759424247",
-                },
-                new User
-                {
-                    Id = 5,
-                    Role = UserRole.User,
-                    Email = "nifraz@live.com",
-                    Username = "nifraz_5",
-                    Password = PasswordHasher.HashPassword("5555"),
-                    Name = "Nifraz",
-                    MobileNo = "0712319319",
+                    modelBuilder.Entity(entityType.ClrType)
+                        .HasQueryFilter(CreateSoftDeleteFilter(entityType.ClrType));
                 }
-            );
+            }
+
+            modelBuilder.Seed();
         }
 
+        private static LambdaExpression CreateSoftDeleteFilter(Type entityType)
+        {
+            var parameter = Expression.Parameter(entityType, "e");
+            var property = Expression.Property(parameter, nameof(AbstractRecord.DeletedTime));
+            var nullConstant = Expression.Constant(null, typeof(DateTime?));
+            var comparison = Expression.Equal(property, nullConstant);
+
+            return Expression.Lambda(comparison, parameter);
+        }
     }
 }

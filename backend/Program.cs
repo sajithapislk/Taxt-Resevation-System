@@ -4,9 +4,11 @@ using backend.Schema.Model;
 using backend.Services;
 using backend.WebSockets;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,11 +18,13 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IDriverService, DriverService>();
 builder.Services.AddScoped<IAdminService, AdminService>();
+builder.Services.AddScoped<IVehicleService, VehicleService>();
+builder.Services.AddScoped<IVehicleTypeService, VehicleTypeService>();
 
 builder.Services.AddScoped<IExternalService, ExternalService>();
 
-// Add services to the container
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson(x =>
+ x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
 var connectionString = builder.Configuration.GetConnectionString("MariaDbConnection");
 
