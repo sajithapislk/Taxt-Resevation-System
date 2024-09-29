@@ -236,7 +236,7 @@ const Sidebar = () => {
       </div>
       <div className="left-side-bar">
         <div className="brand-logo">
-          <a href="index.html">
+          <a href="/">
             <img
               src="vendors/images/deskapp-logo.svg"
               alt=""
@@ -277,7 +277,7 @@ const Sidebar = () => {
                     </a>
                     <ul className="submenu" style={{ display: "block" }}>
                       <li>
-                        {/* <a href="index.html">Dashboard</a> */}
+                        {/* <a href="/">Dashboard</a> */}
                         <Link to="/admin/dashboard" className="">DashBoard</Link>
                         <Link to="/admin/user" className="">User</Link>
                         <Link to="/admin/booking" className="">Booking</Link>

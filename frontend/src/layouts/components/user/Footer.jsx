@@ -9,7 +9,7 @@ const Footer = () => {
             <div className="row">
                 <div className="col-lg-3">
                     <div className="footer-brand">
-                        <a href="index.html"><img src={logo} alt="logo" /></a>
+                        <a href="/"><img src={logo} alt="logo" /></a>
                     </div>
                 </div>
                 <div className="col-lg-6">

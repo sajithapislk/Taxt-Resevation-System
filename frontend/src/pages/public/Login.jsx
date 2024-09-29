@@ -136,12 +136,9 @@ const Login = () => {
                   {errorMessage && <p className="text-danger">{errorMessage}</p>}
                   {successMessage && <p className="text-success">{successMessage}</p>}
                   <p className="acclink">
-                    Don't have an account? <a href="sign-up.html">Sign up <i className="icofont">double_right</i></a>
+                    Don't have an account? <a href="sign-up.html">Sign up</a>
                   </p>
                   <div className="externel-signup">
-                    <a href="#" className="btn-block facebook">
-                      <i className="fab fa-facebook-f"></i> Sign up with Facebook
-                    </a>
                     <a href="#" className="btn-block google">
                       <i className="fab fa-google"></i> Sign up with Google
                     </a>
