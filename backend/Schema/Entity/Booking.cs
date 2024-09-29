@@ -1,4 +1,5 @@
 ﻿using backend.Schema.Enum;
+using NetTopologySuite.Geometries;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace backend.Schema.Entity
@@ -14,15 +15,17 @@ namespace backend.Schema.Entity
         public Vehicle? Vehicle { get; set; }
 
         // Pickup location
-        public string? PickUpLocation { get; set; }  // Optional: start address
-        public decimal? PickUpLatitude { get; set; }
-        public decimal? PickUpLongitude { get; set; }
+        public Point? PickUpLocation { get; set; }
+        public string? PickUpPlace { get; set; }  // Optional: start address
+        public double? PickUpLongitude { get; set; }
+        public double? PickUpLatitude { get; set; }
         public DateTime? PickUpTime { get; set; }  // Time when the journey starts
 
         // End location
-        public string? DropOffLocation { get; set; }  // Optional: end address
-        public decimal? DropOffLatitude { get; set; }
-        public decimal? DropOffLongitude { get; set; }
+        public Point? DropOffLocation { get; set; }
+        public string? DropOffPlace { get; set; }  // Optional: end address
+        public double? DropOffLongitude { get; set; }
+        public double? DropOffLatitude { get; set; }
         public DateTime? DropOffTime { get; set; }  // Time when the journey ends
 
         // Additional properties

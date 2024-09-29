@@ -1,4 +1,5 @@
 ﻿using backend.Schema.Enum;
+using NetTopologySuite.Geometries;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
@@ -22,9 +23,10 @@ namespace backend.Schema.Entity
 
 
         //location
-        public string? Location { get; set; }
-        public decimal? Latitude { get; set; }
-        public decimal? Longitude { get; set; }
+        public Point? Location { get; set; }
+        public string? Place { get; set; }
+        public double? Longitude { get; set; }
+        public double? Latitude { get; set; }
 
         public DriverState? DriverState { get; set; }
 

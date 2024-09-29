@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetTopologySuite.Geometries;
 using backend.Schema;
@@ -12,9 +13,11 @@ using backend.Schema;
 namespace backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240929210300_ChangeCoordinateColumnType")]
+    partial class ChangeCoordinateColumnType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -305,7 +308,7 @@ namespace backend.Migrations
                             Email = "admin@system.com",
                             MobileNo = "0712312312",
                             Name = "System",
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$QzUBtldk43jFNOWgTpDgdw$hkvkstbfXHo72KxVSV2DX6af83k2N9Znsau8bc+qQkw",
+                            Password = "$argon2id$v=19$m=65536,t=3,p=1$MfvdknfTc8duuQowTrPuIA$C/1O8rVx4jp3hTTu1YgzOvoCmNdYMkk5lnwa5o4/A1w",
                             Role = (byte)4,
                             Username = "admin_1"
                         },
@@ -315,7 +318,7 @@ namespace backend.Migrations
                             Email = "sajith@apis.lk",
                             MobileNo = "0772193832",
                             Name = "Sajith",
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$3UX4piSBHL4UiQaMv2fRIA$wFzMxOWwgZbCh4ai8n8fesNt26v6ejT+FKfQun080z0",
+                            Password = "$argon2id$v=19$m=65536,t=3,p=1$E0a6uq1bCLyYsjPYEsvyrA$GjLn1nhOVkqBiYDi/YKMNyFI+CG6AbKES/hkd5KC1TI",
                             Role = (byte)3,
                             Username = "sajith_2"
                         },
@@ -325,7 +328,7 @@ namespace backend.Migrations
                             Email = "mohammedsaheer987@gmail.com",
                             MobileNo = "0712805509",
                             Name = "Saheer",
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$e6v6UPKqn3xso/Cx+LPYFg$nx0lO+myyGWC6ZOTWwbkDjhiLHZtKs1ZdtQo4aWL7vw",
+                            Password = "$argon2id$v=19$m=65536,t=3,p=1$p6POSKjSOllPRq24jZWTmQ$h3ULvutxbVLvV8DybJtloiVBl7lOj8PmaiSCog1Gw6c",
                             Role = (byte)3,
                             Username = "mohammedsaheer987_3"
                         },
@@ -335,7 +338,7 @@ namespace backend.Migrations
                             Email = "abduljizzi@gmail.com",
                             MobileNo = "0759424247",
                             Name = "Abdul",
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$Q4NRpfQgqvpYvjvOAvIw4g$t8oOgrwpCe9wy6R7SJE5zV07dJkXl4s85AMvjBAWt/Y",
+                            Password = "$argon2id$v=19$m=65536,t=3,p=1$Yk24czjwdeekjFc2rH6e9w$WCtP7F5SOhHUYpGZLFN3KWTgkJ9/dYphPFT4j2L8YeY",
                             Role = (byte)2,
                             Username = "abduljizzi_4"
                         },
@@ -345,7 +348,7 @@ namespace backend.Migrations
                             Email = "nifraz@live.com",
                             MobileNo = "0712319319",
                             Name = "Nifraz",
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$qckEBTiFcdbqGMe3PQAj8w$Zw5G4csXuESNEw5+o3ObYUGTr8oOI4K0ebYA9EiszIM",
+                            Password = "$argon2id$v=19$m=65536,t=3,p=1$lQepQSxAZ7rggN7G8m0TEg$WkT+CAjWda9lb2uHoXFGkONtIkP65iKg3TTre58G0T8",
                             Role = (byte)2,
                             Username = "nifraz_5"
                         });
@@ -462,9 +465,6 @@ namespace backend.Migrations
 
                     b.Property<string>("Place")
                         .HasColumnType("longtext");
-
-                    b.Property<byte?>("State")
-                        .HasColumnType("tinyint unsigned");
 
                     b.Property<string>("VehicleNumber")
                         .IsRequired()

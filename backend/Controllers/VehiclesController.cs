@@ -162,12 +162,26 @@ namespace backend.Controllers
             }
         }
 
-        [HttpGet("nearby")]
-        public async Task<IActionResult> GetAllNearbyVehicles([FromQuery] int vehicleTypeId, [FromQuery] decimal latitude, [FromQuery] decimal longitude, [FromQuery] double radiusInKm = 3)
+        [HttpGet("driver/{driverId}")]
+        public async Task<IActionResult> GetAllVehiclesByDriver([FromRoute] int driverId)
         {
             try
             {
-                var response = await vehicleService.GetAllNearbyAsync(vehicleTypeId, latitude, longitude, radiusInKm);
+                var response = await vehicleService.GetAllByDriverAsync(driverId);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpGet("nearby")]
+        public async Task<IActionResult> GetAllNearbyVehicles([FromQuery] int vehicleTypeId, [FromQuery] double longitude, [FromQuery] double latitude, [FromQuery] double radiusInKm = 3)
+        {
+            try
+            {
+                var response = await vehicleService.GetAllNearbyAsync(vehicleTypeId, longitude, latitude, radiusInKm);
                 return Ok(response);
             }
             catch (Exception ex)

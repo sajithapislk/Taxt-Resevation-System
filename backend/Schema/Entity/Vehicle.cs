@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using backend.Schema.Enum;
+using NetTopologySuite.Geometries;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace backend.Schema.Entity
 {
@@ -20,11 +22,14 @@ namespace backend.Schema.Entity
         public string? Description { get; set; }
         public decimal? MaxLoad { get; set; }
         public string? Image { get; set; }
+        public VehicleState? State { get; set; }
 
         //location
-        public string? Location { get; set; }
-        public decimal? Latitude { get; set; }
-        public decimal? Longitude { get; set; }
+        public Point? Location { get; set; }
+        public string? Place { get; set; }
+        public double? Longitude { get; set; }
+        public double? Latitude { get; set; }
+
 
         [InverseProperty(nameof(Booking.Vehicle))]
         public ICollection<Booking> Bookings { get; set; } = [];

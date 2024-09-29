@@ -29,7 +29,11 @@ builder.Services.AddControllers().AddNewtonsoftJson(x =>
 var connectionString = builder.Configuration.GetConnectionString("MariaDbConnection");
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseMySql(connectionString, new MySqlServerVersion(new Version(11, 4, 0)))
+    options.UseMySql(
+        connectionString,
+        new MySqlServerVersion(new Version(11, 4, 0)),
+        mySqlOptions => mySqlOptions.UseNetTopologySuite() // Enable NTS for spatial data
+    )
 );
 
 builder.Services.AddCors(options =>
