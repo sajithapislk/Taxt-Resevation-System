@@ -1,5 +1,8 @@
 import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
+
+import logo from "./../../../assets/images/logo-main.webp";
+
 const Sidebar = ({ sideBarClass, setSideBarClass }) => {
   const toggleSidebar = () => {
     setSideBarClass((prevClass) => (prevClass === "open" ? "" : "open"));
@@ -11,14 +14,9 @@ const Sidebar = ({ sideBarClass, setSideBarClass }) => {
         <div className="brand-logo">
           <a href="/">
             <img
-              src="vendors/images/deskapp-logo.svg"
+              src={logo}
               alt=""
               className="dark-logo"
-            />
-            <img
-              src="vendors/images/deskapp-logo-white.svg"
-              alt=""
-              className="light-logo"
             />
           </a>
           <div
@@ -47,7 +45,7 @@ const Sidebar = ({ sideBarClass, setSideBarClass }) => {
                 <ul id="accordion-menu">
                   <li className="dropdown show">
                     <a
-                      href="javascript:;"
+                      href="#"
                       className="dropdown-toggle"
                       data-option="on"
                     >

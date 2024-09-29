@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 
 const Header = ({ onMenuClick }) => {
-  
+  const [dropdownClass, setDropdownClass] = useState("");
+  const toggleDropdown = () => {
+    setDropdownClass((prevClass) => (prevClass === "show" ? "" : "show"));
+  };
   return (
     <div className="header">
       <div className="header-left">
@@ -14,8 +17,9 @@ const Header = ({ onMenuClick }) => {
       <div className="header-right">
        
         <div className="user-info-dropdown">
-          <div className="dropdown show">
+          <div className={"dropdown " + dropdownClass}>
             <a
+              onClick={toggleDropdown}
               className="dropdown-toggle"
               href="#"
               role="button"
@@ -24,19 +28,14 @@ const Header = ({ onMenuClick }) => {
               <span className="user-icon">
                 <img src="vendors/images/photo1.jpg" alt="" />
               </span>
-              <span className="user-name">Ross C. Lopez</span>
+              <span className="user-name">Admin</span>
             </a>
-            <div className="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+            <div className={"dropdown-menu dropdown-menu-right dropdown-menu-icon-list " + dropdownClass}>
               <a className="dropdown-item" href="login.html">
                 <i className="dw dw-logout"></i> Log Out
               </a>
             </div>
           </div>
-        </div>
-        <div className="github-link">
-          <a href="https://github.com/dropways/deskapp" target="_blank">
-            <img src="vendors/images/github.svg" alt="" />
-          </a>
         </div>
       </div>
     </div>
