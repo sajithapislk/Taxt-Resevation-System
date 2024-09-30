@@ -35,8 +35,7 @@ function HowWorkArea() {
                 <div className="how-it-works-text-wrapper">
                   <h3>Book in Just 2 Tabs</h3>
                   <p className="how-it-works-text">
-                    Curabitur ac quam aliquam urna vehicula semper sed vel elit.
-                    Sed et leo purus. Vivamus vitae sapien.
+                    Passanger can book a ride just to tab 
                   </p>
                 </div>
               </div>
@@ -47,8 +46,7 @@ function HowWorkArea() {
                 <div className="how-it-works-text-wrapper">
                   <h3>Get a Driver</h3>
                   <p className="how-it-works-text">
-                    Curabitur ac quam aliquam urna vehicula semper sed vel elit.
-                    Sed et leo purus. Vivamus vitae sapien.
+                    Passenger can get an available drivers within minute
                   </p>
                 </div>
               </div>
@@ -59,8 +57,7 @@ function HowWorkArea() {
                 <div className="how-it-works-text-wrapper">
                   <h3>Track your Driver</h3>
                   <p className="how-it-works-text">
-                    Curabitur ac quam aliquam urna vehicula semper sed vel elit.
-                    Sed et leo purus. Vivamus vitae sapien.
+                    Passenger can tracj driver from map
                   </p>
                 </div>
               </div>
@@ -71,8 +68,7 @@ function HowWorkArea() {
                 <div className="how-it-works-text-wrapper">
                   <h3>Arrive safely</h3>
                   <p className="how-it-works-text">
-                    Curabitur ac quam aliquam urna vehicula semper sed vel elit.
-                    Sed et leo purus. Vivamus vitae sapien.
+                    We have a good and awesome safe journey here.
                   </p>
                 </div>
               </div>

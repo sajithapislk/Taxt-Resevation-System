@@ -13,11 +13,7 @@ const Sidebar = ({ sideBarClass, setSideBarClass }) => {
       <div className={"left-side-bar " + sideBarClass}>
         <div className="brand-logo">
           <a href="/">
-            <img
-              src={logo}
-              alt=""
-              className="dark-logo"
-            />
+            <img src={logo} alt="" className="dark-logo" />
           </a>
           <div
             className="close-sidebar"
@@ -44,17 +40,18 @@ const Sidebar = ({ sideBarClass, setSideBarClass }) => {
               <div className="sidebar-menu icon-style-1 icon-list-style-1">
                 <ul id="accordion-menu">
                   <li className="dropdown show">
-                    <a
-                      href="#"
-                      className="dropdown-toggle"
-                      data-option="on"
-                    >
+                    <a href="#" className="dropdown-toggle" data-option="on">
                       <span>Admin Dashboard</span>
                     </a>
                     <ul className="submenu" style={{ display: "block" }}>
                       <li>
                         <Link to="/admin/dashboard" className="">
                           DashBoard
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/admin/reservation" className="">
+                          Reservation
                         </Link>
                       </li>
                       <li>
@@ -68,13 +65,13 @@ const Sidebar = ({ sideBarClass, setSideBarClass }) => {
                         </Link>
                       </li>
                       <li>
-                        <Link to="/admin/vehiclecategory" className="">
-                          Vehicle Category
+                        <Link to="/admin/vehicle" className="">
+                          Vehicle
                         </Link>
                       </li>
                       <li>
-                        <Link to="/admin/payment" className="">
-                          Payments
+                        <Link to="/admin/vehicletype" className="">
+                          Vehicle Types
                         </Link>
                       </li>
                     </ul>

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Booking = () => {
+const Vehicletype = () => {
   return (
     <div class="main-container">
       <div class="pd-ltr-20 xs-pd-20-10">
@@ -71,39 +71,25 @@ const Booking = () => {
             </div> */}
             <table class="table table-striped">
               <thead>
-              <tr>
-            <th>#</th>
-            <th>Booking ID</th>
-            <th>Type</th>
-            <th>User</th>
-            <th>Duration</th>
-            <th>Price</th>
-            <th>Status</th>
-          </tr>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Image</th>
+                </tr>
               </thead>
               <tbody>
-              <tr>
-            <td>1</td>
-            <td>#B12345</td>
-            <td>type</td>
-            <td>Jhon</td>
-            <td>5KM</td>
-            <td>200</td>
-            <td>Confirmed</td>
-          </tr>
+                <tr>
+                  <td>1</td>
+                  <td>Saheer</td>
+                  <td>img</td>
+                </tr>
               </tbody>
             </table>
           </div>
-        </div>
-        <div class="footer-wrap pd-20 mb-20 card-box">
-          DeskApp - Bootstrap 4 Admin Template By
-          <a href="https://github.com/dropways" target="_blank">
-            Ankit Hingarajiya
-          </a>
         </div>
       </div>
     </div>
   )
 }
 
-export default Booking
+export default Vehicletype

@@ -8,7 +8,9 @@ const AuthService = {
   UserLogin: async (credentials) => {
     try {
       const response = await axios.post(`${API_URL}/users/login`, credentials);
+      localStorage.setItem("user", JSON.stringify(response.data));
       return response.data; // Return the response data (e.g., token)
+      
     } catch (error) {
       if (error.response && error.response.data) {
         return { error: error.response.data.message };
@@ -20,6 +22,7 @@ const AuthService = {
   DriverLogin: async (credentials) => {
     try {
       const response = await axios.post(`${API_URL}/drivers/login`, credentials);
+      localStorage.setItem("driver", JSON.stringify(response.data));
       return response.data; // Return the response data (e.g., token)
     } catch (error) {
       if (error.response && error.response.data) {
@@ -32,6 +35,7 @@ const AuthService = {
   AdminLogin: async (credentials) => {
     try {
       const response = await axios.post(`${API_URL}/admins/login`, credentials);
+      localStorage.setItem("admin", JSON.stringify(response.data));
       return response.data; // Return the response data (e.g., token)
     } catch (error) {
       if (error.response && error.response.data) {
