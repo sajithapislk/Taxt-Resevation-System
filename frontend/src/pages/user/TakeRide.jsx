@@ -84,9 +84,6 @@ function TakeRide() {
   useEffect(() => {
     const checkAuth = async () => {
       const userData = localStorage.getItem("user");
-      if (!userData) {
-        navigate("/login");
-      }
       const user = JSON.parse(userData);
       
       setFormData((prevData) => ({

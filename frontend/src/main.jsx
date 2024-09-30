@@ -1,27 +1,26 @@
 // main.jsx
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
-import PublicLayout from './layouts/Public.jsx';
-import UserLayout from './layouts/User.jsx';
-import DriverLayout from './layouts/Driver.jsx';
-import Welcome from './pages/public/Welcome.jsx';
-import About from './pages/public/About.jsx'; 
-import Login from './pages/public/Login.jsx'; 
-import TakeRide from './pages/user/TakeRide.jsx';
-import AvailableRide from './pages/user/AvailableRide.jsx';
-import DriverDashboard from './pages/driver/Dashboard.jsx';
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import PublicLayout from "./layouts/Public.jsx";
+import UserLayout from "./layouts/User.jsx";
+import DriverLayout from "./layouts/Driver.jsx";
+import Welcome from "./pages/public/Welcome.jsx";
+import About from "./pages/public/About.jsx";
+import Login from "./pages/public/Login.jsx";
+import TakeRide from "./pages/user/TakeRide.jsx";
+import AvailableRide from "./pages/user/AvailableRide.jsx";
+import DriverDashboard from "./pages/driver/Dashboard.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import AdminLayout from './layouts/Admin.jsx';
-import AdminDashboard from './pages/admin/Dashboard.jsx';
-import User from './pages/admin/User.jsx';
-import Booking from './pages/admin/Booking.jsx';
-import Reservation from './pages/admin/Reservation.jsx';
-import NewVehicle from './pages/driver/vehicle/New.jsx';
-import EditVehicle from './pages/driver/vehicle/Edit.jsx';
-import Vehicle from './pages/admin/Vehicle.jsx';
-import Vehicletype from './pages/admin/Vehicletype.jsx';
-
-
+import AdminLayout from "./layouts/Admin.jsx";
+import AdminDashboard from "./pages/admin/Dashboard.jsx";
+import User from "./pages/admin/User.jsx";
+import Booking from "./pages/admin/Booking.jsx";
+import Reservation from "./pages/admin/Reservation.jsx";
+import NewVehicle from "./pages/driver/vehicle/New.jsx";
+import EditVehicle from "./pages/driver/vehicle/Edit.jsx";
+import Vehicle from "./pages/admin/Vehicle.jsx";
+import Vehicletype from "./pages/admin/Vehicletype.jsx";
+import ProtectedRoute from "./ProtectedRoute.jsx";
 
 const router = createBrowserRouter([
   {
@@ -44,7 +43,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/user",
-    element: <UserLayout />,
+    element: (
+      <ProtectedRoute allowedRole={"user"}>
+        <UserLayout />
+      </ProtectedRoute>
+    ),
     children: [
       {
         path: "take-ride",
@@ -79,40 +82,39 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path:"/admin",
+    path: "/admin",
     element: <AdminLayout />,
-    children:[
+    children: [
       {
-        path:"dashboard",
-        element: <AdminDashboard/>,
+        path: "dashboard",
+        element: <AdminDashboard />,
       },
       {
-        path:"user",
-        element:<User/>,
+        path: "user",
+        element: <User />,
       },
       {
-        path:"booking",
-        element:<Booking/>,
+        path: "booking",
+        element: <Booking />,
       },
       {
-        path:"vehicle",
-        element:<Vehicle/>
+        path: "vehicle",
+        element: <Vehicle />,
       },
       {
-        path:"vehicletype",
-        element:<Vehicletype/>,
+        path: "vehicletype",
+        element: <Vehicletype />,
       },
       {
-        path:"reservation",
-        element:<Reservation/>,
-      }
-    ]
-  }
- 
+        path: "reservation",
+        element: <Reservation />,
+      },
+    ],
+  },
 ]);
 
-createRoot(document.getElementById('root')).render(
+createRoot(document.getElementById("root")).render(
   <StrictMode>
     <RouterProvider router={router} />
-  </StrictMode>,
+  </StrictMode>
 );
