@@ -74,9 +74,10 @@ const Booking = () => {
               <tr>
             <th>#</th>
             <th>Booking ID</th>
+            <th>Type</th>
             <th>User</th>
-            <th>Vehicle Category</th>
-            <th>Date</th>
+            <th>Duration</th>
+            <th>Price</th>
             <th>Status</th>
           </tr>
               </thead>
@@ -84,18 +85,11 @@ const Booking = () => {
               <tr>
             <td>1</td>
             <td>#B12345</td>
-            <td>John Doe</td>
-            <td>SUV</td>
-            <td>2024-09-20</td>
+            <td>type</td>
+            <td>Jhon</td>
+            <td>5KM</td>
+            <td>200</td>
             <td>Confirmed</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>#B12346</td>
-            <td>Jane Smith</td>
-            <td>Sedan</td>
-            <td>2024-09-21</td>
-            <td>Pending</td>
           </tr>
               </tbody>
             </table>
