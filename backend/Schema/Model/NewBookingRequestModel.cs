@@ -1,4 +1,5 @@
-﻿using backend.Schema.Entity;
+﻿using backend.Helpers;
+using backend.Schema.Entity;
 using backend.Schema.Enum;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -6,6 +7,7 @@ namespace backend.Schema.Model
 {
     public class NewBookingRequestModel
     {
+        [EnumValidation(typeof(BookingType))]
         public BookingType Type { get; set; } = BookingType.Instant;
         public int UserId { get; set; }
         public int VehicleId { get; set; }

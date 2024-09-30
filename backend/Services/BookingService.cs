@@ -172,12 +172,24 @@ namespace backend.Services
             var existingRecord = await GetAsync(id)
                 ?? throw new KeyNotFoundException($"No matching record found for the id {id}");
 
-            var entity = new UserFeedback
+            var existingFeedback = await dbContext.UserFeedbacks
+                .FirstOrDefaultAsync(x => x.BookingId == id);
+
+            if (existingFeedback != null)
             {
-                Rate = model.Rate,
-                Feedback = model.Feedback,
-            };
-            existingRecord.UserFeedback = entity;
+                existingFeedback.Rate = model.Rate;
+                existingFeedback.Feedback = model.Feedback;
+            }
+            else
+            {
+                var entity = new UserFeedback
+                {
+                    Rate = model.Rate,
+                    Feedback = model.Feedback,
+                };
+                existingRecord.UserFeedback = entity;
+            }
+
             await dbContext.SaveChangesAsync();
             return existingRecord;
         }
@@ -187,12 +199,24 @@ namespace backend.Services
             var existingRecord = await GetAsync(id)
                 ?? throw new KeyNotFoundException($"No matching record found for the id {id}");
 
-            var entity = new DriverFeedback
+            var existingFeedback = await dbContext.DriverFeedbacks
+                .FirstOrDefaultAsync(x => x.BookingId == id);
+
+            if (existingFeedback != null)
             {
-                Rate = model.Rate,
-                Feedback = model.Feedback,
-            };
-            existingRecord.DriverFeedback = entity;
+                existingFeedback.Rate = model.Rate;
+                existingFeedback.Feedback = model.Feedback;
+            }
+            else
+            {
+                var entity = new DriverFeedback
+                {
+                    Rate = model.Rate,
+                    Feedback = model.Feedback,
+                };
+                existingRecord.DriverFeedback = entity;
+            }
+
             await dbContext.SaveChangesAsync();
             return existingRecord;
         }

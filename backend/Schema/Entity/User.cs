@@ -1,7 +1,7 @@
 ﻿using backend.Schema.Enum;
 using NetTopologySuite.Geometries;
+using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
 
 namespace backend.Schema.Entity
 {
@@ -10,7 +10,7 @@ namespace backend.Schema.Entity
         public UserRole Role { get; set; }
         public string? Email { get; set; }
         public string? Username { get; set; }
-        //[JsonIgnore]
+        [JsonIgnore]
         public string? Password { get; set; }
 
         public string? Name { get; set; }

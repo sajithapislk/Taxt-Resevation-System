@@ -1,4 +1,5 @@
 ﻿using backend.Helpers;
+using backend.Schema.Enum;
 using backend.Schema.Model;
 using backend.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -80,6 +81,30 @@ namespace backend.Controllers
                 }
 
                 return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPut("{id}/state")]
+        [Authorize]
+        public async Task<IActionResult> UpdateState([FromRoute] int id, [FromBody] DriverState state)
+        {
+            if (!Enum.IsDefined(typeof(DriverState), state))
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                var response = await driverService.UpdateStateAsync(id, state);
+                return Ok(response);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {

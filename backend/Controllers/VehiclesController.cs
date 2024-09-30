@@ -1,5 +1,6 @@
 ﻿using backend.Helpers;
 using backend.Schema.Entity;
+using backend.Schema.Enum;
 using backend.Schema.Model;
 using backend.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -29,6 +30,20 @@ namespace backend.Controllers
             return Ok();
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            try
+            {
+                var response = await vehicleService.GetAllAsync();
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> Get([FromRoute] int id)
         {
@@ -56,6 +71,11 @@ namespace backend.Controllers
                 return BadRequest();
             }
 
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             try
             {
                 if (await vehicleService.IsVehicleNumberRegistered(model.VehicleNumber))
@@ -78,6 +98,11 @@ namespace backend.Controllers
             if (id <= 0 || model == null || model.DriverId <= 0 || model.VehicleTypeId <= 0 || string.IsNullOrWhiteSpace(model.VehicleNumber) || model.PassengerSeats <= 0 || model.CostPerKm <= 0)
             {
                 return BadRequest();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
             }
 
             try
@@ -136,6 +161,30 @@ namespace backend.Controllers
             try
             {
                 var response = await vehicleService.UpdateLocationAsync(id, model);
+                return Ok(response);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPut("{id}/state")]
+        [Authorize]
+        public async Task<IActionResult> UpdateState([FromRoute] int id, [FromBody] VehicleState state)
+        {
+            if (!Enum.IsDefined(typeof(VehicleState), state))
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                var response = await vehicleService.UpdateStateAsync(id, state);
                 return Ok(response);
             }
             catch (KeyNotFoundException ex)

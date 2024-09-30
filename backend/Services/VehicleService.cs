@@ -87,6 +87,16 @@ namespace backend.Services
             return existingRecord;
         }
 
+        public async Task<Vehicle> UpdateStateAsync(int id, VehicleState state)
+        {
+            var existingRecord = await GetAsync(id)
+                ?? throw new KeyNotFoundException($"No matching record found for the id {id}");
+
+            existingRecord.State = state;
+            await dbContext.SaveChangesAsync();
+            return existingRecord;
+        }
+
         public async Task<IEnumerable<Vehicle>> GetAllByTypeAsync(int vehicleTypeId)
         {
             return await dbContext.Vehicles

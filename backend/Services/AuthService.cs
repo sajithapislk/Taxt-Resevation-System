@@ -38,6 +38,7 @@ namespace backend.Services
                 Name = model.Name,
                 MobileNo = model.MobileNo,
                 Password = model.Password != null ? PasswordHasher.HashPassword(model.Password) : null,
+                DriverState = model.DriverState,
             };
 
             await dbContext.Users.AddAsync(user);

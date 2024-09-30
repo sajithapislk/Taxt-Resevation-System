@@ -29,6 +29,7 @@ namespace backend.Services
         public Task<AuthenticateResponse?> RegisterAsync(UserRegisterRequest model)
         {
             model.Role = UserRole.Driver;
+            model.DriverState = DriverState.Available;
             return authService.RegisterAsync(model);
         }
 
@@ -37,6 +38,16 @@ namespace backend.Services
             return await dbContext.Users
                 .FirstOrDefaultAsync(x => x.Id == id
                     && x.Role == UserRole.Driver);
+        }
+
+        public async Task<User> UpdateStateAsync(int id, DriverState state)
+        {
+            var existingRecord = await GetAsync(id)
+                ?? throw new KeyNotFoundException($"No matching record found for the id {id}");
+
+            existingRecord.DriverState = state;
+            await dbContext.SaveChangesAsync();
+            return existingRecord;
         }
     }
 }

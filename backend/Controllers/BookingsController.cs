@@ -21,6 +21,20 @@ namespace backend.Controllers
             this.bookingService = bookingService;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            try
+            {
+                var response = await bookingService.GetAllAsync();
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
         [HttpGet("{id}")]
         [Authorize]
         public async Task<IActionResult> Get([FromRoute] int id)
@@ -49,6 +63,11 @@ namespace backend.Controllers
                 return BadRequest();
             }
 
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             try
             {
                 var response = await bookingService.AddAsync(model);
@@ -67,6 +86,11 @@ namespace backend.Controllers
             if (model == null || model.UserId <= 0 || model.VehicleId <= 0 || string.IsNullOrWhiteSpace(model.PickUpPlace) || string.IsNullOrWhiteSpace(model.DropOffPlace))
             {
                 return BadRequest();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
             }
 
             try
