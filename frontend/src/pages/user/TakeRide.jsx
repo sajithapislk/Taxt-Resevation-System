@@ -1,4 +1,5 @@
-import React, { useState,useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   GoogleMap,
   useLoadScript,
@@ -8,24 +9,24 @@ import {
   DirectionsRenderer,
 } from "@react-google-maps/api";
 import Breadcrumb from "./components/Breadcrumb";
+import VehicleTypeService from "./../../services/user/VehicleTypeService";
 
-import VehicleTypeService from './../../services/user/VehicleTypeService';
-
-const _googleMapsApiKey = import.meta.env.GOOGLE_MAPS_API_KEY;
 const libraries = ["places"];
+const _googleMapsApiKey =
+  import.meta.env.GOOGLE_MAP_API_KEY ||
+  "AIzaSyCP6SvRsh7Ba3lOFKEjRxX6dZqkwH6U7H0";
 
-function TakeRide() {  
+function TakeRide() {
+  const navigate = useNavigate();
   const [vehicleTypeList, setVehicleTypeList] = useState([]);
-
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyCP6SvRsh7Ba3lOFKEjRxX6dZqkwH6U7H0",
+    googleMapsApiKey: _googleMapsApiKey,
     libraries,
   });
 
   const [pickupCoords, setPickupCoords] = useState(null);
   const [destinationCoords, setDestinationCoords] = useState(null);
   const [directionsResponse, setDirectionsResponse] = useState(null);
-
   const pickupRef = useRef();
   const destinationRef = useRef();
 
@@ -34,7 +35,16 @@ function TakeRide() {
     if (place && place.geometry) {
       const lat = place.geometry.location.lat();
       const lng = place.geometry.location.lng();
+      const placeName =
+        place.formatted_address || place.name || "Unknown Place";
+
       setPickupCoords({ lat, lng });
+      setFormData((prevData) => ({
+        ...prevData,
+        pickUpPlace: placeName,
+        pickUpLongitude: lng,
+        pickUpLatitude: lat,
+      }));
     }
   }, []);
 
@@ -43,31 +53,57 @@ function TakeRide() {
     if (place && place.geometry) {
       const lat = place.geometry.location.lat();
       const lng = place.geometry.location.lng();
+      const placeName =
+        place.formatted_address || place.name || "Unknown Place";
+
       setDestinationCoords({ lat, lng });
+      setFormData((prevData) => ({
+        ...prevData,
+        dropOffPlace: placeName,
+        dropOffLongitude: lng,
+        dropOffLatitude: lat,
+      }));
     }
   }, []);
 
-  const handleSubmit = useCallback(
-    (e) => {
-      e.preventDefault();
-      if (pickupCoords && destinationCoords) {
-        setDirectionsResponse(null); // Reset directions for a new calculation
-      }
-    },
-    [pickupCoords, destinationCoords]
-  );
+  const [formData, setFormData] = useState({
+    vehicleTypeId: "",
+    userId: 5,
+    pickUpPlace: "",
+    pickUpLongitude: "",
+    pickUpLatitude: "",
+    dropOffPlace: "",
+    dropOffLongitude: "",
+    dropOffLatitude: "",
+  });
+
+  const handleSubmit = () => {
+    navigate("/user/available-driver", { state: { formData } });
+  };
 
   useEffect(() => {
+    const checkAuth = async () => {
+      const userData = localStorage.getItem("user");
+      if (!userData) {
+        navigate("/login");
+      }
+      const user = JSON.parse(userData);
+      
+      setFormData((prevData) => ({
+        ...prevData,
+        userId: user.id,
+      }));
+    }
     const fetchVehicleTypes = async () => {
       const res = await VehicleTypeService.List();
       console.log(res);
       if (!res.error) {
         setVehicleTypeList(res);
       } else {
-        console.error(res.error); 
+        console.error(res.error);
       }
     };
-
+    checkAuth();
     fetchVehicleTypes();
   }, []);
 
@@ -81,65 +117,80 @@ function TakeRide() {
           <div className="row">
             <div className="col-lg-6">
               <div className="booking-form">
-                <form onSubmit={handleSubmit}>
-                  <div className="form-group destination">
-                    <label htmlFor="inputFrom">From</label>
-                    <Autocomplete
-                      onLoad={(autoc) => (pickupRef.current = autoc)}
-                      onPlaceChanged={handlePickupPlaceSelect}
-                    >
-                      <input
-                        type="text"
-                        id="inputFrom"
-                        className="form-control"
-                        placeholder="Select Pickup"
-                      />
-                    </Autocomplete>
-                  </div>
-                  
-                  <div className="form-group destination">
-                    <label htmlFor="inputDestination">Where to?</label>
-                    <Autocomplete
-                      onLoad={(autoc) => (destinationRef.current = autoc)}
-                      onPlaceChanged={handleDestinationPlaceSelect}
-                    >
-                      <input
-                        type="text"
-                        id="inputDestination"
-                        className="form-control"
-                        placeholder="Select Destination"
-                      />
-                    </Autocomplete>
-                  </div>
-                  <div className="select-car-wrapper">
-                    <h2>Selected Vehicle</h2>
-                    <div className="selected-car">
-                      <div className="from-group car-options">
-                      {vehicleTypeList.map((item, index) => (
-                        <div className="form-check form-check-inline"  key={index}>
+                <div className="form-group destination">
+                  <label htmlFor="inputFrom">From</label>
+                  <Autocomplete
+                    onLoad={(autoc) => (pickupRef.current = autoc)}
+                    onPlaceChanged={handlePickupPlaceSelect}
+                  >
+                    <input
+                      type="text"
+                      id="inputFrom"
+                      className="form-control"
+                      placeholder="Select Pickup"
+                    />
+                  </Autocomplete>
+                </div>
+
+                <div className="form-group destination">
+                  <label htmlFor="inputDestination">Where to?</label>
+                  <Autocomplete
+                    onLoad={(autoc) => (destinationRef.current = autoc)}
+                    onPlaceChanged={handleDestinationPlaceSelect}
+                  >
+                    <input
+                      type="text"
+                      id="inputDestination"
+                      className="form-control"
+                      placeholder="Select Destination"
+                    />
+                  </Autocomplete>
+                </div>
+
+                <div className="select-car-wrapper">
+                  <h2>Selected Vehicle</h2>
+                  <div className="selected-car">
+                    <div className="form-group car-options">
+                      {vehicleTypeList.map((item) => (
+                        <div
+                          className="form-check form-check-inline"
+                          key={item.id}
+                        >
                           <input
                             className="form-check-input"
                             type="radio"
                             name="car-opts"
-                            id="scooter"
-                            value="option1"
+                            id={`vehicle-${item.id}`} // Unique ID for each input
+                            value={item.id}
+                            onChange={() =>
+                              setFormData((prevData) => ({
+                                ...prevData,
+                                vehicleTypeId: item.id,
+                              }))
+                            }
                           />
-                          <label className="form-check-label" htmlFor="scooter">
-                            <img src={item.image} alt="car" />
+                          <label
+                            className="form-check-label"
+                            htmlFor={`vehicle-${item.id}`}
+                          >
+                            <img src={item.image} alt={item.name} />
                           </label>
                           <div className="car-details">
                             <h6>{item.vehicleCount}</h6>
                             <p>{item.name}</p>
                           </div>
                         </div>
-                        ))}
-                      </div>
+                      ))}
                     </div>
                   </div>
-                  <button type="submit" className="button button-dark">
-                    Next
-                  </button>
-                </form>
+                </div>
+                <button
+                  type="submit"
+                  className="button button-dark"
+                  onClick={handleSubmit}
+                >
+                  Next
+                </button>
               </div>
             </div>
             <div className="col-lg-6">
