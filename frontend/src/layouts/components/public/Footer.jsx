@@ -28,9 +28,9 @@ const Footer = () => {
               </div>
               <div className="footer-text pe-lg-3">
                 <p className="mb-4">
-                  Nulla justo neque, tincidunt id bibendum a, rhoncus et eros.
-                  Vestibulum commodo diam ut risus pulvinar consequat vitae a
-                  dui. Vivamus sed molestie diam. Maecenas vitae enim lacus.
+                Carrgo offers a seamless and reliable taxi service platform designed to make your transportation experience easy and efficient. 
+                        With user-friendly features, a secure booking system, and real-time updates, Carrgo connects riders with trusted drivers, 
+                        ensuring convenience and safety for all your journeys
                 </p>
               </div>
               <div className="helpline">

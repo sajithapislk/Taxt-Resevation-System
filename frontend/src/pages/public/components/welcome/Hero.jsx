@@ -131,10 +131,7 @@ function Hero() {
                         <h2 className="form-title">
                           Get member exclusive rewards
                         </h2>
-                        <p className="form-text">
-                          Egestas sed vulputate eleifend ac adipiscing quisque.
-                          Hac vulputate integer sapien et.
-                        </p>
+                        
                         <div className="row">
                           <div className="form-group col-md-12">
                             <input
@@ -215,10 +212,7 @@ function Hero() {
                         <h2 className="form-title">
                           Start driving now and get paid
                         </h2>
-                        <p className="form-text">
-                          Egestas sed vulputate eleifend ac adipiscing quisque.
-                          Hac vulputate integer sapien et.
-                        </p>
+                        
                         <div className="row">
                           <div className="form-group col-md-12">
                             <input
