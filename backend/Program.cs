@@ -20,6 +20,7 @@ builder.Services.AddScoped<IDriverService, DriverService>();
 builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<IVehicleService, VehicleService>();
 builder.Services.AddScoped<IVehicleTypeService, VehicleTypeService>();
+builder.Services.AddScoped<IBookingService, BookingService>();
 
 builder.Services.AddScoped<IExternalService, ExternalService>();
 

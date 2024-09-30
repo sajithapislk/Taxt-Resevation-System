@@ -20,13 +20,12 @@ namespace backend.Schema.Entity
         public DateOnly? DateOfBirth { get; set; }
         public Sex? Gender { get; set; }
         public MaritalStatus? Status { get; set; }
+        public string? Description { get; set; }
 
 
         //location
         public Point? Location { get; set; }
         public string? Place { get; set; }
-        public double? Longitude { get; set; }
-        public double? Latitude { get; set; }
 
         public DriverState? DriverState { get; set; }
 

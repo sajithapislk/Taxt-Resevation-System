@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetTopologySuite.Geometries;
 using backend.Schema;
@@ -12,9 +13,11 @@ using backend.Schema;
 namespace backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240930013706_MakeColumnsNonNullable")]
+    partial class MakeColumnsNonNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,9 +49,15 @@ namespace backend.Migrations
                     b.Property<decimal?>("Distance")
                         .HasColumnType("decimal(65,30)");
 
+                    b.Property<double>("DropOffLatitude")
+                        .HasColumnType("double");
+
                     b.Property<Point>("DropOffLocation")
                         .IsRequired()
                         .HasColumnType("point");
+
+                    b.Property<double>("DropOffLongitude")
+                        .HasColumnType("double");
 
                     b.Property<string>("DropOffPlace")
                         .IsRequired()
@@ -66,9 +75,15 @@ namespace backend.Migrations
                     b.Property<int?>("LastModifiedUserId")
                         .HasColumnType("int");
 
+                    b.Property<double>("PickUpLatitude")
+                        .HasColumnType("double");
+
                     b.Property<Point>("PickUpLocation")
                         .IsRequired()
                         .HasColumnType("point");
+
+                    b.Property<double>("PickUpLongitude")
+                        .HasColumnType("double");
 
                     b.Property<string>("PickUpPlace")
                         .IsRequired()
@@ -250,8 +265,14 @@ namespace backend.Migrations
                     b.Property<int?>("LastModifiedUserId")
                         .HasColumnType("int");
 
+                    b.Property<double?>("Latitude")
+                        .HasColumnType("double");
+
                     b.Property<Point>("Location")
                         .HasColumnType("point");
+
+                    b.Property<double?>("Longitude")
+                        .HasColumnType("double");
 
                     b.Property<string>("MobileNo")
                         .HasColumnType("longtext");
@@ -294,7 +315,7 @@ namespace backend.Migrations
                             Email = "admin@system.com",
                             MobileNo = "0712312312",
                             Name = "System",
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$Pn0RyusSKK4JGWhcSNcElw$aVPoQk/wxX3YArCQXb1z1B3FEPZvR0SS86OeZQ5qPM0",
+                            Password = "$argon2id$v=19$m=65536,t=3,p=1$ZjCfQ9yUQGnwUMbc/cGd6w$pr1aM4PAHCQsJFXaqOUXWJRgJaqhYK8971GpJ2CbXKU",
                             Role = (byte)4,
                             Username = "admin_1"
                         },
@@ -304,7 +325,7 @@ namespace backend.Migrations
                             Email = "sajith@apis.lk",
                             MobileNo = "0772193832",
                             Name = "Sajith",
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$pca//MPGFvyiPr1zg/Wv1A$VxXw87nHeqLRnVsknvEr7t6B225CZJD5fuPComuh2Ao",
+                            Password = "$argon2id$v=19$m=65536,t=3,p=1$+fonD39nASHep1fht14f/Q$Q9graCWT/DO/NndIuaAGgA60ei+5/QdzdDuAZjiUSoM",
                             Role = (byte)3,
                             Username = "sajith_2"
                         },
@@ -314,7 +335,7 @@ namespace backend.Migrations
                             Email = "mohammedsaheer987@gmail.com",
                             MobileNo = "0712805509",
                             Name = "Saheer",
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$gAVkMgJ/X1uNG2wrSIGEtA$nnLdc/E4NYiFFfiCT/0U5YobX87nPnNINtbiJQ785Fw",
+                            Password = "$argon2id$v=19$m=65536,t=3,p=1$LtppRlPhSGfG2YFY+uehHA$d/TMS9gKughMiiRT1XiMN3DCtXVPLc9Lylky28gN4Kc",
                             Role = (byte)3,
                             Username = "mohammedsaheer987_3"
                         },
@@ -324,7 +345,7 @@ namespace backend.Migrations
                             Email = "abduljizzi@gmail.com",
                             MobileNo = "0759424247",
                             Name = "Abdul",
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$Zg4B/5Exg32RYg9/VHtLEQ$QXUtDy/MlSlDzarL1h5KBJDiUwNBucJur/dwoPtIxRE",
+                            Password = "$argon2id$v=19$m=65536,t=3,p=1$wDPJpiIe1Oo3vTqCEX5fnQ$KvZbrutpuYCsmM0SpIE7G6I2faTkw0j0gsMd7mhCeu4",
                             Role = (byte)2,
                             Username = "abduljizzi_4"
                         },
@@ -334,7 +355,7 @@ namespace backend.Migrations
                             Email = "nifraz@live.com",
                             MobileNo = "0712319319",
                             Name = "Nifraz",
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$mnS5aTMK7Xvdg8uxlsLKPw$/+UWyJlFaE5gnuOcmrhUiOIUULdCBVxK/N1gbGnTMng",
+                            Password = "$argon2id$v=19$m=65536,t=3,p=1$sEXnWVRwo4qW2QzbbfKkdQ$phFbTPNuMbFWQtUm2xCs5EXFe3RWN521FjQiktXcoqw",
                             Role = (byte)2,
                             Username = "nifraz_5"
                         });
@@ -434,8 +455,14 @@ namespace backend.Migrations
                     b.Property<int?>("LastModifiedUserId")
                         .HasColumnType("int");
 
+                    b.Property<double?>("Latitude")
+                        .HasColumnType("double");
+
                     b.Property<Point>("Location")
                         .HasColumnType("point");
+
+                    b.Property<double?>("Longitude")
+                        .HasColumnType("double");
 
                     b.Property<decimal?>("MaxLoad")
                         .HasColumnType("decimal(65,30)");

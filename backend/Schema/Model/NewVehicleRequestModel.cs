@@ -1,4 +1,5 @@
 ﻿using backend.Schema.Entity;
+using backend.Schema.Enum;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace backend.Schema.Model
@@ -15,6 +16,7 @@ namespace backend.Schema.Model
         public string? Description { get; set; }
         public decimal? MaxLoad { get; set; }
         public string? Image { get; set; }
-       
+        public VehicleState? State { get; set; }
+
     }
 }

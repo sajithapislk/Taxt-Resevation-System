@@ -27,11 +27,12 @@ namespace backend.Schema.Entity
         //location
         public Point? Location { get; set; }
         public string? Place { get; set; }
-        public double? Longitude { get; set; }
-        public double? Latitude { get; set; }
 
 
         [InverseProperty(nameof(Booking.Vehicle))]
         public ICollection<Booking> Bookings { get; set; } = [];
+
+        [NotMapped]
+        public decimal Distance { get; set; }
     }
 }

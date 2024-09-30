@@ -109,40 +109,11 @@ namespace backend.Services
             return existingRecord != null;
         }
 
-        //public async Task<IEnumerable<User>> GetAll()
-        //{
-        //    return await db.Users.Where(x => x.isActive).ToListAsync();
-        //}
-
         public async Task<User?> GetUserById(int id)
         {
             return await dbContext.Users
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
-
-        //public async Task<User?> AddAndUpdateUser(User userObj)
-        //{
-        //    bool isSuccess = false;
-        //    if (userObj.Id > 0)
-        //    {
-        //        var obj = await db.Users.FirstOrDefaultAsync(c => c.Id == userObj.Id);
-        //        if (obj != null)
-        //        {
-        //            // obj.Address = userObj.Address;
-        //            obj.FirstName = userObj.FirstName;
-        //            obj.LastName = userObj.LastName;
-        //            db.Users.Update(obj);
-        //            isSuccess = await db.SaveChangesAsync() > 0;
-        //        }
-        //    }
-        //    else
-        //    {
-        //        await db.Users.AddAsync(userObj);
-        //        isSuccess = await db.SaveChangesAsync() > 0;
-        //    }
-
-        //    return isSuccess ? userObj : null;
-        //}
 
         // helper methods
         private async Task<string> GenerateJwtToken(User user)

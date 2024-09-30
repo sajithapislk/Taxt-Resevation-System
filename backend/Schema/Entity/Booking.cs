@@ -10,22 +10,18 @@ namespace backend.Schema.Entity
         public int UserId { get; set; }
         [ForeignKey(nameof(UserId))]
         public User User { get; set; }
-        public int? VehicleId { get; set; }
+        public int VehicleId { get; set; }
         [ForeignKey(nameof(VehicleId))]
-        public Vehicle? Vehicle { get; set; }
+        public Vehicle Vehicle { get; set; }
 
         // Pickup location
-        public Point? PickUpLocation { get; set; }
-        public string? PickUpPlace { get; set; }  // Optional: start address
-        public double? PickUpLongitude { get; set; }
-        public double? PickUpLatitude { get; set; }
+        public Point PickUpLocation { get; set; }
+        public string PickUpPlace { get; set; }  // Optional: start address
         public DateTime? PickUpTime { get; set; }  // Time when the journey starts
 
         // End location
-        public Point? DropOffLocation { get; set; }
-        public string? DropOffPlace { get; set; }  // Optional: end address
-        public double? DropOffLongitude { get; set; }
-        public double? DropOffLatitude { get; set; }
+        public Point DropOffLocation { get; set; }
+        public string DropOffPlace { get; set; }  // Optional: end address
         public DateTime? DropOffTime { get; set; }  // Time when the journey ends
 
         // Additional properties

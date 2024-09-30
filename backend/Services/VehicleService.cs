@@ -1,4 +1,5 @@
-﻿using backend.Schema;
+﻿using backend.Helpers;
+using backend.Schema;
 using backend.Schema.Entity;
 using backend.Schema.Enum;
 using backend.Schema.Model;
@@ -45,6 +46,7 @@ namespace backend.Services
                 Description = model.Description,
                 MaxLoad = model.MaxLoad,
                 Image = model.Image,
+                State = VehicleState.Available,
             };
 
             return await AddAsync(entity);
@@ -65,6 +67,7 @@ namespace backend.Services
             existingRecord.Description = model.Description;
             existingRecord.MaxLoad = model.MaxLoad;
             existingRecord.Image = model.Image;
+            existingRecord.State = model.State;
 
             await dbContext.SaveChangesAsync();
             return existingRecord;
@@ -79,8 +82,6 @@ namespace backend.Services
 
             existingRecord.Location = location;
             existingRecord.Place = model.Location;
-            existingRecord.Latitude = model.Latitude;
-            existingRecord.Longitude = model.Longitude;
 
             await dbContext.SaveChangesAsync();
             return existingRecord;
@@ -91,6 +92,7 @@ namespace backend.Services
             return await dbContext.Vehicles
                 .Include(x => x.Driver)
                 .Where(x => x.VehicleTypeId == vehicleTypeId
+                    && x.State == VehicleState.Available
                     && x.Driver.DriverState == DriverState.Available)
                 .ToListAsync();
         }
@@ -108,12 +110,19 @@ namespace backend.Services
             var location = new Point(longitude, latitude) { SRID = 4326 };  // Create a Point for the query
 
             // Query vehicles within the specified radius using spatial queries
-            return await dbContext.Vehicles
+            var entities = await dbContext.Vehicles
                 .Include(x => x.Driver)
                 .Where(x => x.VehicleTypeId == vehicleTypeId
+                    && x.State == VehicleState.Available
                     && x.Driver.DriverState == DriverState.Available
                     && x.Location != null && x.Location.IsWithinDistance(location, radiusInKm * 1000))
                 .ToListAsync();
+
+            entities.ForEach(x =>
+            {
+                x.Distance = (decimal)DistanceCalculator.GetExactDistance(location, x.Location);
+            });
+            return entities;
         }
 
         public async Task<bool> IsVehicleNumberRegistered(string vehicleNumber)

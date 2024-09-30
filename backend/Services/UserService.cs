@@ -12,15 +12,18 @@ using System.Text;
 
 namespace backend.Services
 {
-    public class UserService : IUserService
+    public class UserService : AbstractRepositoryService<User>, IUserService
     {
         private readonly IAuthService authService;
+        private readonly AppDbContext dbContext;
 
         public UserService(
-            IAuthService authService
-        )
+            IAuthService authService,
+            AppDbContext dbContext
+        ) : base (dbContext)
         {
             this.authService = authService;
+            this.dbContext = dbContext;
         }
 
         public Task<AuthenticateResponse?> LoginAsync(LoginRequest model)
@@ -41,5 +44,11 @@ namespace backend.Services
             return authService.RegisterAsync(model);
         }
 
+        public override async Task<User?> GetAsync(int id)
+        {
+            return await dbContext.Users
+                .FirstOrDefaultAsync(x => (x.Role == UserRole.Guest || x.Role == UserRole.User)
+                    && x.Id == id);
+        }
     }
 }
