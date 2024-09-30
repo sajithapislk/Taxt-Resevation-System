@@ -47,6 +47,7 @@ const Login = () => {
       // Sending the form data to the backend
       const response = await type === 'driver' ? AuthService.DriverLogin(payload) : AuthService.UserLogin(payload); // Assuming UserService has a login method
       setSuccessMessage(`Successfully logged in as ${activeTab}!`);
+      
     } catch (error) {
       setErrorMessage('Login failed. Please check your credentials.');
     } finally {
