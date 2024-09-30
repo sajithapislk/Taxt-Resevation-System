@@ -68,13 +68,13 @@ const Sidebar = ({ sideBarClass, setSideBarClass }) => {
                         </Link>
                       </li>
                       <li>
-                        <Link to="/admin/vehiclecategory" className="">
-                          Vehicle Category
+                        <Link to="/admin/vehicle" className="">
+                          Vehicle 
                         </Link>
                       </li>
                       <li>
-                        <Link to="/admin/payment" className="">
-                          Payments
+                        <Link to="/admin/vehicletype" className="">
+                          Vehicle Types
                         </Link>
                       </li>
                     </ul>

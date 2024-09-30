@@ -15,11 +15,11 @@ import AdminLayout from './layouts/Admin.jsx';
 import AdminDashboard from './pages/admin/Dashboard.jsx';
 import User from './pages/admin/User.jsx';
 import Booking from './pages/admin/Booking.jsx';
-import VehicleCategory from './pages/admin/VehicleCategory.jsx';
-import Payments from './pages/admin/Payments.jsx';
 import Reservation from './pages/admin/Reservation.jsx';
 import NewVehicle from './pages/driver/vehicle/New.jsx';
 import EditVehicle from './pages/driver/vehicle/Edit.jsx';
+import Vehicle from './pages/admin/Vehicle.jsx';
+import Vehicletype from './pages/admin/Vehicletype.jsx';
 
 
 
@@ -95,12 +95,12 @@ const router = createBrowserRouter([
         element:<Booking/>,
       },
       {
-        path:"vehicle-category",
-        element:<VehicleCategory/>,
+        path:"vehicle",
+        element:<Vehicle/>
       },
       {
-        path:"payment",
-        element:<Payments/>,
+        path:"vehicletype",
+        element:<Vehicletype/>,
       },
       {
         path:"reservation",

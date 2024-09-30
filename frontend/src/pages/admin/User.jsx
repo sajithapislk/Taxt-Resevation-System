@@ -68,18 +68,24 @@ const User = () => {
               <thead>
                 <tr>
                   <th>User ID</th>
-                  <th>Name</th>
+                  <th>Role</th>
                   <th>Email</th>
+                  <th>Username</th>
                   <th>Phone</th>
-                  <th>Actions</th>
+                  <th>Image</th>
+                  <th>Gender</th>
+                  <th>Status</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td>#101</td>
-                  <td>Saheer</td>
+                  <td>Passenger</td>
                   <td>saheer@gmail.com</td>
-                  <td>+123456789</td>
+                  <td>Saheer</td>
+                  <td>+94712805509</td>
+                  <td>image</td>
+                  <td>Male</td>
                   <td>
                     <Button variant="info" size="sm" className="mr-2">
                       View

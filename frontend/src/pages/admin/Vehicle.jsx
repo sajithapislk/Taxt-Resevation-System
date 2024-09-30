@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react'
 
-const VehicleCategory = () => {
+const Vehicle = () => {
   return (
     <div class="main-container">
       <div class="pd-ltr-20 xs-pd-20-10">
@@ -100,7 +100,7 @@ const VehicleCategory = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default VehicleCategory;
+export default Vehicle
