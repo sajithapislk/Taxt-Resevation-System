@@ -7,7 +7,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 const VehicleCategoryService = {
   List: async () => {
     try {
-      const response = await axios.get(`${API_URL}/user/vehicle-category`);
+      const response = await axios.get(`${API_URL}/vehicles/types`);
       return response.data; // Return the response data (e.g., token)
     } catch (error) {
       if (error.response && error.response.data) {

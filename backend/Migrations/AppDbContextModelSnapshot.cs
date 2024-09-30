@@ -294,7 +294,7 @@ namespace backend.Migrations
                             Email = "admin@system.com",
                             MobileNo = "0712312312",
                             Name = "System",
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$Pn0RyusSKK4JGWhcSNcElw$aVPoQk/wxX3YArCQXb1z1B3FEPZvR0SS86OeZQ5qPM0",
+                            Password = "$argon2id$v=19$m=65536,t=3,p=1$lufvbG8bc0dCdlaxDKVSNw$MEzfWaiwHS9DX2IwvwO63u2zyyKANMP88vdCucE2AXw",
                             Role = (byte)4,
                             Username = "admin_1"
                         },
@@ -304,7 +304,7 @@ namespace backend.Migrations
                             Email = "sajith@apis.lk",
                             MobileNo = "0772193832",
                             Name = "Sajith",
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$pca//MPGFvyiPr1zg/Wv1A$VxXw87nHeqLRnVsknvEr7t6B225CZJD5fuPComuh2Ao",
+                            Password = "$argon2id$v=19$m=65536,t=3,p=1$rNOS63I3fJCZ+O/YgTPiaw$ztgBqZN/P3LdizTJ/TYKTwB41IQP27h5ua1klDAzl2Q",
                             Role = (byte)3,
                             Username = "sajith_2"
                         },
@@ -314,7 +314,7 @@ namespace backend.Migrations
                             Email = "mohammedsaheer987@gmail.com",
                             MobileNo = "0712805509",
                             Name = "Saheer",
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$gAVkMgJ/X1uNG2wrSIGEtA$nnLdc/E4NYiFFfiCT/0U5YobX87nPnNINtbiJQ785Fw",
+                            Password = "$argon2id$v=19$m=65536,t=3,p=1$xB+BND433Uddpi+joh84+w$YSqXWUBaFxGtmSKLwQdbGXpcXqKpqQBuVNR2FjV64Xc",
                             Role = (byte)3,
                             Username = "mohammedsaheer987_3"
                         },
@@ -324,7 +324,7 @@ namespace backend.Migrations
                             Email = "abduljizzi@gmail.com",
                             MobileNo = "0759424247",
                             Name = "Abdul",
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$Zg4B/5Exg32RYg9/VHtLEQ$QXUtDy/MlSlDzarL1h5KBJDiUwNBucJur/dwoPtIxRE",
+                            Password = "$argon2id$v=19$m=65536,t=3,p=1$9SqZuushSr6qoz0RSZ1rAQ$96N66C6hXoeLZpBuqLtqC41Z1qGnJgHlp149fH0F1SU",
                             Role = (byte)2,
                             Username = "abduljizzi_4"
                         },
@@ -334,7 +334,7 @@ namespace backend.Migrations
                             Email = "nifraz@live.com",
                             MobileNo = "0712319319",
                             Name = "Nifraz",
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$mnS5aTMK7Xvdg8uxlsLKPw$/+UWyJlFaE5gnuOcmrhUiOIUULdCBVxK/N1gbGnTMng",
+                            Password = "$argon2id$v=19$m=65536,t=3,p=1$Dz87i1yFCzajBoulW7Z4hA$YgOpZ+/0oowC1L7ctyPgR3kSdUt8RUbTQG71CU+cHaU",
                             Role = (byte)2,
                             Username = "nifraz_5"
                         });

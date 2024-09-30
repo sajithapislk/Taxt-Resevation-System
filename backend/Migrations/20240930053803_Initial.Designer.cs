@@ -13,8 +13,8 @@ using backend.Schema;
 namespace backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240929204405_AddSpacialLocation")]
-    partial class AddSpacialLocation
+    [Migration("20240930053803_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,16 +49,12 @@ namespace backend.Migrations
                     b.Property<decimal?>("Distance")
                         .HasColumnType("decimal(65,30)");
 
-                    b.Property<decimal?>("DropOffLatitude")
-                        .HasColumnType("decimal(65,30)");
-
                     b.Property<Point>("DropOffLocation")
+                        .IsRequired()
                         .HasColumnType("point");
 
-                    b.Property<decimal?>("DropOffLongitude")
-                        .HasColumnType("decimal(65,30)");
-
                     b.Property<string>("DropOffPlace")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<DateTime?>("DropOffTime")
@@ -73,16 +69,12 @@ namespace backend.Migrations
                     b.Property<int?>("LastModifiedUserId")
                         .HasColumnType("int");
 
-                    b.Property<decimal?>("PickUpLatitude")
-                        .HasColumnType("decimal(65,30)");
-
                     b.Property<Point>("PickUpLocation")
+                        .IsRequired()
                         .HasColumnType("point");
 
-                    b.Property<decimal?>("PickUpLongitude")
-                        .HasColumnType("decimal(65,30)");
-
                     b.Property<string>("PickUpPlace")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<DateTime?>("PickUpTime")
@@ -100,7 +92,7 @@ namespace backend.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("VehicleId")
+                    b.Property<int>("VehicleId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -240,6 +232,9 @@ namespace backend.Migrations
                     b.Property<int?>("DeletedUserId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext");
+
                     b.Property<int?>("DriverState")
                         .HasColumnType("int");
 
@@ -258,14 +253,8 @@ namespace backend.Migrations
                     b.Property<int?>("LastModifiedUserId")
                         .HasColumnType("int");
 
-                    b.Property<decimal?>("Latitude")
-                        .HasColumnType("decimal(65,30)");
-
                     b.Property<Point>("Location")
                         .HasColumnType("point");
-
-                    b.Property<decimal?>("Longitude")
-                        .HasColumnType("decimal(65,30)");
 
                     b.Property<string>("MobileNo")
                         .HasColumnType("longtext");
@@ -308,7 +297,7 @@ namespace backend.Migrations
                             Email = "admin@system.com",
                             MobileNo = "0712312312",
                             Name = "System",
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$9Ut68rk7HrbbAplOKfAILA$7Qhh9+Ge4kVvD6HhYOPUcntvljSIPR1tTP/XxhCJBCM",
+                            Password = "$argon2id$v=19$m=65536,t=3,p=1$lufvbG8bc0dCdlaxDKVSNw$MEzfWaiwHS9DX2IwvwO63u2zyyKANMP88vdCucE2AXw",
                             Role = (byte)4,
                             Username = "admin_1"
                         },
@@ -318,7 +307,7 @@ namespace backend.Migrations
                             Email = "sajith@apis.lk",
                             MobileNo = "0772193832",
                             Name = "Sajith",
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$roXKk2pX6neyhB40CLFvjQ$oFp9pYJVRRqbD13DjhImQ7THmGpW+bt3jKJB7gnie/U",
+                            Password = "$argon2id$v=19$m=65536,t=3,p=1$rNOS63I3fJCZ+O/YgTPiaw$ztgBqZN/P3LdizTJ/TYKTwB41IQP27h5ua1klDAzl2Q",
                             Role = (byte)3,
                             Username = "sajith_2"
                         },
@@ -328,7 +317,7 @@ namespace backend.Migrations
                             Email = "mohammedsaheer987@gmail.com",
                             MobileNo = "0712805509",
                             Name = "Saheer",
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$gcUjGu9JstInWaxld68gTQ$Zt9CKoVxx5tizjRI8OF7WeP3hYJ6W+TxcWT4n/tWQ94",
+                            Password = "$argon2id$v=19$m=65536,t=3,p=1$xB+BND433Uddpi+joh84+w$YSqXWUBaFxGtmSKLwQdbGXpcXqKpqQBuVNR2FjV64Xc",
                             Role = (byte)3,
                             Username = "mohammedsaheer987_3"
                         },
@@ -338,7 +327,7 @@ namespace backend.Migrations
                             Email = "abduljizzi@gmail.com",
                             MobileNo = "0759424247",
                             Name = "Abdul",
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$5P0jpkRD/E68xKYmC+oJUw$ZitdQHqtqNjgH0ApFJSa962H97aMTGKUcrOBO+K/8rw",
+                            Password = "$argon2id$v=19$m=65536,t=3,p=1$9SqZuushSr6qoz0RSZ1rAQ$96N66C6hXoeLZpBuqLtqC41Z1qGnJgHlp149fH0F1SU",
                             Role = (byte)2,
                             Username = "abduljizzi_4"
                         },
@@ -348,7 +337,7 @@ namespace backend.Migrations
                             Email = "nifraz@live.com",
                             MobileNo = "0712319319",
                             Name = "Nifraz",
-                            Password = "$argon2id$v=19$m=65536,t=3,p=1$GWRT/RuZhpMlqOi0rTOThg$UgLsrmXOtr5NoJ0uGvf80hUszoCRkr1BnsEN55EpyGE",
+                            Password = "$argon2id$v=19$m=65536,t=3,p=1$Dz87i1yFCzajBoulW7Z4hA$YgOpZ+/0oowC1L7ctyPgR3kSdUt8RUbTQG71CU+cHaU",
                             Role = (byte)2,
                             Username = "nifraz_5"
                         });
@@ -448,14 +437,8 @@ namespace backend.Migrations
                     b.Property<int?>("LastModifiedUserId")
                         .HasColumnType("int");
 
-                    b.Property<decimal?>("Latitude")
-                        .HasColumnType("decimal(65,30)");
-
                     b.Property<Point>("Location")
                         .HasColumnType("point");
-
-                    b.Property<decimal?>("Longitude")
-                        .HasColumnType("decimal(65,30)");
 
                     b.Property<decimal?>("MaxLoad")
                         .HasColumnType("decimal(65,30)");
@@ -465,6 +448,9 @@ namespace backend.Migrations
 
                     b.Property<string>("Place")
                         .HasColumnType("longtext");
+
+                    b.Property<byte?>("State")
+                        .HasColumnType("tinyint unsigned");
 
                     b.Property<string>("VehicleNumber")
                         .IsRequired()
@@ -586,7 +572,9 @@ namespace backend.Migrations
 
                     b.HasOne("backend.Schema.Entity.Vehicle", "Vehicle")
                         .WithMany("Bookings")
-                        .HasForeignKey("VehicleId");
+                        .HasForeignKey("VehicleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("CreatedUser");
 

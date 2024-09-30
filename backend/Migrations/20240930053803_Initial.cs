@@ -1,5 +1,7 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using NetTopologySuite.Geometries;
 
 #nullable disable
 
@@ -8,212 +10,378 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace backend.Migrations
 {
     /// <inheritdoc />
-    public partial class ModifyTables : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Bookings_Vehicles_VehicleId",
-                table: "Bookings");
-
-            migrationBuilder.DropColumn(
-                name: "IsAvailableAC",
-                table: "Vehicles");
-
-            migrationBuilder.RenameColumn(
-                name: "PassengerSeat",
-                table: "Vehicles",
-                newName: "PassengerSeats");
-
-            migrationBuilder.RenameColumn(
-                name: "StartTime",
-                table: "Bookings",
-                newName: "PickUpTime");
-
-            migrationBuilder.RenameColumn(
-                name: "StartLongitude",
-                table: "Bookings",
-                newName: "PickUpLongitude");
-
-            migrationBuilder.RenameColumn(
-                name: "StartLatitude",
-                table: "Bookings",
-                newName: "PickUpLatitude");
-
-            migrationBuilder.RenameColumn(
-                name: "StartAddress",
-                table: "Bookings",
-                newName: "PickUpLocation");
-
-            migrationBuilder.RenameColumn(
-                name: "EndTime",
-                table: "Bookings",
-                newName: "DropOffTime");
-
-            migrationBuilder.RenameColumn(
-                name: "EndLongitude",
-                table: "Bookings",
-                newName: "DropOffLongitude");
-
-            migrationBuilder.RenameColumn(
-                name: "EndLatitude",
-                table: "Bookings",
-                newName: "DropOffLatitude");
-
-            migrationBuilder.RenameColumn(
-                name: "EndAddress",
-                table: "Bookings",
-                newName: "DropOffLocation");
-
-            migrationBuilder.AddColumn<string>(
-                name: "Image",
-                table: "VehicleTypes",
-                type: "longtext",
-                nullable: true)
+            migrationBuilder.AlterDatabase()
                 .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.AlterColumn<decimal>(
-                name: "MaxLoad",
-                table: "Vehicles",
-                type: "decimal(65,30)",
-                nullable: true,
-                oldClrType: typeof(decimal),
-                oldType: "decimal(65,30)");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Description",
-                table: "Vehicles",
-                type: "longtext",
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "longtext")
-                .Annotation("MySql:CharSet", "utf8mb4")
-                .OldAnnotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Color",
-                table: "Vehicles",
-                type: "longtext",
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "longtext")
-                .Annotation("MySql:CharSet", "utf8mb4")
-                .OldAnnotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.AddColumn<string>(
-                name: "Image",
-                table: "Vehicles",
-                type: "longtext",
-                nullable: true)
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Role = table.Column<byte>(type: "tinyint unsigned", nullable: false),
+                    Email = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Username = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Password = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Name = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    MobileNo = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Image = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Website = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    DateOfBirth = table.Column<DateOnly>(type: "date", nullable: true),
+                    Gender = table.Column<byte>(type: "tinyint unsigned", nullable: true),
+                    Status = table.Column<byte>(type: "tinyint unsigned", nullable: true),
+                    Description = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Location = table.Column<Point>(type: "point", nullable: true),
+                    Place = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    DriverState = table.Column<int>(type: "int", nullable: true),
+                    CreatedUserId = table.Column<int>(type: "int", nullable: true),
+                    CreatedTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    LastModifiedUserId = table.Column<int>(type: "int", nullable: true),
+                    LastModifiedTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    DeletedUserId = table.Column<int>(type: "int", nullable: true),
+                    DeletedTime = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Users_Users_CreatedUserId",
+                        column: x => x.CreatedUserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Users_Users_DeletedUserId",
+                        column: x => x.DeletedUserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Users_Users_LastModifiedUserId",
+                        column: x => x.LastModifiedUserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.AddColumn<bool>(
-                name: "IsAcAvailable",
-                table: "Vehicles",
-                type: "tinyint(1)",
-                nullable: true);
-
-            migrationBuilder.AddColumn<decimal>(
-                name: "Latitude",
-                table: "Vehicles",
-                type: "decimal(65,30)",
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "Location",
-                table: "Vehicles",
-                type: "longtext",
-                nullable: true)
+            migrationBuilder.CreateTable(
+                name: "PasswordResets",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Code = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ExpirationTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    CreatedUserId = table.Column<int>(type: "int", nullable: true),
+                    CreatedTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    LastModifiedUserId = table.Column<int>(type: "int", nullable: true),
+                    LastModifiedTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    DeletedUserId = table.Column<int>(type: "int", nullable: true),
+                    DeletedTime = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PasswordResets", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PasswordResets_Users_CreatedUserId",
+                        column: x => x.CreatedUserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_PasswordResets_Users_DeletedUserId",
+                        column: x => x.DeletedUserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_PasswordResets_Users_LastModifiedUserId",
+                        column: x => x.LastModifiedUserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_PasswordResets_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.AddColumn<decimal>(
-                name: "Longitude",
-                table: "Vehicles",
-                type: "decimal(65,30)",
-                nullable: true);
-
-            migrationBuilder.AddColumn<DateOnly>(
-                name: "DateOfBirth",
-                table: "Users",
-                type: "date",
-                nullable: true);
-
-            migrationBuilder.AddColumn<byte>(
-                name: "Gender",
-                table: "Users",
-                type: "tinyint unsigned",
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "Image",
-                table: "Users",
-                type: "longtext",
-                nullable: true)
+            migrationBuilder.CreateTable(
+                name: "VehicleTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Image = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CreatedUserId = table.Column<int>(type: "int", nullable: true),
+                    CreatedTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    LastModifiedUserId = table.Column<int>(type: "int", nullable: true),
+                    LastModifiedTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    DeletedUserId = table.Column<int>(type: "int", nullable: true),
+                    DeletedTime = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_VehicleTypes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_VehicleTypes_Users_CreatedUserId",
+                        column: x => x.CreatedUserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_VehicleTypes_Users_DeletedUserId",
+                        column: x => x.DeletedUserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_VehicleTypes_Users_LastModifiedUserId",
+                        column: x => x.LastModifiedUserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.AddColumn<string>(
-                name: "Location",
-                table: "Users",
-                type: "longtext",
-                nullable: true)
+            migrationBuilder.CreateTable(
+                name: "Vehicles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    DriverId = table.Column<int>(type: "int", nullable: false),
+                    VehicleTypeId = table.Column<int>(type: "int", nullable: false),
+                    VehicleNumber = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    PassengerSeats = table.Column<int>(type: "int", nullable: false),
+                    CostPerKm = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
+                    Color = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    IsAcAvailable = table.Column<bool>(type: "tinyint(1)", nullable: true),
+                    Description = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    MaxLoad = table.Column<decimal>(type: "decimal(65,30)", nullable: true),
+                    Image = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    State = table.Column<byte>(type: "tinyint unsigned", nullable: true),
+                    Location = table.Column<Point>(type: "point", nullable: true),
+                    Place = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CreatedUserId = table.Column<int>(type: "int", nullable: true),
+                    CreatedTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    LastModifiedUserId = table.Column<int>(type: "int", nullable: true),
+                    LastModifiedTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    DeletedUserId = table.Column<int>(type: "int", nullable: true),
+                    DeletedTime = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Vehicles", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Vehicles_Users_CreatedUserId",
+                        column: x => x.CreatedUserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Vehicles_Users_DeletedUserId",
+                        column: x => x.DeletedUserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Vehicles_Users_DriverId",
+                        column: x => x.DriverId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Vehicles_Users_LastModifiedUserId",
+                        column: x => x.LastModifiedUserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Vehicles_VehicleTypes_VehicleTypeId",
+                        column: x => x.VehicleTypeId,
+                        principalTable: "VehicleTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.AddColumn<byte>(
-                name: "Status",
-                table: "Users",
-                type: "tinyint unsigned",
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "Website",
-                table: "Users",
-                type: "longtext",
-                nullable: true)
+            migrationBuilder.CreateTable(
+                name: "Bookings",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Type = table.Column<byte>(type: "tinyint unsigned", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    VehicleId = table.Column<int>(type: "int", nullable: false),
+                    PickUpLocation = table.Column<Point>(type: "point", nullable: false),
+                    PickUpPlace = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    PickUpTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    DropOffLocation = table.Column<Point>(type: "point", nullable: false),
+                    DropOffPlace = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    DropOffTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    Distance = table.Column<decimal>(type: "decimal(65,30)", nullable: true),
+                    Duration = table.Column<TimeSpan>(type: "time(6)", nullable: true),
+                    Price = table.Column<decimal>(type: "decimal(65,30)", nullable: true),
+                    Status = table.Column<byte>(type: "tinyint unsigned", nullable: false),
+                    CreatedUserId = table.Column<int>(type: "int", nullable: true),
+                    CreatedTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    LastModifiedUserId = table.Column<int>(type: "int", nullable: true),
+                    LastModifiedTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    DeletedUserId = table.Column<int>(type: "int", nullable: true),
+                    DeletedTime = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Bookings", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Bookings_Users_CreatedUserId",
+                        column: x => x.CreatedUserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Bookings_Users_DeletedUserId",
+                        column: x => x.DeletedUserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Bookings_Users_LastModifiedUserId",
+                        column: x => x.LastModifiedUserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Bookings_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Bookings_Vehicles_VehicleId",
+                        column: x => x.VehicleId,
+                        principalTable: "Vehicles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.AlterColumn<int>(
-                name: "VehicleId",
-                table: "Bookings",
-                type: "int",
-                nullable: true,
-                oldClrType: typeof(int),
-                oldType: "int");
+            migrationBuilder.CreateTable(
+                name: "DriverFeedbacks",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    BookingId = table.Column<int>(type: "int", nullable: false),
+                    Rate = table.Column<int>(type: "int", nullable: false),
+                    Feedback = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CreatedUserId = table.Column<int>(type: "int", nullable: true),
+                    CreatedTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    LastModifiedUserId = table.Column<int>(type: "int", nullable: true),
+                    LastModifiedTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    DeletedUserId = table.Column<int>(type: "int", nullable: true),
+                    DeletedTime = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DriverFeedbacks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DriverFeedbacks_Bookings_BookingId",
+                        column: x => x.BookingId,
+                        principalTable: "Bookings",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DriverFeedbacks_Users_CreatedUserId",
+                        column: x => x.CreatedUserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_DriverFeedbacks_Users_DeletedUserId",
+                        column: x => x.DeletedUserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_DriverFeedbacks_Users_LastModifiedUserId",
+                        column: x => x.LastModifiedUserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.UpdateData(
-                table: "Users",
-                keyColumn: "Id",
-                keyValue: 1,
-                columns: new[] { "DateOfBirth", "Gender", "Image", "Location", "Password", "Status", "Website" },
-                values: new object[] { null, null, null, null, "$argon2id$v=19$m=65536,t=3,p=1$Jwb6H5ono3nxW4BTrjw74w$KnREGZsjtzCGnzqt0Jwrkk4f2xCb7lMl/ev/yDCl3UY", null, null });
+            migrationBuilder.CreateTable(
+                name: "UserFeedbacks",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    BookingId = table.Column<int>(type: "int", nullable: false),
+                    Rate = table.Column<int>(type: "int", nullable: false),
+                    Feedback = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CreatedUserId = table.Column<int>(type: "int", nullable: true),
+                    CreatedTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    LastModifiedUserId = table.Column<int>(type: "int", nullable: true),
+                    LastModifiedTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    DeletedUserId = table.Column<int>(type: "int", nullable: true),
+                    DeletedTime = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserFeedbacks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserFeedbacks_Bookings_BookingId",
+                        column: x => x.BookingId,
+                        principalTable: "Bookings",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserFeedbacks_Users_CreatedUserId",
+                        column: x => x.CreatedUserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_UserFeedbacks_Users_DeletedUserId",
+                        column: x => x.DeletedUserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_UserFeedbacks_Users_LastModifiedUserId",
+                        column: x => x.LastModifiedUserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.UpdateData(
+            migrationBuilder.InsertData(
                 table: "Users",
-                keyColumn: "Id",
-                keyValue: 2,
-                columns: new[] { "DateOfBirth", "Gender", "Image", "Location", "Password", "Status", "Website" },
-                values: new object[] { null, null, null, null, "$argon2id$v=19$m=65536,t=3,p=1$gufa49GoL9CUiQISVBjToQ$dqcnhrWm3/zjvQQ5kee83ORbzau6Aj1OCRQ1HDMd/tQ", null, null });
-
-            migrationBuilder.UpdateData(
-                table: "Users",
-                keyColumn: "Id",
-                keyValue: 3,
-                columns: new[] { "DateOfBirth", "Gender", "Image", "Location", "Password", "Status", "Website" },
-                values: new object[] { null, null, null, null, "$argon2id$v=19$m=65536,t=3,p=1$G72Xk/cf9iIw8JY9oMWF+g$723JN/zwqVV+7z/ycel3iufleygv+NexJU+kKQLNwpE", null, null });
-
-            migrationBuilder.UpdateData(
-                table: "Users",
-                keyColumn: "Id",
-                keyValue: 4,
-                columns: new[] { "DateOfBirth", "Gender", "Image", "Location", "Password", "Status", "Website" },
-                values: new object[] { null, null, null, null, "$argon2id$v=19$m=65536,t=3,p=1$mOUuIYzyVk5fjSV/UMvD1A$lgR4hdO7R+joLg7MzjGNEvM4ZvWvi6giFqJPfMLk7i0", null, null });
-
-            migrationBuilder.UpdateData(
-                table: "Users",
-                keyColumn: "Id",
-                keyValue: 5,
-                columns: new[] { "DateOfBirth", "Gender", "Image", "Location", "Password", "Status", "Website" },
-                values: new object[] { null, null, null, null, "$argon2id$v=19$m=65536,t=3,p=1$8ehXtBf8fQYra4DCZ3Yw4A$43cZP+w0ye/153OkXkU8QZgorkcsnkiGoY7dT4YDwUg", null, null });
+                columns: new[] { "Id", "CreatedTime", "CreatedUserId", "DateOfBirth", "DeletedTime", "DeletedUserId", "Description", "DriverState", "Email", "Gender", "Image", "LastModifiedTime", "LastModifiedUserId", "Location", "MobileNo", "Name", "Password", "Place", "Role", "Status", "Username", "Website" },
+                values: new object[,]
+                {
+                    { 1, null, null, null, null, null, null, null, "admin@system.com", null, null, null, null, null, "0712312312", "System", "$argon2id$v=19$m=65536,t=3,p=1$lufvbG8bc0dCdlaxDKVSNw$MEzfWaiwHS9DX2IwvwO63u2zyyKANMP88vdCucE2AXw", null, (byte)4, null, "admin_1", null },
+                    { 2, null, null, null, null, null, null, null, "sajith@apis.lk", null, null, null, null, null, "0772193832", "Sajith", "$argon2id$v=19$m=65536,t=3,p=1$rNOS63I3fJCZ+O/YgTPiaw$ztgBqZN/P3LdizTJ/TYKTwB41IQP27h5ua1klDAzl2Q", null, (byte)3, null, "sajith_2", null },
+                    { 3, null, null, null, null, null, null, null, "mohammedsaheer987@gmail.com", null, null, null, null, null, "0712805509", "Saheer", "$argon2id$v=19$m=65536,t=3,p=1$xB+BND433Uddpi+joh84+w$YSqXWUBaFxGtmSKLwQdbGXpcXqKpqQBuVNR2FjV64Xc", null, (byte)3, null, "mohammedsaheer987_3", null },
+                    { 4, null, null, null, null, null, null, null, "abduljizzi@gmail.com", null, null, null, null, null, "0759424247", "Abdul", "$argon2id$v=19$m=65536,t=3,p=1$9SqZuushSr6qoz0RSZ1rAQ$96N66C6hXoeLZpBuqLtqC41Z1qGnJgHlp149fH0F1SU", null, (byte)2, null, "abduljizzi_4", null },
+                    { 5, null, null, null, null, null, null, null, "nifraz@live.com", null, null, null, null, null, "0712319319", "Nifraz", "$argon2id$v=19$m=65536,t=3,p=1$Dz87i1yFCzajBoulW7Z4hA$YgOpZ+/0oowC1L7ctyPgR3kSdUt8RUbTQG71CU+cHaU", null, (byte)2, null, "nifraz_5", null }
+                });
 
             migrationBuilder.InsertData(
                 table: "VehicleTypes",
@@ -227,244 +395,172 @@ namespace backend.Migrations
                     { 5, null, null, null, null, "data:image/png;base64,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", null, null, "Minibuses" }
                 });
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_Bookings_Vehicles_VehicleId",
+            migrationBuilder.CreateIndex(
+                name: "IX_Bookings_CreatedUserId",
                 table: "Bookings",
-                column: "VehicleId",
-                principalTable: "Vehicles",
-                principalColumn: "Id");
+                column: "CreatedUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bookings_DeletedUserId",
+                table: "Bookings",
+                column: "DeletedUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bookings_LastModifiedUserId",
+                table: "Bookings",
+                column: "LastModifiedUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bookings_UserId",
+                table: "Bookings",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bookings_VehicleId",
+                table: "Bookings",
+                column: "VehicleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DriverFeedbacks_BookingId",
+                table: "DriverFeedbacks",
+                column: "BookingId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DriverFeedbacks_CreatedUserId",
+                table: "DriverFeedbacks",
+                column: "CreatedUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DriverFeedbacks_DeletedUserId",
+                table: "DriverFeedbacks",
+                column: "DeletedUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DriverFeedbacks_LastModifiedUserId",
+                table: "DriverFeedbacks",
+                column: "LastModifiedUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PasswordResets_CreatedUserId",
+                table: "PasswordResets",
+                column: "CreatedUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PasswordResets_DeletedUserId",
+                table: "PasswordResets",
+                column: "DeletedUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PasswordResets_LastModifiedUserId",
+                table: "PasswordResets",
+                column: "LastModifiedUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PasswordResets_UserId",
+                table: "PasswordResets",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserFeedbacks_BookingId",
+                table: "UserFeedbacks",
+                column: "BookingId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserFeedbacks_CreatedUserId",
+                table: "UserFeedbacks",
+                column: "CreatedUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserFeedbacks_DeletedUserId",
+                table: "UserFeedbacks",
+                column: "DeletedUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserFeedbacks_LastModifiedUserId",
+                table: "UserFeedbacks",
+                column: "LastModifiedUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_CreatedUserId",
+                table: "Users",
+                column: "CreatedUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_DeletedUserId",
+                table: "Users",
+                column: "DeletedUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_LastModifiedUserId",
+                table: "Users",
+                column: "LastModifiedUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Vehicles_CreatedUserId",
+                table: "Vehicles",
+                column: "CreatedUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Vehicles_DeletedUserId",
+                table: "Vehicles",
+                column: "DeletedUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Vehicles_DriverId",
+                table: "Vehicles",
+                column: "DriverId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Vehicles_LastModifiedUserId",
+                table: "Vehicles",
+                column: "LastModifiedUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Vehicles_VehicleTypeId",
+                table: "Vehicles",
+                column: "VehicleTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_VehicleTypes_CreatedUserId",
+                table: "VehicleTypes",
+                column: "CreatedUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_VehicleTypes_DeletedUserId",
+                table: "VehicleTypes",
+                column: "DeletedUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_VehicleTypes_LastModifiedUserId",
+                table: "VehicleTypes",
+                column: "LastModifiedUserId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Bookings_Vehicles_VehicleId",
-                table: "Bookings");
+            migrationBuilder.DropTable(
+                name: "DriverFeedbacks");
 
-            migrationBuilder.DeleteData(
-                table: "VehicleTypes",
-                keyColumn: "Id",
-                keyValue: 1);
+            migrationBuilder.DropTable(
+                name: "PasswordResets");
 
-            migrationBuilder.DeleteData(
-                table: "VehicleTypes",
-                keyColumn: "Id",
-                keyValue: 2);
+            migrationBuilder.DropTable(
+                name: "UserFeedbacks");
 
-            migrationBuilder.DeleteData(
-                table: "VehicleTypes",
-                keyColumn: "Id",
-                keyValue: 3);
+            migrationBuilder.DropTable(
+                name: "Bookings");
 
-            migrationBuilder.DeleteData(
-                table: "VehicleTypes",
-                keyColumn: "Id",
-                keyValue: 4);
+            migrationBuilder.DropTable(
+                name: "Vehicles");
 
-            migrationBuilder.DeleteData(
-                table: "VehicleTypes",
-                keyColumn: "Id",
-                keyValue: 5);
+            migrationBuilder.DropTable(
+                name: "VehicleTypes");
 
-            migrationBuilder.DropColumn(
-                name: "Image",
-                table: "VehicleTypes");
-
-            migrationBuilder.DropColumn(
-                name: "Image",
-                table: "Vehicles");
-
-            migrationBuilder.DropColumn(
-                name: "IsAcAvailable",
-                table: "Vehicles");
-
-            migrationBuilder.DropColumn(
-                name: "Latitude",
-                table: "Vehicles");
-
-            migrationBuilder.DropColumn(
-                name: "Location",
-                table: "Vehicles");
-
-            migrationBuilder.DropColumn(
-                name: "Longitude",
-                table: "Vehicles");
-
-            migrationBuilder.DropColumn(
-                name: "DateOfBirth",
-                table: "Users");
-
-            migrationBuilder.DropColumn(
-                name: "Gender",
-                table: "Users");
-
-            migrationBuilder.DropColumn(
-                name: "Image",
-                table: "Users");
-
-            migrationBuilder.DropColumn(
-                name: "Location",
-                table: "Users");
-
-            migrationBuilder.DropColumn(
-                name: "Status",
-                table: "Users");
-
-            migrationBuilder.DropColumn(
-                name: "Website",
-                table: "Users");
-
-            migrationBuilder.RenameColumn(
-                name: "PassengerSeats",
-                table: "Vehicles",
-                newName: "PassengerSeat");
-
-            migrationBuilder.RenameColumn(
-                name: "PickUpTime",
-                table: "Bookings",
-                newName: "StartTime");
-
-            migrationBuilder.RenameColumn(
-                name: "PickUpLongitude",
-                table: "Bookings",
-                newName: "StartLongitude");
-
-            migrationBuilder.RenameColumn(
-                name: "PickUpLocation",
-                table: "Bookings",
-                newName: "StartAddress");
-
-            migrationBuilder.RenameColumn(
-                name: "PickUpLatitude",
-                table: "Bookings",
-                newName: "StartLatitude");
-
-            migrationBuilder.RenameColumn(
-                name: "DropOffTime",
-                table: "Bookings",
-                newName: "EndTime");
-
-            migrationBuilder.RenameColumn(
-                name: "DropOffLongitude",
-                table: "Bookings",
-                newName: "EndLongitude");
-
-            migrationBuilder.RenameColumn(
-                name: "DropOffLocation",
-                table: "Bookings",
-                newName: "EndAddress");
-
-            migrationBuilder.RenameColumn(
-                name: "DropOffLatitude",
-                table: "Bookings",
-                newName: "EndLatitude");
-
-            migrationBuilder.AlterColumn<decimal>(
-                name: "MaxLoad",
-                table: "Vehicles",
-                type: "decimal(65,30)",
-                nullable: false,
-                defaultValue: 0m,
-                oldClrType: typeof(decimal),
-                oldType: "decimal(65,30)",
-                oldNullable: true);
-
-            migrationBuilder.UpdateData(
-                table: "Vehicles",
-                keyColumn: "Description",
-                keyValue: null,
-                column: "Description",
-                value: "");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Description",
-                table: "Vehicles",
-                type: "longtext",
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "longtext",
-                oldNullable: true)
-                .Annotation("MySql:CharSet", "utf8mb4")
-                .OldAnnotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.UpdateData(
-                table: "Vehicles",
-                keyColumn: "Color",
-                keyValue: null,
-                column: "Color",
-                value: "");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Color",
-                table: "Vehicles",
-                type: "longtext",
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "longtext",
-                oldNullable: true)
-                .Annotation("MySql:CharSet", "utf8mb4")
-                .OldAnnotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.AddColumn<bool>(
-                name: "IsAvailableAC",
-                table: "Vehicles",
-                type: "tinyint(1)",
-                nullable: false,
-                defaultValue: false);
-
-            migrationBuilder.AlterColumn<int>(
-                name: "VehicleId",
-                table: "Bookings",
-                type: "int",
-                nullable: false,
-                defaultValue: 0,
-                oldClrType: typeof(int),
-                oldType: "int",
-                oldNullable: true);
-
-            migrationBuilder.UpdateData(
-                table: "Users",
-                keyColumn: "Id",
-                keyValue: 1,
-                column: "Password",
-                value: "$argon2id$v=19$m=65536,t=3,p=1$CAEIGkJw72/gNfcR+CG+Kg$aoVCfSUWYPN991y0z6kKeoMF6ipo7Z6NWn06RQYcjrE");
-
-            migrationBuilder.UpdateData(
-                table: "Users",
-                keyColumn: "Id",
-                keyValue: 2,
-                column: "Password",
-                value: "$argon2id$v=19$m=65536,t=3,p=1$pQfu6ufc8unAWMZIqhZ/7g$i2e/Mv8z2nLXt3duprIPEng0BQUZWdXyiWXm23UVcSQ");
-
-            migrationBuilder.UpdateData(
-                table: "Users",
-                keyColumn: "Id",
-                keyValue: 3,
-                column: "Password",
-                value: "$argon2id$v=19$m=65536,t=3,p=1$t3UVEC2kEn3lNgPTlL2FfQ$5F/tLyZexAIQm0E0Invf2+jqdlm8xrqp8ULpzdA3NWE");
-
-            migrationBuilder.UpdateData(
-                table: "Users",
-                keyColumn: "Id",
-                keyValue: 4,
-                column: "Password",
-                value: "$argon2id$v=19$m=65536,t=3,p=1$d0gsCrLVZoRQOmdMAfQa+w$94R/R5n8K8RBPlBwaLnH8wAFmav6jdwR31abQ3269so");
-
-            migrationBuilder.UpdateData(
-                table: "Users",
-                keyColumn: "Id",
-                keyValue: 5,
-                column: "Password",
-                value: "$argon2id$v=19$m=65536,t=3,p=1$QENgi439+D5Wl3SeV9FgQg$O/t0pPWCb3KgHw6APAVjkrhxpq2SV6tfmUaEiYe1Vnk");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Bookings_Vehicles_VehicleId",
-                table: "Bookings",
-                column: "VehicleId",
-                principalTable: "Vehicles",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+            migrationBuilder.DropTable(
+                name: "Users");
         }
     }
 }
