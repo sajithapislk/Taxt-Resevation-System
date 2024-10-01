@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="backend.Schema.AppDbContext" Collapsed="true">
+    <Position X="18.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAggEAAAAAQAQAAFAAAAAAAAAAAAQASAAA=</HashCode>
+      <FileName>Schema\AppDbContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="backend.Schema.ModelBuilderExtensions" Collapsed="true">
+    <Position X="24" Y="1.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAEAAAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Schema\ModelBuilderExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="backend.Schema.Entity.AbstractRecord">
+    <Position X="8.25" Y="0.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAGJAAAAAABAAAAAAAAAAAAAAAAAAAAEAQAAEAAAAk=</HashCode>
+      <FileName>Schema\Entity\AbstractRecord.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="backend.Schema.Entity.Booking">
+    <Position X="10.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAIECQICAAABAAAQAggABCAAgABAAQAAAAIAAAA=</HashCode>
+      <FileName>Schema\Entity\Booking.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="backend.Schema.Entity.DriverFeedback">
+    <Position X="10.75" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAIAAAAAAACAAAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Schema\Entity\DriverFeedback.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="backend.Schema.Entity.User">
+    <Position X="5.25" Y="0.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>CACABBAEAyAghASgmQIAgQQwAAASAhASUEAAEAAAAAA=</HashCode>
+      <FileName>Schema\Entity\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="backend.Schema.Entity.UserFeedback">
+    <Position X="10.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAIAAAAAAACAAAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Schema\Entity\UserFeedback.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="backend.Schema.Entity.Vehicle">
+    <Position X="8.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAEAgAAgABAAAAIAAAAAAAgAgBBAAEBghAACAAA=</HashCode>
+      <FileName>Schema\Entity\Vehicle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="backend.Schema.Entity.VehicleType">
+    <Position X="8.25" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAQAAAAAABEAAAAAAAAAAAA=</HashCode>
+      <FileName>Schema\Entity\VehicleType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="backend.Schema.Model.AppSettings" Collapsed="true">
+    <Position X="20.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Schema\Model\AppSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="backend.Schema.Model.AuthenticateResponse" Collapsed="true">
+    <Position X="22.25" Y="0.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAACAAAAAAAQAAAAQAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Schema\Model\AuthenticateResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="backend.Schema.Model.BookingInitiateRequest" Collapsed="true">
+    <Position X="24" Y="0.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Schema\Model\BookingInitiateRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="backend.Schema.Model.ErrorResponse" Collapsed="true">
+    <Position X="18.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Schema\Model\ErrorResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="backend.Schema.Model.LocationModel" Collapsed="true">
+    <Position X="20.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAAAAAAIIAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Schema\Model\LocationModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="backend.Schema.Model.LoginRequest" Collapsed="true">
+    <Position X="22.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAEAAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Schema\Model\LoginRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="backend.Schema.Model.NewBookingRequestModel" Collapsed="true">
+    <Position X="18.75" Y="2.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgCAJAAAAAAAAAAAgAACAAgAAAAQAQAAAAAAA=</HashCode>
+      <FileName>Schema\Model\NewBookingRequestModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="backend.Schema.Model.NewFeedbackRequestModel" Collapsed="true">
+    <Position X="20.5" Y="2.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Schema\Model\NewFeedbackRequestModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="backend.Schema.Model.NewVehicleRequestModel" Collapsed="true">
+    <Position X="22.25" Y="2.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAEAgAAgABAAAAAAAAAAAAgAABAAAABghAAAAAA=</HashCode>
+      <FileName>Schema\Model\NewVehicleRequestModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="backend.Schema.Model.UserRegisterRequest" Collapsed="true">
+    <Position X="24" Y="2.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAEAAAAAQAAAACAAASAAAAAAAAAAA=</HashCode>
+      <FileName>Schema\Model\UserRegisterRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="backend.Schema.Enum.BookingStatus" Collapsed="true">
+    <Position X="18.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAIAAAAAAAAAAAAAAAAAAAAgIBAAAAA=</HashCode>
+      <FileName>Schema\Enum\BookingStatus.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="backend.Schema.Enum.BookingType" Collapsed="true">
+    <Position X="20.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAABAAAAAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Schema\Enum\BookingType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="backend.Schema.Enum.DriverState" Collapsed="true">
+    <Position X="22.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAABAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Schema\Enum\DriverState.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="backend.Schema.Enum.MaritalStatus" Collapsed="true">
+    <Position X="24" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAAAAAAKAAAAAAAAAAAAAAAEACAA=</HashCode>
+      <FileName>Schema\Enum\MaritalStatus.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="backend.Schema.Enum.Sex" Collapsed="true">
+    <Position X="18.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>Schema\Enum\Sex.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="backend.Schema.Enum.UserRole" Collapsed="true">
+    <Position X="20.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAQAAAAAAgAAAAAAAAAAAAAg=</HashCode>
+      <FileName>Schema\Enum\UserRole.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="backend.Schema.Enum.VehicleState" Collapsed="true">
+    <Position X="22.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAABAAAAgAQABAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>Schema\Enum\VehicleState.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

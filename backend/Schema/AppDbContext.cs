@@ -20,6 +20,8 @@ namespace backend.Schema
         public DbSet<UserFeedback> UserFeedbacks { get; set; }
         public DbSet<DriverFeedback> DriverFeedbacks { get; set; }
 
+        public DbSet<SampleEntity> SampleEntities { get; set; }
+
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
