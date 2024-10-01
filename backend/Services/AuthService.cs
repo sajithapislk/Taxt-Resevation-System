@@ -64,7 +64,7 @@ namespace backend.Services
         public async Task<AuthenticateResponse?> LoginAsync(LoginRequest model)
         {
             var user = await dbContext.Users
-                .SingleOrDefaultAsync(x => x.Email == model.Email 
+                .FirstOrDefaultAsync(x => x.Email == model.Email 
                     && x.Role == model.Role);
 
             // return null if user not found or not registered
@@ -104,7 +104,7 @@ namespace backend.Services
         public async Task<bool> IsMobileNoRegistered(string mobileNo)
         {
             var existingRecord = await dbContext.Users
-                .Select(x => x.Username)
+                .Select(x => x.MobileNo)
                 .FirstOrDefaultAsync(x => mobileNo.Equals(x));
 
             return existingRecord != null;
