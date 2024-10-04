@@ -3,11 +3,16 @@ import axios from 'axios';
 // Get the API URL from the environment variable
 const API_URL = import.meta.env.VITE_API_URL;
 
+const userData = localStorage.getItem("driver");
+const user = JSON.parse(userData);
+const config = {
+  headers: { Authorization: `Bearer ${user && user.token}` }
+};
 // Service object to handle API requests related to user
 const BookingService = {
     List: async () => {
       try {
-        const response = await axios.get(`${API_URL}/user/booking`);
+        const response = await axios.get(`${API_URL}/bookings/driver/${user.id}`, config);
         return response.data; // Return the response data (e.g., token)
       } catch (error) {
         if (error.response && error.response.data) {
@@ -19,7 +24,7 @@ const BookingService = {
     },
   Info: async (id) => {
     try {
-      const response = await axios.get(`${API_URL}/user/booking/${id}`);
+      const response = await axios.get(`${API_URL}/bookings/${id}`, config);
       return response.data; // Return the response data (e.g., token)
     } catch (error) {
       if (error.response && error.response.data) {
@@ -29,9 +34,35 @@ const BookingService = {
       }
     }
   },
-  Update: async (userData) => {
+  Start: async (id) => {
     try {
-      const response = await axios.post(`${API_URL}/user/booking/update`, userData);
+      const response = await axios.put(`${API_URL}/user/booking/${id}/start`, config);
+      return response.data; // Return the response data (success message)
+    } catch (error) {
+      // Handle the error response
+      if (error.response && error.response.data) {
+        return { error: error.response.data.message };
+      } else {
+        return { error: 'An error occurred. Please try again.' };
+      }
+    }
+  },
+  Complete: async (id) => {
+    try {
+      const response = await axios.put(`${API_URL}/user/booking/${id}/complete`, config);
+      return response.data; // Return the response data (success message)
+    } catch (error) {
+      // Handle the error response
+      if (error.response && error.response.data) {
+        return { error: error.response.data.message };
+      } else {
+        return { error: 'An error occurred. Please try again.' };
+      }
+    }
+  },
+  Cancel: async (id) => {
+    try {
+      const response = await axios.put(`${API_URL}/user/booking/${id}/cancel`, config);
       return response.data; // Return the response data (success message)
     } catch (error) {
       // Handle the error response

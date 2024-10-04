@@ -1,6 +1,7 @@
 // App.js
-import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import React, { useState, useEffect } from "react";
+import BookingService from "../../../../services/driver/BookingService";
 
 // Simulate backend price calculation (replace with actual backend call)
 const fetchPriceFromBackend = () => {
@@ -12,6 +13,21 @@ const fetchPriceFromBackend = () => {
 };
 
 const ContinueRideTabPanel = () => {
+  const [requestList, setRequestList] = useState([]);
+
+  useEffect(() => {
+    const fetchContinueRide = async () => {
+      const res = await BookingService.List();
+      console.log(res);
+      if (!res.error) {
+        setRequestList(res);
+      } else {
+        console.error(res.error);
+      }
+    };
+
+    fetchContinueRide();
+  }, []);
   // Initial dummy requests
   const initialRequests = [
     { id: 1, pickupLocation: "123 Main St", dropoffLocation: "456 Elm St", pickupTime: "2024-09-28T10:30", status: "pending" },
@@ -26,9 +42,9 @@ const ContinueRideTabPanel = () => {
   const [loadingPrice, setLoadingPrice] = useState(false);
 
   // Handle driver accepting a ride
-  const handleAcceptRequest = (id) => {
-    const acceptedRequest = requests.find((request) => request.id === id);
-    setActiveRide(acceptedRequest);
+  const handleAcceptRequest = (data) => {
+    // const acceptedRequest = requests.find((request) => request.id === id);
+    setActiveRide(data);
     setRideStatus("accepted");
   };
 

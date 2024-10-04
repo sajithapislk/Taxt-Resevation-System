@@ -16,8 +16,8 @@ import AdminDashboard from "./pages/admin/Dashboard.jsx";
 import User from "./pages/admin/User.jsx";
 import Booking from "./pages/admin/Booking.jsx";
 import Reservation from "./pages/admin/Reservation.jsx";
-import NewVehicle from "./pages/driver/vehicle/New.jsx";
-import EditVehicle from "./pages/driver/vehicle/Edit.jsx";
+import NewVehicle from "./pages/driver/Vehicle/New.jsx";
+import EditVehicle from "./pages/driver/Vehicle/Edit.jsx";
 import Vehicle from "./pages/admin/Vehicle.jsx";
 import VehicleType from "./pages/admin/VehicleType.jsx";
 import ProtectedRoute from "./ProtectedRoute.jsx";
@@ -65,7 +65,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/driver",
-    element: <DriverLayout />,
+    element: (
+      <ProtectedRoute allowedRole={"driver"}>
+        <DriverLayout />
+      </ProtectedRoute>
+    ),
     children: [
       {
         path: "dashboard",

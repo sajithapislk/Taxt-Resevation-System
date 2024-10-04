@@ -6,7 +6,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 const userData = localStorage.getItem("user");
 const user = JSON.parse(userData);
 const config = {
-  headers: { Authorization: `Bearer ${user.token}` }
+  headers: { Authorization: `Bearer ${user && user.token}` }
 };
 console.log(config);
 
