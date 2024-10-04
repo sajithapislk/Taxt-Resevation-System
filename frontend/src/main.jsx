@@ -19,7 +19,7 @@ import Reservation from "./pages/admin/Reservation.jsx";
 import NewVehicle from "./pages/driver/vehicle/New.jsx";
 import EditVehicle from "./pages/driver/vehicle/Edit.jsx";
 import Vehicle from "./pages/admin/Vehicle.jsx";
-import Vehicletype from "./pages/admin/Vehicletype.jsx";
+import VehicleType from "./pages/admin/VehicleType.jsx";
 import ProtectedRoute from "./ProtectedRoute.jsx";
 
 const router = createBrowserRouter([
@@ -103,7 +103,7 @@ const router = createBrowserRouter([
       },
       {
         path: "vehicletype",
-        element: <Vehicletype />,
+        element: <VehicleType />,
       },
       {
         path: "reservation",
