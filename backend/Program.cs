@@ -51,11 +51,11 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 // Enable WebSockets
-var webSocketOptions = new WebSocketOptions
-{
-    KeepAliveInterval = TimeSpan.FromMinutes(2),
-};
-app.UseWebSockets(webSocketOptions);
+// var webSocketOptions = new WebSocketOptions
+// {
+//     KeepAliveInterval = TimeSpan.FromMinutes(2),
+// };
+// app.UseWebSockets(webSocketOptions);
 
 // Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
@@ -70,20 +70,20 @@ app.UseRouting();
 app.MapControllers();
 
 // Instantiate the WebSocket handler
-var webSocketHandler = new WebSocketHandler();
+// var webSocketHandler = new WebSocketHandler();
 
 // Middleware to handle WebSocket requests at the "/ws" path
-app.Use(async (context, next) =>
-{
-    if (context.Request.Path == "/ws")
-    {
-        await webSocketHandler.Handle(context); // Delegate WebSocket handling to the handler
-    }
-    else
-    {
-        await next(); // Continue processing the HTTP pipeline for non-WebSocket requests
-    }
-});
+// app.Use(async (context, next) =>
+// {
+//     if (context.Request.Path == "/ws")
+//     {
+//         await webSocketHandler.Handle(context); // Delegate WebSocket handling to the handler
+//     }
+//     else
+//     {
+//         await next(); // Continue processing the HTTP pipeline for non-WebSocket requests
+//     }
+// });
 app.UseCors("AllowLocalhost5173");
 
 await app.RunAsync();
