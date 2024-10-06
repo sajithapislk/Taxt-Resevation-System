@@ -3,11 +3,7 @@ import { Button } from "react-bootstrap";
 
 const User = () => {
   const [isOpen, setIsOpen] = useState(false);
-
-  // Function to open the modal
   const openModal = () => setIsOpen(true);
-
-  // Function to close the modal
   const closeModal = () => setIsOpen(false);
 
   return (
