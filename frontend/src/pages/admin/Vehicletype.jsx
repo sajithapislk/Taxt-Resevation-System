@@ -1,25 +1,44 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import VehicleTypeService from "./../../services/admin/VehicleTypeService";
+import { Button } from "react-bootstrap";
 
 const Vehicletype = () => {
+  const [vehicleTypeList, setVehicleTypeList] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
-  const openModal = () => setIsOpen(true);
-  const closeModal = () => setIsOpen(false);
+  const [formType, setFormType] = useState("create");
 
-  const [userData, setUserData] = useState({
+  const [typeData, setTypeData] = useState({
     id: "",
     name: "",
     image: "",
   });
+
+  const openModal = () => setIsOpen(true);
+  const closeModal = () => setIsOpen(false);
+
+  useEffect(() => {
+    const fetchVehicleTypes = async () => {
+      const res = await VehicleTypeService.List();
+      console.log(res);
+      if (!res.error) {
+        setVehicleTypeList(res);
+      } else {
+        console.error(res.error);
+      }
+    };
+
+    fetchVehicleTypes();
+  }, []);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setUserData((prevData) => ({
+        setTypeData((prevData) => ({
           ...prevData,
-          image: reader.result
-      }));
+          image: reader.result,
+        }));
       };
       reader.readAsDataURL(file);
     }
@@ -28,11 +47,29 @@ const Vehicletype = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await AuthService.DriverLogin(userData);
-      console.log('Vehicle saved successfully:', response.data);
+      if (formType === "create") {
+        const response = await VehicleTypeService.Create(typeData);
+        console.log("Vehicle saved successfully:", response.data);
+      } else if (formType === "update") {
+        const response = await VehicleTypeService.Update(typeData);
+        console.log("Vehicle saved successfully:", response.data);
+      }else{
+        const response = await VehicleTypeService.Delete(typeData);
+        console.log("Vehicle saved successfully:", response.data);
+      }
     } catch (error) {
       console.error("Error saving the vehicle:", error);
     }
+  };
+
+  const updateClick = (data,isDelete = false) => {
+    setTypeData({
+      id: data.id,
+      name: data.name,
+      image: data.image,
+    });
+    setFormType(isDelete ? "delete" : "update");
+    openModal();
   };
 
   return (
@@ -74,20 +111,42 @@ const Vehicletype = () => {
                   <th>ID</th>
                   <th>Name</th>
                   <th>Image</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Saheer</td>
-                  <td>img</td>
-                </tr>
+                {vehicleTypeList.map((item) => (
+                  <tr key={item.id}>
+                    <td>{item.id}</td>
+                    <td>{item.name}</td>
+                    <td>
+                      <img
+                        src={item.image}
+                        className="img-thumbnail"
+                        width="10%"
+                      />
+                    </td>
+                    <td>
+                      <Button
+                        variant="info"
+                        size="sm"
+                        className="mr-2"
+                        onClick={() => updateClick(item)}
+                      >
+                        Update
+                      </Button>
+                      <Button variant="danger" size="sm" onClick={() => updateClick(item,true)}>
+                        Delete
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
         </div>
       </div>
-      {isOpen && (
+      {isOpen & (formType !== "delete") && (
         <div
           className="modal fade show"
           tabIndex="-1"
@@ -123,11 +182,10 @@ const Vehicletype = () => {
                         class="form-control"
                         type="text"
                         placeholder="Johnny Brown"
-                        onChange={
-                          (e) => setUserData(
-                            (prevData) => ({
-                              ...prevData,
-                              name:e.target.value
+                        onChange={(e) =>
+                          setTypeData((prevData) => ({
+                            ...prevData,
+                            name: e.target.value,
                           }))
                         }
                       />
@@ -138,7 +196,12 @@ const Vehicletype = () => {
                       File
                     </label>
                     <div class="col-sm-12 col-md-10">
-                      <input name="file" class="form-control" type="file" onChange={handleFileChange}  />
+                      <input
+                        name="file"
+                        class="form-control"
+                        type="file"
+                        onChange={handleFileChange}
+                      />
                     </div>
                   </div>
 
@@ -155,6 +218,52 @@ const Vehicletype = () => {
                     </button>
                   </div>
                 </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {isOpen & (formType === "delete") && (
+        <div
+          className="modal fade show"
+          tabIndex="-1"
+          role="dialog"
+          style={{ display: "block", backgroundColor: "rgba(0, 0, 0, 0.5)" }}
+          aria-labelledby="myLargeModalLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog modal-lg modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h4 className="modal-title" id="myLargeModalLabel">
+                  Large modal
+                </h4>
+                <button
+                  type="button"
+                  className="close"
+                  aria-label="Close"
+                  onClick={closeModal}
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </p>
+                <div className="modal-footer">
+                    <button
+                      type="button"
+                      className="btn btn-secondary"
+                      onClick={closeModal}
+                    >
+                      Close
+                    </button>
+                    <button type="button" className="btn btn-danger" onClick={handleSubmit}>
+                      delete
+                    </button>
+                  </div>
               </div>
             </div>
           </div>
