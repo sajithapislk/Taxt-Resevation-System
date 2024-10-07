@@ -1,11 +1,11 @@
-import React, {useEffect,useState} from 'react'
-import VehicleService from '../../services/admin/VehicleService';
+import React, { useEffect, useState } from "react";
+import VehicleService from "../../services/admin/VehicleService";
 
 const Vehicle = () => {
   const [vehicleList, setVehicleList] = useState([]);
-  
+
   useEffect(() => {
-    const fetchVehicleTypes = async () => {
+    const fetchVehicle = async () => {
       const res = await VehicleService.List();
       console.log(res);
       if (!res.error) {
@@ -15,13 +15,13 @@ const Vehicle = () => {
       }
     };
 
-    fetchVehicleTypes();
+    fetchVehicle();
   }, []);
   return (
     <div class="main-container">
       <div class="pd-ltr-20 xs-pd-20-10">
         <div class="min-height-200px">
-        <div class="page-header">
+          <div class="page-header">
             <div class="row">
               <div class="col-md-6 col-sm-12">
                 <div class="title">
@@ -38,8 +38,7 @@ const Vehicle = () => {
                   </ol>
                 </nav>
               </div>
-              <div class="col-md-6 col-sm-12 text-right">   
-              </div>
+              <div class="col-md-6 col-sm-12 text-right"></div>
             </div>
           </div>
           <div class="pd-20 card-box mb-30">
@@ -52,12 +51,12 @@ const Vehicle = () => {
                 </tr>
               </thead>
               <tbody>
-              {vehicleList.map((item) => (
-                <tr key={item.id}>
-                  <td>{item.Id}</td>
-                  <td>{item.VehicleNumber}</td>
-                  <td>{item.Description}</td>
-                </tr>
+                {vehicleList.map((item) => (
+                  <tr key={item.id}>
+                    <td>{item.Id}</td>
+                    <td>{item.VehicleNumber}</td>
+                    <td>{item.Description}</td>
+                  </tr>
                 ))}
               </tbody>
             </table>
@@ -65,7 +64,7 @@ const Vehicle = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Vehicle
+export default Vehicle;
