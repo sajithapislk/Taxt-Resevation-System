@@ -1,6 +1,22 @@
-import React from 'react'
+import React, {useEffect,useState} from 'react'
+import VehicleService from '../../services/admin/VehicleService';
 
 const Vehicle = () => {
+  const [vehicleList, setVehicleList] = useState([]);
+  
+  useEffect(() => {
+    const fetchVehicleTypes = async () => {
+      const res = await VehicleService.List();
+      console.log(res);
+      if (!res.error) {
+        setVehicleList(res);
+      } else {
+        console.error(res.error);
+      }
+    };
+
+    fetchVehicleTypes();
+  }, []);
   return (
     <div class="main-container">
       <div class="pd-ltr-20 xs-pd-20-10">
@@ -27,46 +43,22 @@ const Vehicle = () => {
             </div>
           </div>
           <div class="pd-20 card-box mb-30">
-            {/* <div class="clearfix mb-20">
-              <div class="pull-left">
-                <h4 class="text-blue h4">Striped table</h4>
-                <p>
-                  Add <code>.table .table-striped</code> to add zebra-striping
-                  to any table row within the <code>&lt;tbody&gt;</code>.
-                </p>
-              </div>
-              <div class="pull-right">
-                <a
-                  href="#striped-table"
-                  class="btn btn-primary btn-sm scroll-click"
-                  rel="content-y"
-                  data-toggle="collapse"
-                  role="button"
-                  aria-expanded="true"
-                >
-                  <i class="fa fa-code"></i> Source Code
-                </a>
-              </div>
-            </div> */}
             <table class="table table-striped">
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Category Name</th>
+                  <th>Vehicle Number</th>
                   <th>Description</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>SUV</td>
-                  <td>Sport Utility Vehicle</td>
+              {vehicleList.map((item) => (
+                <tr key={item.id}>
+                  <td>{item.Id}</td>
+                  <td>{item.VehicleNumber}</td>
+                  <td>{item.Description}</td>
                 </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Sedan</td>
-                  <td>Comfortable for 4 passengers</td>
-                </tr>
+                ))}
               </tbody>
             </table>
           </div>
