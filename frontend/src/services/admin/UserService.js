@@ -2,12 +2,15 @@ import axios from 'axios';
 
 // Get the API URL from the environment variable
 const API_URL = import.meta.env.VITE_API_URL;
-
-// Service object to handle API requests related to user
+const userData = localStorage.getItem("admin");
+const user = JSON.parse(userData);
+const config = {
+  headers: { Authorization: `Bearer ${user && user.token}` }
+};
 const UserService = {
   List: async () => {
     try {
-      const response = await axios.get(`${API_URL}/admin/user`);
+      const response = await axios.get(`${API_URL}/users`, config);
       return response.data;
     } catch (error) {
       if (error.response && error.response.data) {
@@ -19,7 +22,7 @@ const UserService = {
   },
   Update: async (userData) => {
     try {
-      const response = await axios.post(`${API_URL}/admin/user/update`, userData);
+      const response = await axios.post(`${API_URL}/admin/user/update`, userData, config);
       return response.data; // Return the response data (success message)
     } catch (error) {
       // Handle the error response
@@ -34,7 +37,7 @@ const UserService = {
   },
   Delete: async (data) => {
     try {
-      const response = await axios.post(`${API_URL}/admin/user/delete`, data);
+      const response = await axios.post(`${API_URL}/admin/user/delete`, data, config);
       return response.data;
     } catch (error) {
       if (error.response && error.response.data) {
