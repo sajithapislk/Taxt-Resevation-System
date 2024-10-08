@@ -68,7 +68,7 @@ namespace tests.Services
         public async Task RegisterAsync_ShouldCallAuthServiceRegisterWithDriverRole()
         {
             // Arrange
-            var registerRequest = new UserRegisterRequest
+            var registerRequest = new UserRegisterRequestModel
             {
                 Email = "driver@example.com",
                 Password = "DriverPassword123",
@@ -79,7 +79,7 @@ namespace tests.Services
             var mockResponse = new AuthenticateResponse(new User { Id = 1, Name = "Driver User", Email = "driver@example.com" }, "mocked-token");
 
             // Set up the mock to return the response when RegisterAsync is called
-            _mockAuthService.Setup(x => x.RegisterAsync(It.IsAny<UserRegisterRequest>()))
+            _mockAuthService.Setup(x => x.RegisterAsync(It.IsAny<UserRegisterRequestModel>()))
                             .ReturnsAsync(mockResponse);
 
             // Act
@@ -91,7 +91,7 @@ namespace tests.Services
             Assert.Equal("mocked-token", result?.Token);
 
             // Verify that the AuthService was called with the Driver role
-            _mockAuthService.Verify(x => x.RegisterAsync(It.Is<UserRegisterRequest>(r => r.Role == UserRole.Driver)), Times.Once);
+            _mockAuthService.Verify(x => x.RegisterAsync(It.Is<UserRegisterRequestModel>(r => r.Role == UserRole.Driver)), Times.Once);
         }
 
         [Fact]

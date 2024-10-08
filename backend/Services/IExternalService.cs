@@ -4,7 +4,7 @@ namespace backend.Services
 {
     public interface IExternalService
     {
-        Task<bool> SendRegistrationEmailAsync(UserRegisterRequest model);
-        Task<bool> SendRegistrationSmsAsync(UserRegisterRequest model);
+        Task<bool> SendRegistrationEmailAsync(UserRegisterRequestModel model);
+        Task<bool> SendRegistrationSmsAsync(UserRegisterRequestModel model);
     }
 }

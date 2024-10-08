@@ -13,7 +13,16 @@ namespace backend.Helpers
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            // Check if the value is a valid enum value
+            if (Nullable.GetUnderlyingType(_enumType) != null)
+            {
+                return ValidationResult.Success; // Return success if nullable
+            }
+
+            if (value == null)
+            {
+                return ValidationResult.Success; // Return success if null
+            }
+
             if (Enum.IsDefined(_enumType, value))
             {
                 return ValidationResult.Success;  // Return success if valid

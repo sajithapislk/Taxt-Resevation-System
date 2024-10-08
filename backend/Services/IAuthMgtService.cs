@@ -1,10 +1,12 @@
-﻿using backend.Schema.Model;
+﻿using backend.Schema.Entity;
+using backend.Schema.Model;
 
 namespace backend.Services
 {
-    public interface IAuthMgtService
+    public interface IAuthMgtService : ICrudService<User, UserRegisterRequestModel>
     {
-        Task<AuthenticateResponse?> RegisterAsync(UserRegisterRequest model);
+        Task<AuthenticateResponse?> RegisterAsync(UserRegisterRequestModel model);
         Task<AuthenticateResponse?> LoginAsync(LoginRequest model);
+        Task<User?> GetByMobileAsync(string mobileNo);
     }
 }

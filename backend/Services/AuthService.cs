@@ -6,13 +6,14 @@ using backend.Schema.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using NetTopologySuite.Geometries;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
 namespace backend.Services
 {
-    public class AuthService : IAuthService
+    public class AuthService : AbstractRepositoryService<User>, IAuthService
     {
         private readonly AppSettings appSettings;
         private readonly AppDbContext dbContext;
@@ -22,14 +23,14 @@ namespace backend.Services
             IOptions<AppSettings> appSettings,
             AppDbContext dbContext,
             IExternalService externalService
-        )
+        ) : base(dbContext)
         {
             this.appSettings = appSettings.Value;
             this.dbContext = dbContext;
             this.externalService = externalService;
         }
 
-        public async Task<AuthenticateResponse?> RegisterAsync(UserRegisterRequest model)
+        public async Task<AuthenticateResponse?> RegisterAsync(UserRegisterRequestModel model)
         {
             var user = new User
             {
@@ -83,6 +84,39 @@ namespace backend.Services
             return new AuthenticateResponse(user, token);
         }
 
+        public async Task<User> AddAsync(UserRegisterRequestModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<User> UpdateAsync(int id, UserRegisterRequestModel model)
+        {
+            var existingRecord = await GetAsync(id)
+                ?? throw new KeyNotFoundException($"No matching record found for the id {id}");
+
+            //existingRecord.Role = model.Role;
+            //existingRecord.Email = model.Email;
+            //existingRecord.Username = model.Username;
+            //if (!string.IsNullOrWhiteSpace(model.Password))
+            //{
+            //    existingRecord.Password = PasswordHasher.HashPassword(model.Password);
+            //}
+            existingRecord.Name = model.Name;
+            existingRecord.MobileNo = model.MobileNo;
+            existingRecord.Image = model.Image;
+            existingRecord.Website = model.Website;
+            existingRecord.DateOfBirth = model.DateOfBirth;
+            existingRecord.Gender = model.Gender;
+            existingRecord.Status = model.Status;
+            existingRecord.Description = model.Description;
+            //existingRecord.Location = new Point(model.Location.Longitude, model.Location.Latitude) { SRID = 4326 }; ;
+            //existingRecord.Place = model.Location.Location;
+            //existingRecord.DriverState = model.DriverState;
+
+            await dbContext.SaveChangesAsync();
+            return existingRecord;
+        }
+
         public async Task<bool> IsEmailRegistered(string email)
         {
             var existingRecord = await dbContext.Users
@@ -92,13 +126,25 @@ namespace backend.Services
             return existingRecord != null;
         }
 
-        public async Task<bool> IsUsernameTaken(string username)
+        public async Task<bool> IsEmailRegistered(int id, string email)
+        {
+            return await dbContext.Users
+                .AnyAsync(x => x.Id != id && x.Email == email);
+        }
+
+        public async Task<bool> IsUsernameRegistered(string username)
         {
             var existingRecord = await dbContext.Users
                 .Select(x => x.Username)
                 .FirstOrDefaultAsync(x => username.Equals(x));
 
             return existingRecord != null;
+        }
+
+        public async Task<bool> IsUsernameRegistered(int id, string username)
+        {
+            return await dbContext.Users
+                .AnyAsync(x => x.Id != id && x.Username == username);
         }
 
         public async Task<bool> IsMobileNoRegistered(string mobileNo)
@@ -108,6 +154,12 @@ namespace backend.Services
                 .FirstOrDefaultAsync(x => mobileNo.Equals(x));
 
             return existingRecord != null;
+        }
+
+        public async Task<bool> IsMobileNoRegistered(int id, string mobileNo)
+        {
+            return await dbContext.Users
+                .AnyAsync(x => x.Id != id && x.MobileNo == mobileNo);
         }
 
         public async Task<User?> GetUserById(int id)
@@ -137,5 +189,10 @@ namespace backend.Services
             return tokenHandler.WriteToken(token);
         }
 
+        public async Task<User?> GetByMobileAsync(string mobileNo)
+        {
+            return await dbContext.Users
+                .FirstOrDefaultAsync(x => x.MobileNo == mobileNo);
+        }
     }
 }

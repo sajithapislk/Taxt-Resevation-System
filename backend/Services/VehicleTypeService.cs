@@ -26,9 +26,45 @@ namespace backend.Services
                 .ToListAsync();
         }
 
+        public async Task<VehicleType> AddAsync(NewVehicleTypeRequestModel model)
+        {
+            var entity = new VehicleType
+            {
+                Name = model.Name,
+                Image = model.Image,
+            };
+
+            return await AddAsync(entity);
+        }
+
+        public async Task<VehicleType> UpdateAsync(int id, NewVehicleTypeRequestModel model)
+        {
+            var existingRecord = await GetAsync(id)
+                ?? throw new KeyNotFoundException($"No matching record found for the id {id}");
+
+            existingRecord.Name = model.Name;
+            existingRecord.Image = model.Image;
+
+            await dbContext.SaveChangesAsync();
+            return existingRecord;
+        }
+
         public Task<IEnumerable<VehicleType>> GetAllNearbyVehicleTypesAsync(decimal latitude, decimal longitude, double radiusInKm = 3)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<bool> IsVehicleTypeNameRegistered(string name)
+        {
+            return await dbContext.VehicleTypes
+                .Select(x => x.Name)
+                .AnyAsync(x => x == name);
+        }
+
+        public async Task<bool> IsVehicleTypeNameRegistered(int id, string name)
+        {
+            return await dbContext.VehicleTypes
+                .AnyAsync(x => x.Id != id && x.Name == name);
         }
     }
 }

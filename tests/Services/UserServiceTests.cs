@@ -68,7 +68,7 @@ namespace tests.Services
         public async Task RegisterAsync_ShouldCallAuthServiceRegisterWithUserRole()
         {
             // Arrange
-            var registerRequest = new UserRegisterRequest
+            var registerRequest = new UserRegisterRequestModel
             {
                 Email = "user@example.com",
                 Password = "UserPassword123",
@@ -79,7 +79,7 @@ namespace tests.Services
             var mockResponse = new AuthenticateResponse(new User { Id = 1, Name = "User", Email = "user@example.com" }, "mocked-token");
 
             // Set up the mock to return the response when RegisterAsync is called
-            _mockAuthService.Setup(x => x.RegisterAsync(It.IsAny<UserRegisterRequest>()))
+            _mockAuthService.Setup(x => x.RegisterAsync(It.IsAny<UserRegisterRequestModel>()))
                             .ReturnsAsync(mockResponse);
 
             // Act
@@ -91,14 +91,14 @@ namespace tests.Services
             Assert.Equal("mocked-token", result?.Token);
 
             // Verify that the AuthService was called with the User role
-            _mockAuthService.Verify(x => x.RegisterAsync(It.Is<UserRegisterRequest>(r => r.Role == UserRole.User)), Times.Once);
+            _mockAuthService.Verify(x => x.RegisterAsync(It.Is<UserRegisterRequestModel>(r => r.Role == UserRole.User)), Times.Once);
         }
 
         [Fact]
         public async Task RegisterGuestAsync_ShouldCallAuthServiceRegisterWithGuestRole()
         {
             // Arrange
-            var registerRequest = new UserRegisterRequest
+            var registerRequest = new UserRegisterRequestModel
             {
                 Email = "guest@example.com",
                 Password = "GuestPassword123",
@@ -109,7 +109,7 @@ namespace tests.Services
             var mockResponse = new AuthenticateResponse(new User { Id = 2, Name = "Guest", Email = "guest@example.com" }, "mocked-token");
 
             // Set up the mock to return the response when RegisterAsync is called
-            _mockAuthService.Setup(x => x.RegisterAsync(It.IsAny<UserRegisterRequest>()))
+            _mockAuthService.Setup(x => x.RegisterAsync(It.IsAny<UserRegisterRequestModel>()))
                             .ReturnsAsync(mockResponse);
 
             // Act
@@ -121,7 +121,7 @@ namespace tests.Services
             Assert.Equal("mocked-token", result?.Token);
 
             // Verify that the AuthService was called with the Guest role
-            _mockAuthService.Verify(x => x.RegisterAsync(It.Is<UserRegisterRequest>(r => r.Role == UserRole.Guest)), Times.Once);
+            _mockAuthService.Verify(x => x.RegisterAsync(It.Is<UserRegisterRequestModel>(r => r.Role == UserRole.Guest)), Times.Once);
         }
 
         [Fact]

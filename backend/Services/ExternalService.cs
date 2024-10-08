@@ -4,12 +4,12 @@ namespace backend.Services
 {
     public class ExternalService : IExternalService
     {
-        public async Task<bool> SendRegistrationEmailAsync(UserRegisterRequest model)
+        public async Task<bool> SendRegistrationEmailAsync(UserRegisterRequestModel model)
         {
             return true;
         }
 
-        public async Task<bool> SendRegistrationSmsAsync(UserRegisterRequest model)
+        public async Task<bool> SendRegistrationSmsAsync(UserRegisterRequestModel model)
         {
             return true;
         }

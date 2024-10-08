@@ -5,6 +5,7 @@ namespace backend.Services
 {
     public interface IUserService : IRepositoryService<User>, IAuthMgtService
     {
-        Task<AuthenticateResponse?> RegisterGuestAsync(UserRegisterRequest model);
+        Task<AuthenticateResponse?> RegisterGuestAsync(UserRegisterRequestModel model);
+        Task<AuthenticateResponse?> LoginGuestAsync(LoginRequest model);
     }
 }

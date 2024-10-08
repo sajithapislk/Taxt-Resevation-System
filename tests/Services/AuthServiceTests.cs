@@ -63,7 +63,7 @@ namespace tests.Services
         public async Task RegisterAsync_ShouldRegisterUserSuccessfully()
         {
             // Arrange
-            var registerRequest = new UserRegisterRequest
+            var registerRequest = new UserRegisterRequestModel
             {
                 Email = "newuser@example.com",
                 Password = "NewUserPassword123",
@@ -83,8 +83,8 @@ namespace tests.Services
             Assert.Equal("New User", user.Name);
 
             // Verify external service calls
-            _mockExternalService.Verify(s => s.SendRegistrationEmailAsync(It.IsAny<UserRegisterRequest>()), Times.Once);
-            _mockExternalService.Verify(s => s.SendRegistrationSmsAsync(It.IsAny<UserRegisterRequest>()), Times.Once);
+            _mockExternalService.Verify(s => s.SendRegistrationEmailAsync(It.IsAny<UserRegisterRequestModel>()), Times.Once);
+            _mockExternalService.Verify(s => s.SendRegistrationSmsAsync(It.IsAny<UserRegisterRequestModel>()), Times.Once);
         }
 
         [Fact]
@@ -147,7 +147,7 @@ namespace tests.Services
 
             // Act
             var isEmailRegistered = await _authService.IsEmailRegistered(email);
-            var isUsernameTaken = await _authService.IsUsernameTaken(username);
+            var isUsernameTaken = await _authService.IsUsernameRegistered(username);
             var isMobileNoRegistered = await _authService.IsMobileNoRegistered(mobileNo);
 
             // Assert
