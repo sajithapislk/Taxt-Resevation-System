@@ -148,7 +148,7 @@ const Vehicletype = () => {
           </div>
         </div>
       </div>
-      {isOpen && (formType !== "delete") && (
+      {isOpen && (formType !== "update") && (
         <div
           className="modal fade show"
           tabIndex="-1"
