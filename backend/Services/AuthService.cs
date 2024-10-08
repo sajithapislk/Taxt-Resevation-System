@@ -17,49 +17,62 @@ namespace backend.Services
     {
         private readonly AppSettings appSettings;
         private readonly AppDbContext dbContext;
-        private readonly IExternalService externalService;
+        private readonly INotificationService notificationService;
 
         public AuthService(
             IOptions<AppSettings> appSettings,
             AppDbContext dbContext,
-            IExternalService externalService
+            INotificationService notificationService
         ) : base(dbContext)
         {
             this.appSettings = appSettings.Value;
             this.dbContext = dbContext;
-            this.externalService = externalService;
+            this.notificationService = notificationService;
         }
 
         public async Task<AuthenticateResponse?> RegisterAsync(UserRegisterRequestModel model)
         {
-            var user = new User
-            {
-                Role = model.Role ?? UserRole.Guest,
-                Email = model.Email?.ToLower(),
-                Name = model.Name,
-                MobileNo = model.MobileNo,
-                Password = model.Password != null ? PasswordHasher.HashPassword(model.Password) : null,
-                DriverState = model.DriverState,
-            };
 
-            await dbContext.Users.AddAsync(user);
-            await dbContext.SaveChangesAsync();
-
-            if (model.Email != null)
+            try
             {
-                var username = $"{EmailValidator.ExtractEmailId(model.Email)}_{user.Id}";
-                user.Username = username;
+                await dbContext.Database.BeginTransactionAsync();
+
+                var user = new User
+                {
+                    Role = model.Role ?? UserRole.Guest,
+                    Email = model.Email?.ToLower(),
+                    Name = model.Name,
+                    MobileNo = model.MobileNo,
+                    Password = model.Password != null ? PasswordHasher.HashPassword(model.Password) : null,
+                    DriverState = model.DriverState,
+                };
+
+                await dbContext.Users.AddAsync(user);
                 await dbContext.SaveChangesAsync();
-                await externalService.SendRegistrationEmailAsync(model);
-            }
 
-            if (model.MobileNo != null)
+                if (model.Email != null)
+                {
+                    var username = $"{EmailValidator.ExtractEmailId(model.Email)}_{user.Id}";
+                    user.Username = model.Username = username;
+                    await dbContext.SaveChangesAsync();
+                    await notificationService.SendRegistrationEmailAsync(model);
+                }
+
+                if (model.MobileNo != null)
+                {
+                    await notificationService.SendRegistrationSmsAsync(model);
+                }
+
+                var token = await GenerateJwtToken(user);
+
+                await dbContext.Database.CommitTransactionAsync();
+                return new AuthenticateResponse(user, token);
+            }
+            catch (Exception)
             {
-                await externalService.SendRegistrationSmsAsync(model);
+                await dbContext.Database.RollbackTransactionAsync();
+                throw;
             }
-
-            var token = await GenerateJwtToken(user);
-            return new AuthenticateResponse(user, token);
         }
 
         public async Task<AuthenticateResponse?> LoginAsync(LoginRequest model)
