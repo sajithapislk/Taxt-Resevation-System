@@ -10676,6 +10676,7 @@ img {
 .account-access .nav-tabs li {
   flex-basis: 50%;
   text-align: center;
+  flex: 1;
 }
 .account-access .nav-tabs li a {
   display: block;

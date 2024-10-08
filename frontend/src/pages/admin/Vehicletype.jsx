@@ -46,6 +46,7 @@ const Vehicletype = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    
     try {
       if (formType === "create") {
         const response = await VehicleTypeService.Create(typeData);
@@ -54,6 +55,7 @@ const Vehicletype = () => {
         const response = await VehicleTypeService.Update(typeData);
         console.log("Vehicle saved successfully:", response.data);
       }else{
+        console.log(formType);
         const response = await VehicleTypeService.Delete(typeData);
         console.log("Vehicle saved successfully:", response.data);
       }
@@ -146,7 +148,7 @@ const Vehicletype = () => {
           </div>
         </div>
       </div>
-      {isOpen & (formType !== "delete") && (
+      {isOpen && (formType !== "delete") && (
         <div
           className="modal fade show"
           tabIndex="-1"
@@ -223,7 +225,7 @@ const Vehicletype = () => {
           </div>
         </div>
       )}
-      {isOpen & (formType === "delete") && (
+      {isOpen && formType === "delete" && (
         <div
           className="modal fade show"
           tabIndex="-1"

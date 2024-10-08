@@ -1,13 +1,17 @@
 import axios from 'axios';
 
-// Get the API URL from the environment variable
 const API_URL = import.meta.env.VITE_API_URL;
 
-// Service object to handle API requests related to user
+const userData = localStorage.getItem("admin");
+const user = JSON.parse(userData);
+const config = {
+  headers: { Authorization: `Bearer ${user && user.token}` }
+};
+
 const VehicleTypeService = {
   List: async () => {
     try {
-      const response = await axios.get(`${API_URL}/vehicles/types`);
+      const response = await axios.get(`${API_URL}/vehicletypes`, config);
       return response.data; // Return the response data (e.g., token)
     } catch (error) {
       if (error.response && error.response.data) {
@@ -19,7 +23,7 @@ const VehicleTypeService = {
   },
   Create: async (data) => {
     try {
-      const response = await axios.post(`${API_URL}/admin/vehicle-type`, data);
+      const response = await axios.post(`${API_URL}/vehicletypes`, data, config);
       return response.data; // Return the response data (e.g., token)
     } catch (error) {
       if (error.response && error.response.data) {
@@ -31,7 +35,7 @@ const VehicleTypeService = {
   },
   Update: async (data) => {
     try {
-      const response = await axios.put(`${API_URL}/admin/vehicle-type`, data);
+      const response = await axios.put(`${API_URL}/vehicletypes/${data.id}`, data, config);
       return response.data; // Return the response data (e.g., token)
     } catch (error) {
       if (error.response && error.response.data) {
@@ -43,8 +47,8 @@ const VehicleTypeService = {
   },
   Delete: async (data) => {
     try {
-      const response = await axios.post(`${API_URL}/admin/vehicle-type/delete`, data);
-      return response.data; // Return the response data (e.g., token)
+      const response = await axios.delete(`${API_URL}/vehicletypes/${data.id}`, config);
+      return response.data;
     } catch (error) {
       if (error.response && error.response.data) {
         return { error: error.response.data.message };
