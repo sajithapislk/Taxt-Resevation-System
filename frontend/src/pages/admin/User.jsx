@@ -1,14 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
+import UserService from "../../services/admin/UserService";
 
 const User = () => {
   const [isOpen, setIsOpen] = useState(false);
-
-  // Function to open the modal
   const openModal = () => setIsOpen(true);
-
-  // Function to close the modal
   const closeModal = () => setIsOpen(false);
+  const [userList, setUserList] = useState([]);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await UserService.List();
+      console.log(res);
+      if (!res.error) {
+        setUserList(res);
+      } else {
+        console.error(res.error);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  const handleSubmit = async (id) => {
+    try {
+      const response = await UserService.Delete(id);
+      console.log("Vehicle saved successfully:", response.data);
+    } catch (error) {
+      console.error("Error saving the vehicle:", error);
+    }
+  };
 
   return (
     <div class="main-container">
@@ -43,64 +64,46 @@ const User = () => {
             </div>
           </div>
           <div class="pd-20 card-box mb-30">
-            {/* <div class="clearfix mb-20">
-              <div class="pull-left">
-                <h4 class="text-blue h4">Striped table</h4>
-                <p>
-                  Add <code>.table .table-striped</code> to add zebra-striping
-                  to any table row within the <code>&lt;tbody&gt;</code>.
-                </p>
-              </div>
-              <div class="pull-right">
-                <a
-                  href="#striped-table"
-                  class="btn btn-primary btn-sm scroll-click"
-                  rel="content-y"
-                  data-toggle="collapse"
-                  role="button"
-                  aria-expanded="true"
-                >
-                  <i class="fa fa-code"></i> Source Code
-                </a>
-              </div>
-            </div> */}
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th>User ID</th>
-                  <th>Role</th>
+                  <th>Id</th>
                   <th>Email</th>
-                  <th>Username</th>
-                  <th>Phone</th>
+                  <th>Name</th>
+                  <th>MobileNo</th>
                   <th>Image</th>
+                  <th>DateOfBirth</th>
                   <th>Gender</th>
+                  <th>Status</th>
                   <th>Status</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>#101</td>
-                  <td>Passenger</td>
-                  <td>saheer@gmail.com</td>
-                  <td>Saheer</td>
-                  <td>+94712805509</td>
-                  <td>image</td>
-                  <td>Male</td>
-                  <td>
-                    <Button variant="info" size="sm" className="mr-2">
-                      View
-                    </Button>
-                    <Button variant="danger" size="sm">
-                      Delete
-                    </Button>
-                  </td>
-                </tr>
+                {userList.map((item) => (
+                  <tr key={item.Id}>
+                    <td>{item.Id}</td>
+                    <td>{item.Email}</td>
+                    <td>{item.Name}</td>
+                    <td>{item.MobileNo}</td>
+                    <td>{item.Image}</td>
+                    <td>{item.DateOfBirth}</td>
+                    <td>{item.Gender}</td>
+                    <td>{item.Status}</td>
+                    <td>
+                      <Button variant="info" size="sm" className="mr-2">
+                        View
+                      </Button>
+                      <Button variant="danger" size="sm">
+                        Delete
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
         </div>
       </div>
-      {/* Modal */}
       {isOpen && (
         <div
           className="modal fade show"
@@ -126,94 +129,26 @@ const User = () => {
                 </button>
               </div>
               <div className="modal-body">
-                <form>
-                  <div class="select-role">
-                    <div
-                      class="btn-group btn-group-toggle"
-                      data-toggle="buttons"
-                    >
-                      <label class="btn">
-                        <input type="radio" name="options" id="admin" />
-                        <div class="icon">
-                          <img
-                            src="vendors/images/briefcase.svg"
-                            class="svg"
-                            alt=""
-                          />
-                        </div>
-                        <span>I'm</span>
-                        Manager
-                      </label>
-                      <label class="btn">
-                        <input type="radio" name="options" id="user" />
-                        <div class="icon">
-                          <img
-                            src="vendors/images/person.svg"
-                            class="svg"
-                            alt=""
-                          />
-                        </div>
-                        <span>I'm</span>
-                        Employee
-                      </label>
-                    </div>
-                  </div>
-                  <div class="input-group custom">
-                    <input
-                      type="text"
-                      class="form-control form-control-lg"
-                      placeholder="Username"
-                    />
-                    <div class="input-group-append custom">
-                      <span class="input-group-text">
-                        <i class="icon-copy dw dw-user1"></i>
-                      </span>
-                    </div>
-                  </div>
-                  <div class="input-group custom">
-                    <input
-                      type="password"
-                      class="form-control form-control-lg"
-                      placeholder="**********"
-                    />
-                    <div class="input-group-append custom">
-                      <span class="input-group-text">
-                        <i class="dw dw-padlock1"></i>
-                      </span>
-                    </div>
-                  </div>
-                  <div class="row pb-30">
-                    <div class="col-6">
-                      <div class="custom-control custom-checkbox">
-                        <input
-                          type="checkbox"
-                          class="custom-control-input"
-                          id="customCheck1"
-                        />
-                        <label class="custom-control-label" htmlFor="customCheck1">
-                          Remember
-                        </label>
-                      </div>
-                    </div>
-                    <div class="col-6">
-                      <div class="forgot-password">
-                        <a href="forgot-password.html">Forgot Password</a>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="modal-footer">
-                    <button
-                      type="button"
-                      className="btn btn-secondary"
-                      onClick={closeModal}
-                    >
-                      Close
-                    </button>
-                    <button type="button" className="btn btn-primary">
-                      Save changes
-                    </button>
-                  </div>
-                </form>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </p>
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={closeModal}
+                  >
+                    Close
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-danger"
+                    onClick={()=>handleSubmit(id)}
+                  >
+                    delete
+                  </button>
+                </div>
               </div>
             </div>
           </div>
