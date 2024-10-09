@@ -19,7 +19,7 @@ namespace tests.Services
     {
         private readonly AppDbContext _context;
         private readonly AuthService _authService;
-        private readonly Mock<IExternalService> _mockExternalService;
+        private readonly Mock<INotificationService> _mockExternalService;
 
         public AuthServiceTests()
         {
@@ -37,7 +37,7 @@ namespace tests.Services
             };
 
             // Set up mock external service
-            _mockExternalService = new Mock<IExternalService>();
+            _mockExternalService = new Mock<INotificationService>();
 
             // Initialize AuthService with mock services
             _authService = new AuthService(Options.Create(appSettings), _context, _mockExternalService.Object);
