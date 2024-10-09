@@ -1,34 +1,56 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Form, Button, Container, Row, Col, Alert } from "react-bootstrap";
 import axios from "axios";
-import UnregisterUserService from "../../services/admin/UnregisterUserService";
 import ReservationService from "../../services/admin/ReservationService";
+import UserService from "../../services/admin/UserService";
+import {
+  GoogleMap,
+  useLoadScript,
+  Autocomplete,
+  Marker,
+  DirectionsService,
+  DirectionsRenderer,
+} from "@react-google-maps/api";
+import VehicleTypeService from "../../services/admin/VehicleTypeService";
+import { useNavigate } from "react-router-dom";
+
+const libraries = ["places"];
+const _googleMapsApiKey =
+  import.meta.env.GOOGLE_MAP_API_KEY ||
+  "AIzaSyCP6SvRsh7Ba3lOFKEjRxX6dZqkwH6U7H0";
+
 
 const Reservation = () => {
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: _googleMapsApiKey,
+    libraries,
+  });
+
+  const navigate = useNavigate();
   const [error, setError] = useState("");
   const [newUser, setNewUser] = useState(false);
-  const [bookingSuccess, setBookingSuccess] = useState(false);
+  const [vehicleTypeList, setVehicleTypeList] = useState([]);
 
-  const [reservationData, setReservationData] = useState({
-    vehicle_type_id: "",
-    unregistered_user_id: "",
-    picked: "",
-    pick_at: "",
-  });
+  const pickupRef = useRef();
+  const destinationRef = useRef();
+
   const [userData, setUserData] = useState({
     id: "",
     name: "",
-    tp: "",
+    mobileNo: "",
+  });
+  
+  const [formData, setFormData] = useState({
+    vehicleTypeId: "",
+    userId: "",
+    pickUpPlace: "",
+    pickUpLongitude: "",
+    pickUpLatitude: "",
+    dropOffPlace: "",
+    dropOffLongitude: "",
+    dropOffLatitude: "",
   });
 
-  const handleChangeReservation = (e) => {
-    const { name, value } = e.target;
-
-    setReservationData({
-      ...reservationData,
-      [name]: value,
-    });
-  };
 
   const handleChangeUser = (e) => {
     const { name, value } = e.target;
@@ -42,58 +64,93 @@ const Reservation = () => {
 
   const searchUser = async () => {
     setError("");
-    // const result = await UnregisterUserService.FilterByTp(searchTerm);
-    const result = {
-      id: 123,
-      name: "John Doe",
-      tp: "0123456789",
-      error: "asd"
-    };
-
+    const result = await UserService.FilterByTp(userData.mobileNo);
+    
     if (result.error) {
       setNewUser(true);
     } else {
       setUserData(result);
     }
   };
-
-  const handleBooking = async () => {
-    if (
-      !reservationData.picked ||
-      !reservationData.pick_at ||
-      !reservationData.vehicle_type_id
-    ) {
-      setError("Please fill in all booking fields");
-      return;
-    }
-
-    const result = await ReservationService.Booking(reservationData);
-
-    if (result.error) {
-      setError("Error creating booking");
-    } else {
-      setBookingSuccess(true);
-      setError("");
-    }
-  };
   const handleUser = async () => {
     if (
       !userData.name ||
-      !userData.tp 
+      !userData.mobileNo 
     ) {
       setError("Please fill in all user fields");
       return;
     }
 
-    const result = await UnregisterUserService.Register(userData);
+    const result = await UserService.Unregister(userData);
 
     if (result.error) {
       setError("Error creating booking");
     } else {
-      setUserData(result.user);
+      setFormData((prevData) => ({
+        ...prevData,
+        userId: result.id
+      }));
+      setUserData((prevData) => ({
+        ...prevData,
+        id: result.id
+      }));
       setError("");
     }
   };
+
+  const handlePickupPlaceSelect = useCallback(() => {
+    const place = pickupRef.current?.getPlace();
+    if (place && place.geometry) {
+      const lat = place.geometry.location.lat();
+      const lng = place.geometry.location.lng();
+      console.log(lat, lng);
+      const placeName =
+        place.formatted_address || place.name || "Unknown Place";
+
+      // setPickupCoords({ lat, lng });
+      setFormData((prevData) => ({
+        ...prevData,
+        pickUpPlace: placeName,
+        pickUpLongitude: lng,
+        pickUpLatitude: lat,
+      }));
+    }
+  }, []);
+  const handleDestinationPlaceSelect = useCallback(() => {
+    const place = destinationRef.current?.getPlace();
+    if (place && place.geometry) {
+      const lat = place.geometry.location.lat();
+      const lng = place.geometry.location.lng();
+      const placeName =
+        place.formatted_address || place.name || "Unknown Place";
+
+      // setDestinationCoords({ lat, lng });
+      setFormData((prevData) => ({
+        ...prevData,
+        dropOffPlace: placeName,
+        dropOffLongitude: lng,
+        dropOffLatitude: lat,
+      }));
+    }
+  }, []);
+
+  const handleSubmit = () => {
+    // console.log(formData);
+    navigate("/admin/available-driver", { state: { formData } });
+  };
+  useEffect(() => {
+    const fetchVehicleTypes = async () => {
+      const res = await VehicleTypeService.List();
+      console.log(res);
+      if (!res.error) {
+        setVehicleTypeList(res);
+      } else {
+        console.error(res.error);
+      }
+    };
+    fetchVehicleTypes();
+  }, []);
+
   return (
     <div className="main-container">
       <div className="pd-ltr-20 xs-pd-20-10">
@@ -119,21 +176,19 @@ const Reservation = () => {
           </div>
           <div className="pd-20 card-box mb-30">
             {/* Search User Form */}
-            <Form>
               <Form.Group>
                 <Form.Label>Search User (by TP)</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Enter user TP"
-                  value={userData.tp}
-                  name="tp"
+                  value={userData.mobileNo}
+                  name="mobileNo"
                   onChange={handleChangeUser}
                 />
               </Form.Group>
               <Button variant="primary" onClick={searchUser}>
                 Search User
               </Button>
-            </Form>
 
             {/* Display User Info or Error */}
             {error && (
@@ -143,7 +198,7 @@ const Reservation = () => {
             )}
             {userData.id && (
               <Alert variant="success" className="mt-3">
-                <strong>Found User:</strong> {userData.name} (TP: {userData.tp}
+                <strong>Found User:</strong> {userData.name} (TP: {userData.mobileNo}
                 ), ID: {userData.id}
               </Alert>
             )}
@@ -166,8 +221,8 @@ const Reservation = () => {
                       <Form.Label>Contact Number</Form.Label>
                       <Form.Control
                         type="text"
-                        name="tp"
-                        value={userData.tp}
+                        name="mobileNo"
+                        value={userData.mobileNo}
                         onChange={handleChangeUser}
                       />
                     </Form.Group>
@@ -186,61 +241,82 @@ const Reservation = () => {
             )}
             {/* Booking Form (if user is found) */}
             {userData.id && (
-              <Form className="mt-4">
-                <Row>
-                  <Col>
-                    <Form.Group>
-                      <Form.Label>Pick-up Date & Time</Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="picked"
-                        value={reservationData.picked}
-                        onChange={handleChangeReservation}
-                      />
-                    </Form.Group>
-                  </Col>
-                  <Col>
-                    <Form.Group>
-                      <Form.Label>Pick-out Date & Time</Form.Label>
-                      <Form.Control
-                        type="datetime-local"
-                        name="pick_at"
-                        value={reservationData.pick_at}
-                        onChange={handleChangeReservation}
-                      />
-                    </Form.Group>
-                  </Col>
-                </Row>
-
-                <Form.Group className="mt-3">
-                  <Form.Label>Vehicle Type</Form.Label>
-                  <Form.Control
-                    as="select"
-                    name="vehicle_type_id"
-                    value={reservationData.vehicle_type_id}
-                    onChange={handleChangeReservation}
-                  >
-                    <option value="">Select vehicle type</option>
-                    <option value="1">Car</option>
-                    <option value="2">Truck</option>
-                    <option value="3">Bike</option>
-                  </Form.Control>
-                </Form.Group>
-
-                <Button
-                  variant="success"
-                  className="mt-3"
-                  onClick={handleBooking}
+              <div className="booking-form">
+              <div className="form-group destination">
+                <label htmlFor="inputFrom">From</label>
+                <Autocomplete
+                  onLoad={(autoc) => (pickupRef.current = autoc)}
+                  onPlaceChanged={handlePickupPlaceSelect}
                 >
-                  Create Booking
-                </Button>
+                  <input
+                    type="text"
+                    id="inputFrom"
+                    className="form-control"
+                    placeholder="Select Pickup"
+                  />
+                </Autocomplete>
+              </div>
 
-                {bookingSuccess && (
-                  <Alert variant="success" className="mt-3">
-                    Booking successfully created!
-                  </Alert>
-                )}
-              </Form>
+              <div className="form-group destination">
+                <label htmlFor="inputDestination">Where to?</label>
+                <Autocomplete
+                  onLoad={(autoc) => (destinationRef.current = autoc)}
+                  onPlaceChanged={handleDestinationPlaceSelect}
+                >
+                  <input
+                    type="text"
+                    id="inputDestination"
+                    className="form-control"
+                    placeholder="Select Destination"
+                  />
+                </Autocomplete>
+              </div>
+
+              <div className="select-car-wrapper">
+                <h2>Selected Vehicle</h2>
+                <div className="selected-car">
+                  <div className="form-group car-options">
+                    {vehicleTypeList.map((item) => (
+                      <div
+                        className="form-check form-check-inline"
+                        key={item.id}
+                      >
+                        <input
+                          className="form-check-input"
+                          type="radio"
+                          name="car-opts"
+                          id={`vehicle-${item.id}`} // Unique ID for each input
+                          value={item.id}
+                          onChange={() =>
+                            setFormData((prevData) => ({
+                              ...prevData,
+                              vehicleTypeId: item.id,
+                            }))
+                          }
+                        />
+                        <label
+                          className="form-check-label"
+                          htmlFor={`vehicle-${item.id}`}
+                        >
+                          <img src={item.image} alt={item.name} />
+                        </label>
+                        <div className="car-details">
+                          <h6>{item.vehicleCount}</h6>
+                          <p>{item.name}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <button
+                type="submit"
+                className="button button-dark"
+                onClick={handleSubmit}
+              >
+                Next
+              </button>
+            </div>
             )}
           </div>
         </div>

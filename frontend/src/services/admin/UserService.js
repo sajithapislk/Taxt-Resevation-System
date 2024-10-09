@@ -20,6 +20,32 @@ const UserService = {
       }
     }
   },
+  FilterByTp: async (tp) => {
+    try {
+      const response = await axios.get(`${API_URL}/users/mobile/${tp}`, config);
+      return response.data;
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        return { error: 'Resource not found. Please check the phone number and try again.' };
+      } else if (error.response && error.response.data) {
+        return { error: error.response.data.message };
+      } else {
+        return { error: 'An error occurred. Please try again.' };
+      }
+    }
+  },
+  Unregister: async (userData) => {
+    try {
+      const response = await axios.post(`${API_URL}/users/register-guest`, userData, config);
+      return response.data;
+    } catch (error) {
+      if (error.response && error.response.data) {
+        return { error: error.response.data.message };
+      } else {
+        return { error: 'An error occurred. Please try again.' };
+      }
+    }
+  },
   Update: async (userData) => {
     try {
       const response = await axios.post(`${API_URL}/admin/user/update`, userData, config);

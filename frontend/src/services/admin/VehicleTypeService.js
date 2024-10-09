@@ -17,7 +17,7 @@ const VehicleTypeService = {
       if (error.response && error.response.data) {
         return { error: error.response.data.message };
       } else {
-        return { error: 'An error occurred. Please try again.' };
+        return { error: 'An error occurred. Please try again.'};
       }
     }
   },

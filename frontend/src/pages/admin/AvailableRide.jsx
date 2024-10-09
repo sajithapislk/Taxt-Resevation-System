@@ -1,9 +1,8 @@
-import Breadcrumb from "./components/Breadcrumb";
 import React, { useState, useEffect } from "react";
 import { Card, Button, Container, Row, Col } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
-import VehicleService from "../../services/user/VehicleService";
-import BookingService from "../../services/user/BookingService";
+import VehicleService from "../../services/admin/VehicleService";
+import BookingService from "../../services/admin/BookingService";
 
 const AvailableRide = () => {
   const location = useLocation();
@@ -37,7 +36,7 @@ const AvailableRide = () => {
   }, []);
 
   const handleSubmit = (vehicleId) => {
-    console.log(vehicleId);
+    // console.log(vehicleId);
     setLoading(true);
     setCombinedFormData((prevData) => ({
       ...prevData,
@@ -45,16 +44,16 @@ const AvailableRide = () => {
     }));
     const res = BookingService.Request(combinedFormData);
     if (!res.error) {
+      console.log(res);
     } else {
-      console.error(res.error);
+      console.log(res.error);
     }
   };
 
   return (
-    <>
-      <Breadcrumb title="Available Drivers" path="Available Drivers" />
-      <div className="div-padding our-vehicles-div">
-        <div className="container">
+    <div className="main-container">
+      <div className="pd-ltr-20 xs-pd-20-10">
+        <div className="min-height-200px">
           <Row>
             {vehicleList.length > 0 &&
               vehicleList.map((item) => (
@@ -64,7 +63,6 @@ const AvailableRide = () => {
                   xs={12}
                   key={item.id}
                   className="mb-4"
-                  onClick={() => handleSubmit(item.id)}
                 >
                   <Card>
                     <Card.Img
@@ -96,7 +94,7 @@ const AvailableRide = () => {
           </Row>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

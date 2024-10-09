@@ -45,6 +45,20 @@ const VehicleService = {
       }
     }
   },
+  AvailableList: async (data) => {
+    try {
+      const response = await axios.get(`${API_URL}/vehicles/nearby`, {
+        params: data,
+      },config);
+      return response.data; // Return the response data (e.g., token)
+    } catch (error) {
+      if (error.response && error.response.data) {
+        return { error: error.response.data.message };
+      } else {
+        return { error: "An error occurred. Please try again." };
+      }
+    }
+  },
 };
 
 export default VehicleService;
