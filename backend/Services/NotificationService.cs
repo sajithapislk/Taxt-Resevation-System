@@ -4,18 +4,29 @@ using MailKit.Net.Smtp;
 using MimeKit;
 using backend.Schema.Entity;
 using backend.Helpers;
+using System.Net.Http;
+using System.Text;
+using Newtonsoft.Json;
 
 namespace backend.Services
 {
     public class NotificationService : INotificationService
     {
         private readonly SmtpSettings smtpSettings;
+        private readonly SmsSettings smsSettings;
+        private readonly HttpClient httpClient;
 
         public NotificationService(
-            IOptions<SmtpSettings> smtpSettings
+            IOptions<SmtpSettings> smtpSettings,
+            IOptions<SmsSettings> smsSettings,
+            HttpClient httpClient
             )
         {
             this.smtpSettings = smtpSettings.Value;
+            this.smsSettings = smsSettings.Value;
+            this.httpClient = httpClient;
+
+            httpClient.DefaultRequestHeaders.Add("x-api-key", this.smsSettings.ApiKey);
         }
 
         public async Task SendEmailAsync(string toName, string toEmail, string subject, string htmlContent)
@@ -40,11 +51,28 @@ namespace backend.Services
             await client.DisconnectAsync(true);
         }
 
+        public async Task<string> SendSmsAsync(string toPhoneNumber, string messageContent)
+        {
+            var messagePayload = new
+            {
+                from = smsSettings.FromPhoneNumber,
+                to = toPhoneNumber,
+                content = messageContent
+            };
+
+            var jsonPayload = JsonConvert.SerializeObject(messagePayload);
+            var httpContent = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+
+            var response = await httpClient.PostAsync("https://api.httpsms.com/v1/messages/send", httpContent);
+
+            return await response.Content.ReadAsStringAsync();
+        }
+
         public async Task SendRegistrationCompletedEmailAsync(UserRegisterRequestModel model)
         {
             if (!string.IsNullOrWhiteSpace(model.Email))
             {
-                var emailBody = TemplateGenerator.BuildRegistrationEmailBody(smtpSettings, model);
+                var emailBody = TemplateGenerator.BuildRegistrationCompletedEmailBody(smtpSettings, model);
                 await SendEmailAsync(model.Name, model.Email, "Welcome to CarrGo Taxi Service!", emailBody);
             }
         }
@@ -124,14 +152,89 @@ namespace backend.Services
             }
         }
 
-        public async Task<bool> SendRegistrationSmsAsync(UserRegisterRequestModel model)
+
+        public async Task SendRegistrationCompletedSmsAsync(UserRegisterRequestModel model)
         {
-            return true;
+            if (!string.IsNullOrWhiteSpace(model.MobileNo))
+            {
+                var smsBody = TemplateGenerator.BuildRegistrationCompletedSmsBody(model);
+                await SendSmsAsync(model.MobileNo, smsBody);
+            }
         }
 
-        
+        public async Task SendBookingAddedSmsAsync(Booking model)
+        {
+            if (!string.IsNullOrWhiteSpace(model.User.MobileNo))
+            {
+                var userSmsBody = TemplateGenerator.BuildBookingAddedUserSms(model);
+                await SendSmsAsync(model.User.MobileNo, userSmsBody);
+            }
 
-        
+            if (!string.IsNullOrWhiteSpace(model.Vehicle.Driver.MobileNo))
+            {
+                var driverSmsBody = TemplateGenerator.BuildBookingAddedDriverSms(model);
+                await SendSmsAsync(model.Vehicle.Driver.MobileNo, driverSmsBody);
+            }
+        }
 
+        public async Task SendBookingConfirmedSmsAsync(Booking model)
+        {
+            if (!string.IsNullOrWhiteSpace(model.User.MobileNo))
+            {
+                var userSmsBody = TemplateGenerator.BuildBookingConfirmedUserSms(model);
+                await SendSmsAsync(model.User.MobileNo, userSmsBody);
+            }
+
+            if (!string.IsNullOrWhiteSpace(model.Vehicle.Driver.MobileNo))
+            {
+                var driverSmsBody = TemplateGenerator.BuildBookingConfirmedDriverSms(model);
+                await SendSmsAsync(model.Vehicle.Driver.MobileNo, driverSmsBody);
+            }
+        }
+
+        public async Task SendBookingStartedSmsAsync(Booking model)
+        {
+            if (!string.IsNullOrWhiteSpace(model.User.MobileNo))
+            {
+                var userSmsBody = TemplateGenerator.BuildBookingStartedUserSms(model);
+                await SendSmsAsync(model.User.MobileNo, userSmsBody);
+            }
+
+            if (!string.IsNullOrWhiteSpace(model.Vehicle.Driver.MobileNo))
+            {
+                var driverSmsBody = TemplateGenerator.BuildBookingStartedDriverSms(model);
+                await SendSmsAsync(model.Vehicle.Driver.MobileNo, driverSmsBody);
+            }
+        }
+
+        public async Task SendBookingCompletedSmsAsync(Booking model)
+        {
+            if (!string.IsNullOrWhiteSpace(model.User.MobileNo))
+            {
+                var userSmsBody = TemplateGenerator.BuildBookingCompletedUserSms(model);
+                await SendSmsAsync(model.User.MobileNo, userSmsBody);
+            }
+
+            if (!string.IsNullOrWhiteSpace(model.Vehicle.Driver.MobileNo))
+            {
+                var driverSmsBody = TemplateGenerator.BuildBookingCompletedDriverSms(model);
+                await SendSmsAsync(model.Vehicle.Driver.MobileNo, driverSmsBody);
+            }
+        }
+
+        public async Task SendBookingCancelledSmsAsync(Booking model)
+        {
+            if (!string.IsNullOrWhiteSpace(model.User.MobileNo))
+            {
+                var userSmsBody = TemplateGenerator.BuildBookingCancelledUserSms(model);
+                await SendSmsAsync(model.User.MobileNo, userSmsBody);
+            }
+
+            if (!string.IsNullOrWhiteSpace(model.Vehicle.Driver.MobileNo))
+            {
+                var driverSmsBody = TemplateGenerator.BuildBookingCancelledDriverSms(model);
+                await SendSmsAsync(model.Vehicle.Driver.MobileNo, driverSmsBody);
+            }
+        }
     }
 }

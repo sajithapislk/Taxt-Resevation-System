@@ -55,13 +55,11 @@ namespace backend.Services
                     var username = $"{EmailValidator.ExtractEmailId(model.Email)}_{user.Id}";
                     user.Username = model.Username = username;
                     await dbContext.SaveChangesAsync();
-                    await notificationService.SendRegistrationCompletedEmailAsync(model);
+
+                    _ = Task.Run(() => notificationService.SendRegistrationCompletedEmailAsync(model));
                 }
 
-                if (model.MobileNo != null)
-                {
-                    await notificationService.SendRegistrationSmsAsync(model);
-                }
+                await notificationService.SendRegistrationCompletedSmsAsync(model);
 
                 var token = await GenerateJwtToken(user);
 

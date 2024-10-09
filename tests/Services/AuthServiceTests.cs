@@ -84,7 +84,7 @@ namespace tests.Services
 
             // Verify external service calls
             _mockExternalService.Verify(s => s.SendRegistrationCompletedEmailAsync(It.IsAny<UserRegisterRequestModel>()), Times.Once);
-            _mockExternalService.Verify(s => s.SendRegistrationSmsAsync(It.IsAny<UserRegisterRequestModel>()), Times.Once);
+            _mockExternalService.Verify(s => s.SendRegistrationCompletedSmsAsync(It.IsAny<UserRegisterRequestModel>()), Times.Once);
         }
 
         [Fact]

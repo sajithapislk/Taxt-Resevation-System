@@ -5,7 +5,7 @@ namespace backend.Helpers
 {
     public static class TemplateGenerator
     {
-        public static string BuildRegistrationEmailBody(SmtpSettings smtpSettings, UserRegisterRequestModel model)
+        public static string BuildRegistrationCompletedEmailBody(SmtpSettings smtpSettings, UserRegisterRequestModel model)
         {
             return $@"
             <html>
@@ -360,6 +360,61 @@ namespace backend.Helpers
                     </div>
                 </body>
             </html>";
+        }
+
+        public static string BuildRegistrationCompletedSmsBody(UserRegisterRequestModel model)
+        {
+            return $"Welcome to CarrGo, {model.Name}! Your account has been created. You can now log in and start booking rides. We're excited to have you onboard!";
+        }
+
+        public static string BuildBookingAddedUserSms(Booking model)
+        {
+            return $"Your ride has been booked! Pickup: {model.PickUpPlace}. Driver: {model.Vehicle.Driver.Name}. Booking ID: {model.Id}. You'll get a confirmation soon.";
+        }
+
+        public static string BuildBookingAddedDriverSms(Booking model)
+        {
+            return $"New ride booked! Pickup: {model.PickUpPlace}. Drop-off: {model.DropOffPlace}. Passenger: {model.User.Name}. Booking ID: {model.Id}. Confirm to proceed.";
+        }
+
+        public static string BuildBookingConfirmedUserSms(Booking model)
+        {
+            return $"Your ride is confirmed! Driver {model.Vehicle.Driver.Name} is on the way. Booking ID: {model.Id}. Pickup at {model.PickUpPlace}. Track in real-time.";
+        }
+
+        public static string BuildBookingConfirmedDriverSms(Booking model)
+        {
+            return $"Booking confirmed! Pickup {model.PickUpPlace}. Drop-off {model.DropOffPlace}. Passenger: {model.User.Name}. Booking ID: {model.Id}. Proceed to pickup.";
+        }
+
+        public static string BuildBookingStartedUserSms(Booking model)
+        {
+            return $"Your ride has started! Enjoy your journey with Driver {model.Vehicle.Driver.Name}. Booking ID: {model.Id}. Drop-off at {model.DropOffPlace}.";
+        }
+
+        public static string BuildBookingStartedDriverSms(Booking model)
+        {
+            return $"Ride started! Passenger: {model.User.Name}. Booking ID: {model.Id}. Pickup {model.PickUpPlace}. Drop-off {model.DropOffPlace}. Drive safe!";
+        }
+
+        public static string BuildBookingCompletedUserSms(Booking model)
+        {
+            return $"Your ride is complete! Total fare: {model.Price:C}. Thanks for riding with CarrGo. Booking ID: {model.Id}. We hope to see you again!";
+        }
+
+        public static string BuildBookingCompletedDriverSms(Booking model)
+        {
+            return $"Ride completed! Passenger: {model.User.Name}. Booking ID: {model.Id}. Fare: {model.Price:C}. Thanks for providing excellent service!";
+        }
+
+        public static string BuildBookingCancelledUserSms(Booking model)
+        {
+            return $"Your booking has been cancelled. We're sorry for the inconvenience. Booking ID: {model.Id}. You can book another ride anytime.";
+        }
+
+        public static string BuildBookingCancelledDriverSms(Booking model)
+        {
+            return $"The booking has been cancelled. Passenger: {model.User.Name}. Booking ID: {model.Id}. We're sorry for the inconvenience. Please standby for new bookings.";
         }
 
     }

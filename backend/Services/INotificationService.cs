@@ -11,6 +11,12 @@ namespace backend.Services
         Task SendBookingStartedEmailAsync(Booking model);
         Task SendBookingCompletedEmailAsync(Booking model);
         Task SendBookingCancelledEmailAsync(Booking model);
-        Task<bool> SendRegistrationSmsAsync(UserRegisterRequestModel model);
+
+        Task SendRegistrationCompletedSmsAsync(UserRegisterRequestModel model);
+        Task SendBookingAddedSmsAsync(Booking model);
+        Task SendBookingConfirmedSmsAsync(Booking model);
+        Task SendBookingStartedSmsAsync(Booking model);
+        Task SendBookingCompletedSmsAsync(Booking model);
+        Task SendBookingCancelledSmsAsync(Booking model);
     }
 }

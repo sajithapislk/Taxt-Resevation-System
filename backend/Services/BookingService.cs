@@ -66,6 +66,7 @@ namespace backend.Services
             var existingRecord = await GetWithNavigationProps(entity.Id)
                 ?? throw new KeyNotFoundException($"No matching record found for the id {entity.Id}");
             _ = Task.Run(() => notificationService.SendBookingAddedEmailAsync(existingRecord));
+            await notificationService.SendBookingAddedSmsAsync(existingRecord);
 
             return entity;
         }
@@ -121,6 +122,7 @@ namespace backend.Services
             existingRecord.Status = BookingStatus.Confirmed;
             await dbContext.SaveChangesAsync();
             _ = Task.Run(() => notificationService.SendBookingConfirmedEmailAsync(existingRecord));
+            await notificationService.SendBookingConfirmedSmsAsync(existingRecord);
             return existingRecord;
         }
 
@@ -137,6 +139,7 @@ namespace backend.Services
 
             await dbContext.SaveChangesAsync();
             _ = Task.Run(() => notificationService.SendBookingStartedEmailAsync(existingRecord));
+            await notificationService.SendBookingStartedSmsAsync(existingRecord);
             return existingRecord;
         }
 
@@ -154,6 +157,7 @@ namespace backend.Services
 
             await dbContext.SaveChangesAsync();
             _ = Task.Run(() => notificationService.SendBookingCompletedEmailAsync(existingRecord));
+            await notificationService.SendBookingCompletedSmsAsync(existingRecord);
             return existingRecord;
         }
 
@@ -165,6 +169,7 @@ namespace backend.Services
             existingRecord.Status = BookingStatus.Cancelled;
             await dbContext.SaveChangesAsync();
             _ = Task.Run(() => notificationService.SendBookingCancelledEmailAsync(existingRecord));
+            await notificationService.SendBookingCancelledSmsAsync(existingRecord);
             return existingRecord;
         }
 
