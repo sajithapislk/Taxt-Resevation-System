@@ -55,7 +55,7 @@ namespace backend.Services
                     var username = $"{EmailValidator.ExtractEmailId(model.Email)}_{user.Id}";
                     user.Username = model.Username = username;
                     await dbContext.SaveChangesAsync();
-                    await notificationService.SendRegistrationEmailAsync(model);
+                    await notificationService.SendRegistrationCompletedEmailAsync(model);
                 }
 
                 if (model.MobileNo != null)

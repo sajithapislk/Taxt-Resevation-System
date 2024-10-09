@@ -21,7 +21,8 @@ namespace backend.Schema.Entity
         public Sex? Gender { get; set; }
         public MaritalStatus? Status { get; set; }
         public string? Description { get; set; }
-
+        //public bool? EnableEmailNotifications { get; set; }
+        //public bool? EnableSmsNotifications { get; set; }
 
         //location
         public Point? Location { get; set; }

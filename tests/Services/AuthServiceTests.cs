@@ -83,7 +83,7 @@ namespace tests.Services
             Assert.Equal("New User", user.Name);
 
             // Verify external service calls
-            _mockExternalService.Verify(s => s.SendRegistrationEmailAsync(It.IsAny<UserRegisterRequestModel>()), Times.Once);
+            _mockExternalService.Verify(s => s.SendRegistrationCompletedEmailAsync(It.IsAny<UserRegisterRequestModel>()), Times.Once);
             _mockExternalService.Verify(s => s.SendRegistrationSmsAsync(It.IsAny<UserRegisterRequestModel>()), Times.Once);
         }
 
