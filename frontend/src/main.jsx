@@ -9,6 +9,7 @@ import About from "./pages/public/About.jsx";
 import Login from "./pages/public/Login.jsx";
 import TakeRide from "./pages/user/TakeRide.jsx";
 import AvailableRide from "./pages/user/AvailableRide.jsx";
+import AdminAvailableRide from "./pages/admin/AvailableRide.jsx";
 import DriverDashboard from "./pages/driver/Dashboard.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AdminLayout from "./layouts/Admin.jsx";
@@ -22,6 +23,7 @@ import Vehicle from "./pages/admin/Vehicle.jsx";
 import VehicleType from "./pages/admin/VehicleType.jsx";
 import ProtectedRoute from "./wrapper/ProtectedRoute.jsx";
 import CheckAuth from "./wrapper/CheckAuth.jsx";
+import Logout from "./pages/Logout.jsx";
 
 const router = createBrowserRouter([
   {
@@ -118,8 +120,17 @@ const router = createBrowserRouter([
         path: "reservation",
         element: <Reservation />,
       },
+      {
+        path: "available-driver",
+        element: <AdminAvailableRide />,
+      },
     ],
   },
+  {
+    path: "logout",
+    element: <Logout />,
+  }
+
 ]);
 
 createRoot(document.getElementById("root")).render(
