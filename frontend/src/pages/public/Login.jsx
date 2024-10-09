@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import AuthService from "./../../services/AuthService"; // Assuming this is your axios service
+import { useNavigate  } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("rider"); // To handle active tab (Rider/Driver)
   const [formData, setFormData] = useState({
     email: "",
@@ -46,10 +48,19 @@ const Login = () => {
     try {
       if (type === "driver") {
         const response = await AuthService.DriverLogin(payload);
+        if (!response.error) {
+          navigate('/driver/dashboard');
+        }
       } else if (type === "user") {
         const response = await AuthService.UserLogin(payload);
+        if (!response.error) {
+          navigate('/user/take-ride');
+        }
       } else if (type === "admin") {
         const response = await AuthService.AdminLogin(payload);
+        if (!response.error) {
+          navigate('/admin/dashboard');
+        }
       }
       setSuccessMessage(`Successfully logged in as ${activeTab}!`);
     } catch (error) {
@@ -126,7 +137,7 @@ const Login = () => {
                 >
                   <form
                     className="mb-4"
-                    onSubmit={(e) => handleSubmit(e, "rider")}
+                    onSubmit={(e) => handleSubmit(e, "user")}
                   >
                     <div className="form-floating">
                       <input

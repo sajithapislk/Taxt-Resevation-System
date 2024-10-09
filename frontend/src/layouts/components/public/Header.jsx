@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import logo from "./../../../assets/images/logo-main.webp";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [bodyClass, setBodyClass] = useState("");
@@ -25,16 +26,16 @@ const Header = () => {
               <div className="col-12 col-lg-6">
                 <div className="header__upper--left">
                   <div className="d-none d-lg-block logo">
-                    <a href="/">
+                    <Link to={"/"}>
                       <img src={logo} alt="Site Logo" />
-                    </a>
+                    </Link>
                   </div>
                   <div className="d-block d-lg-none logo w-49px">
-                    <a href="/">
+                    <Link to={"/"}>
                       <img src={logo} alt="Site Logo" />
-                    </a>
+                    </Link>
                   </div>
-                  
+
                   <button
                     type="button"
                     className="nav-toggle-btn a-nav-toggle ms-auto d-block d-lg-none"
@@ -73,37 +74,31 @@ const Header = () => {
                     id="navbarSupportedContent"
                   >
                     <ul className="navbar-nav me-auto">
-                      <li className="nav-item dropdown active">
-                        <a
-                          className="nav-link dropdown-toggle"
-                          href="/"
-                        >
+                      <li className="nav-item active">
+                        <Link to={"/"} className="nav-link dropdown-toggle">
                           <i className="fas fa-home"></i>Home
-                        </a>
+                        </Link>
                       </li>
                       <li className="nav-item">
-                        <a className="nav-link" href="/about">
+                        <Link to={"/about"} className="nav-link">
                           <i className="fas fa-exclamation-circle"></i>About
-                        </a>
+                        </Link>
                       </li>
                       <li className="nav-item">
-                        <a className="nav-link" href="our-vehicles.html">
+                        <Link to={"/"} className="nav-link">
                           <i className="fas fa-taxi"></i>Our Vehicles
-                        </a>
+                        </Link>
                       </li>
                       <li className="nav-item">
-                        <a className="nav-link" href="contact-us.html">
+                        <Link to={"/contact"} className="nav-link">
                           <i className="fas fa-map-marker-alt"></i>Contact
-                        </a>
+                        </Link>
                       </li>
                     </ul>
                     <div className="my-2 my-lg-0 d-inline-flex">
-                      <a
-                        href="/login"
-                        className="button button-light big"
-                      >
+                      <Link to={"/login"} className="button button-light big">
                         Get Started
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </nav>

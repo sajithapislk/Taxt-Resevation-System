@@ -20,7 +20,8 @@ import NewVehicle from "./pages/driver/Vehicle/New.jsx";
 import EditVehicle from "./pages/driver/Vehicle/Edit.jsx";
 import Vehicle from "./pages/admin/Vehicle.jsx";
 import VehicleType from "./pages/admin/VehicleType.jsx";
-import ProtectedRoute from "./ProtectedRoute.jsx";
+import ProtectedRoute from "./wrapper/ProtectedRoute.jsx";
+import CheckAuth from "./wrapper/CheckAuth.jsx";
 
 const router = createBrowserRouter([
   {
@@ -37,7 +38,11 @@ const router = createBrowserRouter([
       },
       {
         path: "login",
-        element: <Login />,
+        element: (
+          <CheckAuth>
+            <Login />
+          </CheckAuth>
+        ),
       },
     ],
   },
