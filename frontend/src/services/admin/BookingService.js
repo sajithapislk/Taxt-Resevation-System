@@ -11,7 +11,7 @@ const config = {
 const BookingService = {
     List: async () => {
       try {
-        const response = await axios.get(`${API_URL}/admin/booking`);
+        const response = await axios.get(`${API_URL}/bookings`);
         return response.data; // Return the response data (e.g., token)
       } catch (error) {
         if (error.response && error.response.data) {
