@@ -15,18 +15,21 @@ namespace backend.Services
         private readonly IUserService userService;
         private readonly IDriverService driverService;
         private readonly IVehicleService vehicleService;
+        private readonly INotificationService notificationService;
 
         public BookingService(
             AppDbContext dbContext,
             IUserService userService,
             IDriverService driverService,
-            IVehicleService vehicleService
+            IVehicleService vehicleService,
+            INotificationService notificationService
         ) : base(dbContext)
         {
             this.dbContext = dbContext;
             this.userService = userService;
             this.driverService = driverService;
             this.vehicleService = vehicleService;
+            this.notificationService = notificationService;
         }
 
         public async Task<Booking> AddAsync(NewBookingRequestModel model)
@@ -58,7 +61,13 @@ namespace backend.Services
             user.Location = entity.PickUpLocation;
             user.Place = entity.PickUpPlace;
 
-            return await AddAsync(entity);
+            entity = await AddAsync(entity);
+
+            var existingRecord = await GetWithNavigationProps(entity.Id)
+                ?? throw new KeyNotFoundException($"No matching record found for the id {entity.Id}");
+            _ = Task.Run(() => notificationService.SendBookingAddedEmailAsync(existingRecord));
+
+            return entity;
         }
 
         public async Task<Booking> UpdateAsync(int id, NewBookingRequestModel model)
@@ -106,64 +115,56 @@ namespace backend.Services
 
         public async Task<Booking> ConfirmAsync(int id)
         {
-            var existingRecord = await GetAsync(id)
+            var existingRecord = await GetWithNavigationProps(id)
                 ?? throw new KeyNotFoundException($"No matching record found for the id {id}");
 
             existingRecord.Status = BookingStatus.Confirmed;
             await dbContext.SaveChangesAsync();
+            _ = Task.Run(() => notificationService.SendBookingConfirmedEmailAsync(existingRecord));
             return existingRecord;
         }
 
         public async Task<Booking> StartAsync(int id)
         {
-            var existingRecord = await GetAsync(id)
+            var existingRecord = await GetWithNavigationProps(id)
                 ?? throw new KeyNotFoundException($"No matching record found for the id {id}");
-
-            var vehicle = await vehicleService.GetAsync(existingRecord.VehicleId)
-                ?? throw new KeyNotFoundException($"No matching vehicle record found for the id {existingRecord.VehicleId}");
-            var driver = await driverService.GetAsync(vehicle.DriverId)
-                ?? throw new KeyNotFoundException($"No matching driver record found for the id {vehicle.DriverId}");
 
             existingRecord.Status = BookingStatus.InProgress;
             existingRecord.PickUpTime = DateTime.Now;
 
-            vehicle.Location = driver.Location = existingRecord.PickUpLocation;
-            vehicle.Place = driver.Place = existingRecord.PickUpPlace;
+            existingRecord.Vehicle.Location = existingRecord.Vehicle.Driver.Location = existingRecord.PickUpLocation;
+            existingRecord.Vehicle.Place = existingRecord.Vehicle.Driver.Place = existingRecord.PickUpPlace;
 
             await dbContext.SaveChangesAsync();
+            _ = Task.Run(() => notificationService.SendBookingStartedEmailAsync(existingRecord));
             return existingRecord;
         }
 
         public async Task<Booking> CompleteAsync(int id)
         {
-            var existingRecord = await GetAsync(id)
+            var existingRecord = await GetWithNavigationProps(id)
                 ?? throw new KeyNotFoundException($"No matching record found for the id {id}");
-
-            var vehicle = await vehicleService.GetAsync(existingRecord.VehicleId)
-                ?? throw new KeyNotFoundException($"No matching vehicle record found for the id {existingRecord.VehicleId}");
-            var driver = await driverService.GetAsync(vehicle.DriverId)
-                ?? throw new KeyNotFoundException($"No matching driver record found for the id {vehicle.DriverId}");
-            var user = await userService.GetAsync(existingRecord.UserId)
-                ?? throw new KeyNotFoundException($"No matching user record found for the id {existingRecord.UserId}");
 
             existingRecord.Status = BookingStatus.Completed;
             existingRecord.DropOffTime = DateTime.Now;
             existingRecord.Duration = existingRecord.DropOffTime - existingRecord.PickUpTime;
 
-            vehicle.Location = driver.Location = user.Location = existingRecord.DropOffLocation;
-            vehicle.Place = driver.Place = user.Place = existingRecord.DropOffPlace;
+            existingRecord.Vehicle.Location = existingRecord.Vehicle.Driver.Location = existingRecord.User.Location = existingRecord.DropOffLocation;
+            existingRecord.Vehicle.Place = existingRecord.Vehicle.Driver.Place = existingRecord.User.Place = existingRecord.DropOffPlace;
 
             await dbContext.SaveChangesAsync();
+            _ = Task.Run(() => notificationService.SendBookingCompletedEmailAsync(existingRecord));
             return existingRecord;
         }
 
         public async Task<Booking> CancelAsync(int id)
         {
-            var existingRecord = await GetAsync(id)
+            var existingRecord = await GetWithNavigationProps(id)
                 ?? throw new KeyNotFoundException($"No matching record found for the id {id}");
 
             existingRecord.Status = BookingStatus.Cancelled;
             await dbContext.SaveChangesAsync();
+            _ = Task.Run(() => notificationService.SendBookingCancelledEmailAsync(existingRecord));
             return existingRecord;
         }
 
@@ -219,6 +220,16 @@ namespace backend.Services
 
             await dbContext.SaveChangesAsync();
             return existingRecord;
+        }
+
+        private async Task<Booking?> GetWithNavigationProps(int id)
+        {
+            return await dbContext.Bookings
+                .Include(x => x.User)
+                .Include(x => x.Vehicle)
+                .ThenInclude(x => x.Driver)
+                .Where(x => x.Id == id)
+                .FirstOrDefaultAsync();
         }
     }
 }
