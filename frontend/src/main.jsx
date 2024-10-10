@@ -20,6 +20,7 @@ import Reservation from "./pages/admin/Reservation.jsx";
 import NewVehicle from "./pages/driver/Vehicle/New.jsx";
 import EditVehicle from "./pages/driver/Vehicle/Edit.jsx";
 import Vehicle from "./pages/admin/Vehicle.jsx";
+import PublicVehicle from "./pages/public/Vehicles.jsx";
 import VehicleType from "./pages/admin/VehicleType.jsx";
 import ProtectedRoute from "./wrapper/ProtectedRoute.jsx";
 import CheckAuth from "./wrapper/CheckAuth.jsx";
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: "about",
         element: <About />,
+      },
+      {
+        path: "vehicles",
+        element: <PublicVehicle />,
       },
       {
         path: "login",
