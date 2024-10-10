@@ -46,9 +46,22 @@ const BookingService = {
       }
     }
   },
+  Confirm: async (id) => {
+    try {
+      const response = await axios.put(`${API_URL}/bookings/${id}/confirm`, config);
+      return response.data; // Return the response data (success message)
+    } catch (error) {
+      // Handle the error response
+      if (error.response && error.response.data) {
+        return { error: error.response.data.message };
+      } else {
+        return { error: 'An error occurred. Please try again.' };
+      }
+    }
+  },
   Start: async (id) => {
     try {
-      const response = await axios.put(`${API_URL}/user/booking/${id}/start`, config);
+      const response = await axios.put(`${API_URL}/bookings/${id}/start`, config);
       return response.data; // Return the response data (success message)
     } catch (error) {
       // Handle the error response
@@ -61,7 +74,7 @@ const BookingService = {
   },
   Complete: async (id) => {
     try {
-      const response = await axios.put(`${API_URL}/user/booking/${id}/complete`, config);
+      const response = await axios.put(`${API_URL}/bookings/${id}/complete`, config);
       return response.data; // Return the response data (success message)
     } catch (error) {
       // Handle the error response
@@ -74,7 +87,7 @@ const BookingService = {
   },
   Cancel: async (id) => {
     try {
-      const response = await axios.put(`${API_URL}/user/booking/${id}/cancel`, config);
+      const response = await axios.put(`${API_URL}/bookings/${id}/cancel`, config);
       return response.data; // Return the response data (success message)
     } catch (error) {
       // Handle the error response

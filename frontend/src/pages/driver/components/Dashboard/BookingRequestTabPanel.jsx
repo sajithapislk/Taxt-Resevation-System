@@ -21,7 +21,8 @@ const BookingRequestTabPanel = () => {
   }, []);
 
   // Approve a request
-  const handleApprove = (id) => {
+  const handleApprove = async (id) => {
+    const data = await BookingService.Confirm(id);
     setBookings(
       bookings.map((request) =>
         request.id === id ? { ...request, status: "approved" } : request
@@ -30,7 +31,8 @@ const BookingRequestTabPanel = () => {
   };
 
   // Reject a request
-  const handleReject = (id) => {
+  const handleReject = async (id) => {
+    const data = await BookingService.Cancel(id);
     setBookings(
       bookings.map((request) =>
         request.id === id ? { ...request, status: "rejected" } : request

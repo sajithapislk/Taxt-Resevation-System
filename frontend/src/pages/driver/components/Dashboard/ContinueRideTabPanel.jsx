@@ -42,7 +42,8 @@ const ContinueRideTabPanel = () => {
   };
 
   // Handle starting the ride
-  const handleStartRide = () => {
+  const handleStartRide = async () => {
+    const data = await BookingService.Start(id);
     setRideStatus("started");
   };
 
