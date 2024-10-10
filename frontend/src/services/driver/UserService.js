@@ -11,7 +11,7 @@ const config = {
 const UserService = {
   Info: async () => {
     try {
-      const response = await axios.get(`${API_URL}/driver/profile`);
+      const response = await axios.get(`${API_URL}/drivers/${user.id}`, config);
       return response.data; // Return the response data (e.g., token)
     } catch (error) {
       if (error.response && error.response.data) {
@@ -36,7 +36,7 @@ const UserService = {
   },
   Update: async (userData) => {
     try {
-      const response = await axios.post(`${API_URL}/driver/update`, userData);
+      const response = await axios.put(`${API_URL}/drivers/update`, userData, config);
       return response.data; // Return the response data (success message)
     } catch (error) {
       // Handle the error response
