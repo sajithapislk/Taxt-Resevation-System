@@ -22,6 +22,18 @@ const BookingService = {
         }
       }
     },
+    ListByStatus: async (status) => {
+      try {
+        const response = await axios.get(`${API_URL}/bookings/driver/${user.id}?status=${status}`, config);
+        return response.data; // Return the response data (e.g., token)
+      } catch (error) {
+        if (error.response && error.response.data) {
+          return { error: error.response.data.message };
+        } else {
+          return { error: 'An error occurred. Please try again.' };
+        }
+      }
+    },
   Info: async (id) => {
     try {
       const response = await axios.get(`${API_URL}/bookings/${id}`, config);
