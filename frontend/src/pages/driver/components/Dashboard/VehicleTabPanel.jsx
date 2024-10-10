@@ -6,7 +6,15 @@ function VehicleTabPanel() {
   const [vehicles, setVehicles] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [newVehicle, setNewVehicle] = useState({
-    name: "",
+    driverId: '',
+    vehicle_type_id: '',
+    cost_per_km: '',
+    description: '',
+    color: '',
+    vehicle_number: '',
+    passenger_seat: '',
+    is_available_ac: 'false',
+    max_load: '',
     image: null,
   });
 
@@ -95,16 +103,51 @@ function VehicleTabPanel() {
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3" controlId="vehicleName">
-              <Form.Label>Vehicle Name</Form.Label>
-              <Form.Control
-                type="text"
-                name="name"
-                value={newVehicle.name}
-                onChange={handleInputChange}
-                required
-              />
-            </Form.Group>
+            {Object.keys(newVehicle).map(
+              (key) =>
+                key !== "image" && key !== "driverId" &&  (
+                  <Form.Group key={key} className="mb-3">
+                    <Form.Label>
+                      {key.replace(/_/g, " ").toUpperCase()}
+                    </Form.Label>
+                    {key === "description" ? (
+                      <Form.Control
+                        as="textarea"
+                        rows={3}
+                        name={key}
+                        value={newVehicle[key]}
+                        onChange={handleInputChange}
+                      />
+                    ) : key === "is_available_ac" ? (
+                      <Form.Select
+                        name={key}
+                        value={newVehicle[key]}
+                        onChange={handleInputChange}
+                      >
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                      </Form.Select>
+                    ) : (
+                      <Form.Control
+                        type={
+                          [
+                            "cost_per_km",
+                            "max_load",
+                            "passenger_seat",
+                            "driver_id",
+                            "vehicle_type_id",
+                          ].includes(key)
+                            ? "number"
+                            : "text"
+                        }
+                        name={key}
+                        value={newVehicle[key]}
+                        onChange={handleInputChange}
+                      />
+                    )}
+                  </Form.Group>
+                )
+            )}
             <Form.Group className="mb-3" controlId="vehicleImage">
               <Form.Label>Vehicle Image</Form.Label>
               <Form.Control
