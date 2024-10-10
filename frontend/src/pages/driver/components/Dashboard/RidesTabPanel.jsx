@@ -1,128 +1,208 @@
-function TabPanel6() {
+// BookingHistory.js
+import React, { useEffect, useState } from "react";
+import {
+  Table,
+  Spinner,
+  Alert,
+  Container,
+  Button,
+  Modal,
+  Form,
+} from "react-bootstrap";
+import BookingService from "../../../../services/driver/BookingService";
+
+const RidesTabPanel = () => {
+  const [bookings, setBookings] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Modal state
+  const [showModal, setShowModal] = useState(false);
+  const [feedback, setFeedback] = useState({
+    bookingId: null,
+    rate: 0,
+    feedback: "",
+  });
+  const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
+
+  useEffect(() => {
+    const fetchBookings = async () => {
+      try {
+        const data = await BookingService.List();
+        setBookings(data);
+      } catch (err) {
+        setError("Failed to fetch booking history.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBookings();
+  }, []);
+
+  // Open modal and set current booking
+  const handleShowModal = (booking) => {
+    setFeedback({ id: booking.id, rate: 0, feedback: "" });
+    setFeedbackSubmitted(false);
+    setShowModal(true);
+  };
+
+  // Handle modal close
+  const handleCloseModal = () => setShowModal(false);
+
+  // Handle feedback submit
+  const handleSubmitFeedback = async () => {
+    setFeedbackSubmitted(true);
+    const data = await BookingService.Feedback(feedback);
+    // Simulating feedback submission
+    setTimeout(() => {
+      setShowModal(false);
+    }, 1500);
+  };
+
+  const handleRatingChange = (newRating) => {
+    console.log(newRating);
+    setFeedback((prevFeedback) => ({ ...prevFeedback, rate: newRating }));
+  };
+  if (loading) {
+    return (
+      <Container className="mt-5 text-center">
+        <Spinner animation="border" role="status">
+          <span className="sr-only">Loading...</span>
+        </Spinner>
+      </Container>
+    );
+  }
+
+  if (error) {
+    return (
+      <Container className="mt-5">
+        <Alert variant="danger">{error}</Alert>
+      </Container>
+    );
+  }
+
   return (
-    <div className="rides-details">
-      <div className="row">
-        <div className="col-lg-6">
-          <h4>Rides</h4>
-        </div>
-        <div className="col-lg-6">
-          <div className="rides-filter">
-            <ul>
-              <li>
-                <a href="#">Yesterday</a>
-              </li>
-              <li>
-                <a href="#">Last Week</a>
-              </li>
-              <li>
-                <a href="#">Last Month</a>
-              </li>
-              <li>
-                <a href="#">Last 6 Month</a>
-              </li>
-              <li>
-                <a href="#">Last Year</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
+    <Container className="mt-5">
+      <h2 className="mb-4">Booking History</h2>
       <div className="row small-div">
         <div className="col-lg-12">
           <div className="total-earning-table table-responsive">
-            <table className="table">
-              <thead>
-                <tr>
-                  <th scope="col">Name of Cabs</th>
-                  <th scope="col">Earnigns</th>
-                  <th scope="col">Date</th>
-                  <th scope="col">Passengers</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">
-                    BMW 5 <small>“4976ART RU”</small>
-                  </th>
-                  <td>$337.29</td>
-                  <td>May 11, 2018</td>
-                  <td>Johnson Smith</td>
-                </tr>
-                <tr>
-                  <th scope="row">
-                    Audi <small>“4876ORT AU”</small>
-                  </th>
-                  <td>$856.56</td>
-                  <td>May 11, 2018</td>
-                  <td>John Doe</td>
-                </tr>
-                <tr>
-                  <th scope="row">
-                    Alto XL <small>“4865ART KU”</small>
-                  </th>
-                  <td>$186.00</td>
-                  <td>May 11, 2018</td>
-                  <td>Rock William</td>
-                </tr>
-                <tr>
-                  <th scope="row">
-                    Swift Dezire <small>“9856BRU PO”</small>
-                  </th>
-                  <td>$847.25</td>
-                  <td>May 11, 2018</td>
-                  <td>Jassica</td>
-                </tr>
-                <tr>
-                  <th scope="row">
-                    BMW 5 <small>“4976ART RU”</small>
-                  </th>
-                  <td>$1337.29</td>
-                  <td>May 11, 2018</td>
-                  <td>Elly Smith</td>
-                </tr>
-                <tr>
-                  <th scope="row">
-                    Tesia <small>“68946KUY UK”</small>
-                  </th>
-                  <td>$869.29</td>
-                  <td>May 11, 2018</td>
-                  <td>Stone Gold</td>
-                </tr>
-                <tr>
-                  <th scope="row">
-                    Audi 8 <small>“4976ART RU”</small>
-                  </th>
-                  <td>$537.29</td>
-                  <td>May 11, 2018</td>
-                  <td>Rock</td>
-                </tr>
-                <tr>
-                  <th scope="row">
-                    Honda City XL <small>“8766ART TU”</small>
-                  </th>
-                  <td>$225.50</td>
-                  <td>May 11, 2018</td>
-                  <td>Johnson Doe</td>
-                </tr>
-                <tr>
-                  <th scope="row">
-                    Alto XL <small>“3589PMT MB”</small>
-                  </th>
-                  <td>$100.00</td>
-                  <td>May 11, 2018</td>
-                  <td>John William</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div className="text-center">
-            <a href="#" className="button button-dark">
-              View More
-            </a>
+            {bookings.length > 0 ? (
+              <Table className="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">pickUpPlace</th>
+                    <th scope="col">dropOffPlace</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {bookings.map((booking, index) => (
+                    <tr key={booking.id} scope="row">
+                      <td>{index + 1}</td>
+                      <td>{booking.pickUpPlace}</td>
+                      <td>{booking.dropOffPlace}</td>
+                      <td>
+                        <span
+                          className={`badge ${
+                            booking.status === 4
+                              ? "bg-success"
+                              : booking.status === 1
+                              ? "bg-warning"
+                              : "bg-danger"
+                          }`}
+                        >
+                          {booking.status}
+                        </span>
+                      </td>
+                      <td>{booking.price}</td>
+                      <td>
+                        <Button
+                          variant="primary"
+                          onClick={() => handleShowModal(booking)}
+                          disabled={booking.status !== 4}
+                        >
+                          Give Feedback
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            ) : (
+              <Alert variant="info">No bookings found.</Alert>
+            )}
           </div>
         </div>
       </div>
-    </div>
+
+      {/* Feedback Modal */}
+      <Modal show={showModal} onHide={handleCloseModal} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Feedback</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {feedbackSubmitted ? (
+            <Alert variant="success">Thank you for your feedback!</Alert>
+          ) : (
+            <Form>
+              <Form.Group>
+                <Form.Label>Rate us:</Form.Label>
+                <div className="d-flex justify-content-around mb-3">
+                  {[0, 1, 2, 3, 4, 5].map((star) => (
+                    <span
+                      key={star}
+                      onClick={() => handleRatingChange(star)}
+                      style={{
+                        cursor: "pointer",
+                        fontSize: "24px",
+                        color: star <= feedback.rate ? "#FFD700" : "#ccc",
+                      }}
+                    >
+                      ★
+                    </span>
+                  ))}
+                </div>
+              </Form.Group>
+              <Form.Group controlId="feedbackForm.ControlTextarea">
+                <Form.Label>Feedback</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  value={feedback.feedback}
+                  onChange={(e) =>
+                    setFeedback((prev) => ({
+                      ...prev,
+                      feedback: e.target.value,
+                    }))
+                  }
+                  placeholder="Enter your feedback here"
+                />
+              </Form.Group>
+            </Form>
+          )}
+        </Modal.Body>
+        {!feedbackSubmitted && (
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCloseModal}>
+              Close
+            </Button>
+            <Button
+              variant="primary"
+              onClick={handleSubmitFeedback}
+              disabled={!feedback.feedback.trim()}
+            >
+              Submit Feedback
+            </Button>
+          </Modal.Footer>
+        )}
+      </Modal>
+    </Container>
   );
-}
-export default TabPanel6;
+};
+
+export default RidesTabPanel;
