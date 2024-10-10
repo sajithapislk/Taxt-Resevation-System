@@ -25,6 +25,7 @@ import VehicleType from "./pages/admin/VehicleType.jsx";
 import ProtectedRoute from "./wrapper/ProtectedRoute.jsx";
 import CheckAuth from "./wrapper/CheckAuth.jsx";
 import Logout from "./pages/Logout.jsx";
+import BookingHistory from "./pages/user/BookingHistory.jsx";
 
 const router = createBrowserRouter([
   {
@@ -70,8 +71,8 @@ const router = createBrowserRouter([
         element: <AvailableRide />,
       },
       {
-        path: "rides",
-        element: <AvailableRide />,
+        path: "history",
+        element: <BookingHistory />,
       },
     ],
   },

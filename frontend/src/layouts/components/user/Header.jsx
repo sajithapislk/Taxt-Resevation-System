@@ -55,7 +55,7 @@ const Header = () => {
                         <a href="/user/rides">Continue Ride</a>
                       </li>
                       <li className="m-0">
-                        <a href="/user/rides">Ride History</a>
+                        <a href="/user/history">Ride History</a>
                       </li>
                     </ul>
                   </nav>
