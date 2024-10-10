@@ -13,14 +13,14 @@ const fetchPriceFromBackend = () => {
 };
 
 const ContinueRideTabPanel = () => {
-  const [requestList, setRequestList] = useState([]);
+  const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
     const fetchContinueRide = async () => {
-      const res = await BookingService.List();
+      const res = await BookingService.ListByStatus(2);
       console.log(res);
       if (!res.error) {
-        setRequestList(res);
+        setBookings(res);
       } else {
         console.error(res.error);
       }
@@ -28,14 +28,7 @@ const ContinueRideTabPanel = () => {
 
     fetchContinueRide();
   }, []);
-  // Initial dummy requests
-  const initialRequests = [
-    { id: 1, pickupLocation: "123 Main St", dropoffLocation: "456 Elm St", pickupTime: "2024-09-28T10:30", status: "pending" },
-    { id: 2, pickupLocation: "789 Oak Ave", dropoffLocation: "321 Pine Blvd", pickupTime: "2024-09-29T12:00", status: "pending" },
-  ];
 
-  // State to manage requests and active ride
-  const [requests, setRequests] = useState(initialRequests);
   const [activeRide, setActiveRide] = useState(null);
   const [rideStatus, setRideStatus] = useState(null);
   const [ridePrice, setRidePrice] = useState(null);
@@ -43,7 +36,7 @@ const ContinueRideTabPanel = () => {
 
   // Handle driver accepting a ride
   const handleAcceptRequest = (data) => {
-    // const acceptedRequest = requests.find((request) => request.id === id);
+    // const acceptedRequest = bookings.find((request) => request.id === id);
     setActiveRide(data);
     setRideStatus("accepted");
   };
@@ -69,10 +62,10 @@ const ContinueRideTabPanel = () => {
       {/* Pending Requests List (if no active ride) */}
       {!activeRide && (
           <div className="row">
-            {requests.length === 0 ? (
+            {bookings.length === 0 ? (
               <p>No pending requests available.</p>
             ) : (
-              requests.map((request) => (
+              bookings.map((request) => (
                 <div className="col-md-4 mb-3" key={request.id}>
                   <div className="card bg-secondary text-white">
                     <div className="card-body">
