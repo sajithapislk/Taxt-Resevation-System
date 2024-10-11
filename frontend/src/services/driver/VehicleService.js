@@ -24,7 +24,7 @@ const VehicleService = {
 
   Store: async (data) => {
     try {
-      const response = await axios.post(`${API_URL}/driver/vehicle`, data, config);
+      const response = await axios.post(`${API_URL}/vehicles`, data, config);
       return response.data; // Return the response data (e.g., token)
     } catch (error) {
       if (error.response && error.response.data) {
@@ -36,7 +36,19 @@ const VehicleService = {
   },
   Update: async (data) => {
     try {
-      const response = await axios.post(`${API_URL}/driver/vehicle`, data, config);
+      const response = await axios.put(`${API_URL}/vehicles/${data.id}`, data, config);
+      return response.data; // Return the response data (e.g., token)
+    } catch (error) {
+      if (error.response && error.response.data) {
+        return { error: error.response.data.message };
+      } else {
+        return { error: 'An error occurred. Please try again.' };
+      }
+    }
+  },
+  Delete: async (id) => {
+    try {
+      const response = await axios.delete(`${API_URL}/vehicles/${id}`, config);
       return response.data; // Return the response data (e.g., token)
     } catch (error) {
       if (error.response && error.response.data) {

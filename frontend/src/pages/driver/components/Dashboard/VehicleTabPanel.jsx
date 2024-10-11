@@ -18,6 +18,8 @@ const _googleMapsApiKey =
   "AIzaSyCP6SvRsh7Ba3lOFKEjRxX6dZqkwH6U7H0";
 const libraries = ["places"];
 function VehicleTabPanel() {
+  const userData = localStorage.getItem("driver");
+  const user = JSON.parse(userData);
   const [vehicles, setVehicles] = useState([]);
   const [vehicleTypeList, setVehicleTypeList] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -25,15 +27,16 @@ function VehicleTabPanel() {
   const [locationModel, setLocationModel] = useState(false);
   const locationRef = useRef();
   const [newVehicle, setNewVehicle] = useState({
+    id: "",
     driverId: "",
-    vehicle_type_id: "",
-    cost_per_km: "",
+    vehicleTypeId: user.id,
+    costPerKm: "",
     description: "",
     color: "",
-    vehicle_number: "",
-    passenger_seat: "",
-    is_available_ac: "false",
-    max_load: "",
+    vehicleNumber: "",
+    passengerSeats: "",
+    isAcAvailable: "false",
+    maxLoad: "",
     image: null,
   });
   useLoadScript({
@@ -98,15 +101,16 @@ function VehicleTabPanel() {
       setEditingVehicleId(vehicle.id);
     } else {
       setNewVehicle({
-        driverId: "",
-        vehicle_type_id: "",
-        cost_per_km: "",
+        id: "",
+        driverId: user.id,
+        vehicleTypeId: "",
+        costPerKm: "",
         description: "",
         color: "",
-        vehicle_number: "",
-        passenger_seat: "",
-        is_available_ac: "false",
-        max_load: "",
+        vehicleNumber: "",
+        passengerSeats: "",
+        isAcAvailable: "false",
+        maxLoad: "",
         image: null,
       });
       setEditingVehicleId(null);
@@ -124,9 +128,9 @@ function VehicleTabPanel() {
     try {
       let res;
       if (editingVehicleId) {
-        res = await VehicleService.Update(editingVehicleId, newVehicle);
+        res = await VehicleService.Update(newVehicle);
       } else {
-        res = await VehicleService.Create(newVehicle);
+        res = await VehicleService.Store(newVehicle);
       }
 
       if (!res.error) {
@@ -181,6 +185,22 @@ function VehicleTabPanel() {
       }));
     }
   }, []);
+
+  const deleteVehicle = async (vehicleId) => {
+    console.log(vehicleId);
+    try {
+      const res = await VehicleService.Delete(vehicleId);
+      if (!res.error) {
+        setVehicles((prevVehicles) =>
+          prevVehicles.filter((veh) => veh.id !== vehicleId)
+        );
+      } else {
+        console.error(res.error);
+      }
+    } catch (error) {
+      console.error("Error deleting vehicle:", error);
+    }
+  }
   return (
     <>
       <div className="vehicles-container">
@@ -209,7 +229,15 @@ function VehicleTabPanel() {
                 </Button>
                 <Button
                   variant="secondary"
+                  onClick={() => deleteVehicle(item.id)}
+                  className="mr-2"
+                >
+                  Delete
+                </Button>
+                <Button
+                  variant="secondary"
                   onClick={() => handleLocationModal(item.id)}
+                  className="mt-2"
                 >
                   Update Location
                 </Button>
@@ -243,7 +271,7 @@ function VehicleTabPanel() {
                         value={newVehicle[key]}
                         onChange={handleInputChange}
                       />
-                    ) : key === "vehicle_type_id" ? (
+                    ) : key === "vehicleTypeId" ? (
                       <Form.Select
                         name={key}
                         value={newVehicle[key]}
@@ -255,7 +283,7 @@ function VehicleTabPanel() {
                           </option>
                         ))}
                       </Form.Select>
-                    ) : key === "is_available_ac" ? (
+                    ) : key === "isAcAvailable" ? (
                       <Form.Select
                         name={key}
                         value={newVehicle[key]}
@@ -268,11 +296,11 @@ function VehicleTabPanel() {
                       <Form.Control
                         type={
                           [
-                            "cost_per_km",
-                            "max_load",
-                            "passenger_seat",
+                            "costPerKm",
+                            "maxLoad",
+                            "passengerSeats",
                             "driver_id",
-                            "vehicle_type_id",
+                            "vehicleTypeId",
                           ].includes(key)
                             ? "number"
                             : "text"
@@ -293,7 +321,7 @@ function VehicleTabPanel() {
                 accept="image/*"
               />
             </Form.Group>
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" onClick={handleSubmit}>
               {editingVehicleId ? "Update Vehicle" : "Add Vehicle"}
             </Button>
           </Form>
