@@ -62,7 +62,7 @@ const Login = () => {
           navigate('/admin/dashboard');
         }
       }
-      setSuccessMessage(`Successfully logged in as ${activeTab}!`);
+      setErrorMessage("Login failed. Please check your credentials.");
     } catch (error) {
       setErrorMessage("Login failed. Please check your credentials.");
     } finally {

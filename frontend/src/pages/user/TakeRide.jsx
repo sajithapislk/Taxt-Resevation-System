@@ -68,7 +68,7 @@ function TakeRide() {
 
   const [formData, setFormData] = useState({
     vehicleTypeId: "",
-    userId: 5,
+    userId: "",
     pickUpPlace: "",
     pickUpLongitude: "",
     pickUpLatitude: "",
@@ -114,37 +114,8 @@ function TakeRide() {
           <div className="row">
             <div className="col-lg-6">
               <div className="booking-form">
-                <div className="form-group destination">
-                  <label htmlFor="inputFrom">From</label>
-                  <Autocomplete
-                    onLoad={(autoc) => (pickupRef.current = autoc)}
-                    onPlaceChanged={handlePickupPlaceSelect}
-                  >
-                    <input
-                      type="text"
-                      id="inputFrom"
-                      className="form-control"
-                      placeholder="Select Pickup"
-                    />
-                  </Autocomplete>
-                </div>
-
-                <div className="form-group destination">
-                  <label htmlFor="inputDestination">Where to?</label>
-                  <Autocomplete
-                    onLoad={(autoc) => (destinationRef.current = autoc)}
-                    onPlaceChanged={handleDestinationPlaceSelect}
-                  >
-                    <input
-                      type="text"
-                      id="inputDestination"
-                      className="form-control"
-                      placeholder="Select Destination"
-                    />
-                  </Autocomplete>
-                </div>
-
-                <div className="select-car-wrapper">
+                
+              <div className="select-car-wrapper">
                   <h2>Selected Vehicle</h2>
                   <div className="selected-car">
                     <div className="form-group car-options">
@@ -181,6 +152,36 @@ function TakeRide() {
                     </div>
                   </div>
                 </div>
+
+                <div className="form-group destination">
+                  <label htmlFor="inputFrom">From</label>
+                  <Autocomplete
+                    onLoad={(autoc) => (pickupRef.current = autoc)}
+                    onPlaceChanged={handlePickupPlaceSelect}
+                  >
+                    <input
+                      type="text"
+                      id="inputFrom"
+                      className="form-control"
+                      placeholder="Select Pickup"
+                    />
+                  </Autocomplete>
+                </div>
+
+                <div className="form-group destination">
+                  <label htmlFor="inputDestination">Where to?</label>
+                  <Autocomplete
+                    onLoad={(autoc) => (destinationRef.current = autoc)}
+                    onPlaceChanged={handleDestinationPlaceSelect}
+                  >
+                    <input
+                      type="text"
+                      id="inputDestination"
+                      className="form-control"
+                      placeholder="Select Destination"
+                    />
+                  </Autocomplete>
+                </div>
                 <button
                   type="submit"
                   className="button button-dark"
@@ -194,7 +195,7 @@ function TakeRide() {
               <div className="ride-map-area">
                 <GoogleMap
                   mapContainerStyle={{ width: "100%", height: "400px" }}
-                  center={{ lat: 40.7128, lng: -74.006 }}
+                  center={{ lat: 7.2945453, lng: 80.6257814 }}
                   zoom={14}
                 >
                   {pickupCoords && (
