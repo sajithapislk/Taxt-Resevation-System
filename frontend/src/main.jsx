@@ -17,8 +17,6 @@ import AdminDashboard from "./pages/admin/Dashboard.jsx";
 import User from "./pages/admin/User.jsx";
 import Booking from "./pages/admin/Booking.jsx";
 import Reservation from "./pages/admin/Reservation.jsx";
-import NewVehicle from "./pages/driver/Vehicle/New.jsx";
-import EditVehicle from "./pages/driver/Vehicle/Edit.jsx";
 import Vehicle from "./pages/admin/Vehicle.jsx";
 import PublicVehicle from "./pages/public/Vehicles.jsx";
 import VehicleType from "./pages/admin/VehicleType.jsx";
@@ -92,14 +90,6 @@ const router = createBrowserRouter([
       {
         path: "dashboard",
         element: <DriverDashboard />,
-      },
-      {
-        path: "vehicle/create",
-        element: <NewVehicle />,
-      },
-      {
-        path: "vehicle/edit",
-        element: <EditVehicle />,
       },
     ],
   },

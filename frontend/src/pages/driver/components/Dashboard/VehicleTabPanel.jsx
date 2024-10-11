@@ -1,13 +1,29 @@
-import React, { useState, useEffect } from "react";
+
+
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import VehicleService from "../../../../services/driver/VehicleService";
 import VehicleTypeService from "../../../../services/admin/VehicleTypeService";
-
+import {
+  GoogleMap,
+  useLoadScript,
+  Autocomplete,
+  Marker,
+  DirectionsService,
+  DirectionsRenderer,
+} from "@react-google-maps/api";
+import './AutocompleteStyles.css';
+const _googleMapsApiKey =
+  import.meta.env.GOOGLE_MAP_API_KEY ||
+  "AIzaSyCP6SvRsh7Ba3lOFKEjRxX6dZqkwH6U7H0";
+const libraries = ["places"];
 function VehicleTabPanel() {
   const [vehicles, setVehicles] = useState([]);
   const [vehicleTypeList, setVehicleTypeList] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [editingVehicleId, setEditingVehicleId] = useState(null);
+  const [locationModel, setLocationModel] = useState(false);
+  const locationRef = useRef();
   const [newVehicle, setNewVehicle] = useState({
     driverId: "",
     vehicle_type_id: "",
@@ -19,6 +35,16 @@ function VehicleTabPanel() {
     is_available_ac: "false",
     max_load: "",
     image: null,
+  });
+  useLoadScript({
+    googleMapsApiKey: _googleMapsApiKey,
+    libraries,
+  });
+  const [vehicleLocation, setVehicleLocation] = useState({
+    vehicleId: "",
+    location: "",
+    longitude: "",
+    latitude: "",
   });
 
   useEffect(() => {
@@ -119,7 +145,42 @@ function VehicleTabPanel() {
       console.error("Error updating or creating vehicle:", error);
     }
   };
+  const handleLocationModal = (vehicleId) => {
+    setLocationModel(true);
+    setVehicleLocation((prevData) => ({
+      ...prevData,
+      vehicleId: vehicleId,
+    }));
+  };
+  const handleLocationSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const res = await VehicleService.UpdateLocation(vehicleLocation);
+      if (!res.error) {
+        setLocationModel(false);
+      } else {
+        console.error(res.error);
+      }
+    } catch (error) {
+      console.error("Error updating or creating vehicle:", error);
+    }
+  };
 
+  const handlePickupPlaceSelect = useCallback(() => {
+    const place = locationRef.current?.getPlace();
+    if (place && place.geometry) {
+      const lat = place.geometry.location.lat();
+      const lng = place.geometry.location.lng();
+      const placeName =
+        place.formatted_address || place.name || "Unknown Place";
+      setVehicleLocation((prevData) => ({
+        ...prevData,
+        location: placeName,
+        longitude: lng,
+        latitude: lat,
+      }));
+    }
+  }, []);
   return (
     <>
       <div className="vehicles-container">
@@ -139,8 +200,18 @@ function VehicleTabPanel() {
               <div className="single-vehicle-container">
                 <img src={item.image} alt={`Vehicle ${item.id}`} />
                 <p>{item.name}</p>
-                <Button variant="secondary" onClick={() => handleShowModal(item)}>
+                <Button
+                  variant="secondary"
+                  onClick={() => handleShowModal(item)}
+                  className="mr-2"
+                >
                   Edit
+                </Button>
+                <Button
+                  variant="secondary"
+                  onClick={() => handleLocationModal(item.id)}
+                >
+                  Update Location
                 </Button>
               </div>
             </div>
@@ -150,7 +221,9 @@ function VehicleTabPanel() {
 
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
-          <Modal.Title>{editingVehicleId ? "Edit Vehicle" : "Add New Vehicle"}</Modal.Title>
+          <Modal.Title>
+            {editingVehicleId ? "Edit Vehicle" : "Add New Vehicle"}
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit}>
@@ -224,6 +297,34 @@ function VehicleTabPanel() {
               {editingVehicleId ? "Update Vehicle" : "Add Vehicle"}
             </Button>
           </Form>
+        </Modal.Body>
+      </Modal>
+
+      <Modal show={locationModel} onHide={() => setLocationModel(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Update Location</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="form-group destination">
+            <label htmlFor="inputFrom">From</label>
+            <Autocomplete
+              onLoad={(autoc) => (locationRef.current = autoc)}
+              onPlaceChanged={handlePickupPlaceSelect}
+            >
+              <input
+                type="text"
+                id="inputFrom"
+                className="form-control"
+                placeholder="Select Pickup"
+              />
+            </Autocomplete>
+          </div>
+          <Button
+            variant="primary"
+            onClick={handleLocationSubmit}  
+          >
+            Update Location
+          </Button>
         </Modal.Body>
       </Modal>
     </>
