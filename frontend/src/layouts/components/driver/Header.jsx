@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import logo from "./../../../assets/images/logo-main.webp";
 import partner from "./../../../assets/images/partner-img.webp";
+import { Dropdown } from "react-bootstrap";
 
 const Header = () => {
   const [bodyClass, setBodyClass] = useState("");
@@ -50,17 +51,14 @@ const Header = () => {
               <div className="d-none d-lg-block col-lg-2">
                 <div className="header__upper--right">
                   <nav className="navigation">
-                    <ul>
-                    </ul>
+                    <ul></ul>
                   </nav>
-                  <div className="dropdown">
-                    <a
-                      href="#"
-                      className="dropdown-toggle"
-                      id="dropdownMenuButton"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
+                  <Dropdown>
+                    <Dropdown.Toggle
+                      id="dropdown-basic"
+                      as="a"
+                      className="dropdown-toggle d-flex align-items-center"
+                      style={{ cursor: "pointer" }}
                     >
                       <div className="media">
                         <img
@@ -68,6 +66,7 @@ const Header = () => {
                           width="30"
                           className="me-3"
                           src={partner}
+                          alt="Partner"
                         />
                         <div className="media-body">
                           <h6 className="m-0">
@@ -76,22 +75,12 @@ const Header = () => {
                           <p className="m-0">India</p>
                         </div>
                       </div>
-                    </a>
-                    <div
-                      className="dropdown-menu dropdown-menu-right"
-                      aria-labelledby="dropdownMenuButton"
-                    >
-                      <a className="dropdown-item" href="partner-profile.html">
-                        Profile
-                      </a>
-                      <a className="dropdown-item" href="#">
-                        Sign out
-                      </a>
-                      <a className="dropdown-item" href="#">
-                        Something else here
-                      </a>
-                    </div>
-                  </div>
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu align="end">
+                      <Dropdown.Item href="/logout">Sign out</Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
                 </div>
               </div>
             </div>
