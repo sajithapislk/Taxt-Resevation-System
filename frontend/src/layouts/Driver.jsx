@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
-import Footer from './components/user/Footer'
-import Header from './components/user/Header'
+import Footer from './components/driver/Footer'
+import Header from './components/driver/Header'
 import { Outlet } from "react-router-dom"
 
 import './../styles/css/style.css'
