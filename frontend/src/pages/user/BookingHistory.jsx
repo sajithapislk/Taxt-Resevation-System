@@ -147,7 +147,7 @@ const BookingHistory = () => {
               <Form.Group>
                 <Form.Label>Rate us:</Form.Label>
                 <div className="d-flex justify-content-around mb-3">
-                  {[0, 1, 2, 3, 4, 5].map((star) => (
+                  {[0, 1, 2, 3, 4].map((star) => (
                     <span
                       key={star}
                       onClick={() => handleRatingChange(star)}

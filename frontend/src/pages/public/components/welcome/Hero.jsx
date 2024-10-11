@@ -3,9 +3,11 @@ import download1 from "./../../../../assets/images/download-1.webp";
 import download2 from "./../../../../assets/images/download-2.webp";
 import bgVideo2 from "./../../../../assets/bg-video-2.mp4";
 import UserService from "./../../../../services/UserService";
+import { useNavigate } from "react-router-dom";
 
 function Hero() {
-  
+  const navigate = useNavigate();
+
   const [takeRide, setTakeRide] = useState(true);
   const [rideForm, setRideForm] = useState({
     name: "",
@@ -47,6 +49,9 @@ function Hero() {
           ? UserService.DriverRegister(formData)
           : UserService.UserRegister(formData);
       setFormMessage("Form submitted successfully!");
+      setTimeout(() => {
+        navigate("/login"); // Adjust this path as needed
+      }, 2000);
     } catch (error) {
       setFormMessage("There was an error submitting the form.");
     } finally {
@@ -131,7 +136,7 @@ function Hero() {
                         <h2 className="form-title">
                           Get member exclusive rewards
                         </h2>
-                        
+
                         <div className="row">
                           <div className="form-group col-md-12">
                             <input
@@ -190,9 +195,9 @@ function Hero() {
                             >
                               {loading ? "Submitting..." : "Sign up to Ride"}
                             </button>
+                        <p className="form-messages mb-0 mt-3">{formMessage}asd s ad dsa</p>
                           </div>
                         </div>
-                        <p className="form-messages mb-0 mt-3">{formMessage}</p>
                       </form>
                     </div>
 
@@ -212,7 +217,7 @@ function Hero() {
                         <h2 className="form-title">
                           Start driving now and get paid
                         </h2>
-                        
+
                         <div className="row">
                           <div className="form-group col-md-12">
                             <input

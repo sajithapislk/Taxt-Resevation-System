@@ -1,15 +1,28 @@
 import Breadcrumb from "./components/Breadcrumb";
 import React, { useState, useEffect } from "react";
-import { Card, Button, Container, Row, Col, Alert } from "react-bootstrap";
+import {
+  Card,
+  Button,
+  Container,
+  Row,
+  Col,
+  Alert,
+  Modal,
+} from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 import VehicleService from "../../services/user/VehicleService";
 import BookingService from "../../services/user/BookingService";
+import { useNavigate } from "react-router-dom";
 
 const AvailableRide = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const { formData } = location.state || {};
   const [vehicleList, setVehicleList] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const [combinedFormData, setCombinedFormData] = useState({
     ...formData,
@@ -25,11 +38,8 @@ const AvailableRide = () => {
         vehicleTypeId: formData.vehicleTypeId,
       };
       const res = await VehicleService.AvailableList(data);
-      console.log(res);
       if (!res.error) {
         setVehicleList(res);
-      } else {
-        console.error(res.error);
       }
     };
 
@@ -44,10 +54,18 @@ const AvailableRide = () => {
       vehicleId: vehicleId,
     }));
     const res = BookingService.Request(combinedFormData);
+    console.log(res);
     if (!res.error) {
+      setModalMessage("Booking request was successful!");
+      setShowModal(true);
     } else {
-      console.error(res.error);
+      setErrorMessage(`Error: ${res.error}`);
     }
+  };
+
+  const handleModalClose = () => {
+    setShowModal(false);
+    navigate("/user/history");
   };
 
   return (
@@ -55,8 +73,18 @@ const AvailableRide = () => {
       <Breadcrumb title="Available Drivers" path="Available Drivers" />
       <div className="div-padding our-vehicles-div">
         <div className="container">
+          {/* Display error message if exists */}
+          {errorMessage && (
+            <Alert
+              variant="danger"
+              onClose={() => setErrorMessage("")}
+              dismissible
+            >
+              {errorMessage}
+            </Alert>
+          )}
           <Row>
-            {vehicleList.length > 0 ? 
+            {vehicleList.length > 0 ? (
               vehicleList.map((item) => (
                 <Col
                   md={4}
@@ -92,10 +120,25 @@ const AvailableRide = () => {
                     </Card.Body>
                   </Card>
                 </Col>
-              )) : (
-                <Alert variant="info">No bookings found.</Alert>
-              )}
+              ))
+            ) : (
+              <Alert variant="info">No bookings found.</Alert>
+            )}
           </Row>
+          {/* Bootstrap Modal */}
+          <Modal show={showModal} onHide={handleModalClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>Booking Status</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <p>{modalMessage}</p>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="primary" onClick={handleModalClose}>
+                OK
+              </Button>
+            </Modal.Footer>
+          </Modal>
         </div>
       </div>
     </>
