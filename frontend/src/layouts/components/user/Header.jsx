@@ -52,7 +52,7 @@ const Header = () => {
                   <nav className="navigation">
                     <ul>
                       <li className="m-0">
-                        <a href="/user/rides">Continue Ride</a>
+                        <a href="/user/continue-booking">Continue Ride</a>
                       </li>
                       <li className="m-0">
                         <a href="/user/history">Ride History</a>

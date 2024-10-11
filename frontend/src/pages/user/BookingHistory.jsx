@@ -131,7 +131,7 @@ const BookingHistory = () => {
           </tbody>
         </Table>
       ) : (
-        <Alert variant="info">No bookings found.</Alert>
+        <Alert variant="info">No found.</Alert>
       )}
 
       {/* Feedback Modal */}

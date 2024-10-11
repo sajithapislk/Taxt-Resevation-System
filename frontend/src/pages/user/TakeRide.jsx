@@ -75,22 +75,25 @@ function TakeRide() {
     dropOffPlace: "",
     dropOffLongitude: "",
     dropOffLatitude: "",
+    distance:""
   });
 
   const handleSubmit = () => {
-    navigate("/user/available-driver", { state: { formData } });
+    if (formData.vehicleTypeId && pickupCoords && destinationCoords) {
+      navigate("/user/available-driver", { state: { formData } });
+    }
   };
 
   useEffect(() => {
     const checkAuth = async () => {
       const userData = localStorage.getItem("user");
       const user = JSON.parse(userData);
-      
+
       setFormData((prevData) => ({
         ...prevData,
         userId: user.id,
       }));
-    }
+    };
     const fetchVehicleTypes = async () => {
       const res = await VehicleTypeService.List();
       console.log(res);
@@ -114,8 +117,7 @@ function TakeRide() {
           <div className="row">
             <div className="col-lg-6">
               <div className="booking-form">
-                
-              <div className="select-car-wrapper">
+                <div className="select-car-wrapper">
                   <h2>Selected Vehicle</h2>
                   <div className="selected-car">
                     <div className="form-group car-options">
@@ -205,20 +207,27 @@ function TakeRide() {
                     <Marker position={destinationCoords} label="Destination" />
                   )}
                   {pickupCoords && destinationCoords && !directionsResponse && (
-                    <DirectionsService
-                      options={{
-                        origin: pickupCoords,
-                        destination: destinationCoords,
-                        travelMode: window.google.maps.TravelMode.DRIVING,
-                      }}
-                      callback={(response) => {
-                        if (response && response.status === "OK") {
-                          setDirectionsResponse(response);
-                        } else {
-                          console.error("Directions request failed");
-                        }
-                      }}
-                    />
+                     <DirectionsService
+                     options={{
+                       origin: pickupCoords,
+                       destination: destinationCoords,
+                       travelMode: window.google.maps.TravelMode.DRIVING,
+                     }}
+                     callback={(response) => {
+                       if (response && response.status === "OK") {
+                         setDirectionsResponse(response);
+
+                         // Extracting distance from response
+                         const distanceInMeters =
+                           response.routes[0].legs[0].distance.value;
+                         const distanceInKm = distanceInMeters / 1000;
+                         console.log("Distance in kilometers:", distanceInKm);
+                         setFormData((prevData) => ({ ...prevData, distance: distanceInKm})); // Storing the distance in kilometers
+                       } else {
+                         console.error("Directions request failed");
+                       }
+                     }}
+                   />
                   )}
                   {directionsResponse && (
                     <DirectionsRenderer directions={directionsResponse} />

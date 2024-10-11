@@ -26,6 +26,7 @@ import ProtectedRoute from "./wrapper/ProtectedRoute.jsx";
 import CheckAuth from "./wrapper/CheckAuth.jsx";
 import Logout from "./pages/Logout.jsx";
 import BookingHistory from "./pages/user/BookingHistory.jsx";
+import ContinueBooking from "./pages/user/ContinueBooking.jsx";
 
 const router = createBrowserRouter([
   {
@@ -73,6 +74,10 @@ const router = createBrowserRouter([
       {
         path: "history",
         element: <BookingHistory />,
+      },
+      {
+        path: "continue-booking",
+        element: <ContinueBooking />,
       },
     ],
   },

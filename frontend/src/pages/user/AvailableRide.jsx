@@ -1,6 +1,6 @@
 import Breadcrumb from "./components/Breadcrumb";
 import React, { useState, useEffect } from "react";
-import { Card, Button, Container, Row, Col } from "react-bootstrap";
+import { Card, Button, Container, Row, Col, Alert } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 import VehicleService from "../../services/user/VehicleService";
 import BookingService from "../../services/user/BookingService";
@@ -56,7 +56,7 @@ const AvailableRide = () => {
       <div className="div-padding our-vehicles-div">
         <div className="container">
           <Row>
-            {vehicleList.length > 0 &&
+            {vehicleList.length > 0 ? 
               vehicleList.map((item) => (
                 <Col
                   md={4}
@@ -92,7 +92,9 @@ const AvailableRide = () => {
                     </Card.Body>
                   </Card>
                 </Col>
-              ))}
+              )) : (
+                <Alert variant="info">No bookings found.</Alert>
+              )}
           </Row>
         </div>
       </div>
