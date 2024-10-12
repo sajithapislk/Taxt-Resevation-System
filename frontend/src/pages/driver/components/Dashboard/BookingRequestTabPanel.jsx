@@ -7,19 +7,26 @@ const BookingRequestTabPanel = () => {
 
   useEffect(() => {
     const fetchBookings = async () => {
-      try {
-        const data = await BookingService.ListByStatus(1);
-        setBookings(data);
-      } catch (err) {
-        setError("Failed to fetch booking history.");
-      } finally {
-        setLoading(false);
-      }
+        setLoading(true); // Ensure loading starts at true
+
+        try {
+            const data = await BookingService.ListByStatus(1);
+
+            if (data && Array.isArray(data)) {
+                setBookings(data);
+            } else {
+                throw new Error("Unexpected response format.");
+            }
+        } catch (err) {
+            console.error("Error fetching booking data:", err);
+            setError("Failed to fetch booking history.");
+        } finally {
+            setLoading(false); // Set loading to false once the operation is complete
+        }
     };
 
     fetchBookings();
-  }, []);
-
+}, []);
   // Approve a request
   const handleApprove = async (id) => {
     const data = await BookingService.Confirm(id);
