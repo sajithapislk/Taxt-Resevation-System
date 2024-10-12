@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import VehicleService from "../../../../services/driver/VehicleService";
@@ -12,7 +10,7 @@ import {
   DirectionsService,
   DirectionsRenderer,
 } from "@react-google-maps/api";
-import './AutocompleteStyles.css';
+import "./AutocompleteStyles.css";
 const _googleMapsApiKey =
   import.meta.env.GOOGLE_MAP_API_KEY ||
   "AIzaSyCP6SvRsh7Ba3lOFKEjRxX6dZqkwH6U7H0";
@@ -200,7 +198,7 @@ function VehicleTabPanel() {
     } catch (error) {
       console.error("Error deleting vehicle:", error);
     }
-  }
+  };
   return (
     <>
       <div className="vehicles-container">
@@ -255,64 +253,103 @@ function VehicleTabPanel() {
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit}>
-            {Object.keys(newVehicle).map(
-              (key) =>
-                key !== "image" &&
-                key !== "driverId" && (
-                  <Form.Group key={key} className="mb-3">
-                    <Form.Label>
-                      {key.replace(/_/g, " ").toUpperCase()}
-                    </Form.Label>
-                    {key === "description" ? (
-                      <Form.Control
-                        as="textarea"
-                        rows={3}
-                        name={key}
-                        value={newVehicle[key]}
-                        onChange={handleInputChange}
-                      />
-                    ) : key === "vehicleTypeId" ? (
-                      <Form.Select
-                        name={key}
-                        value={newVehicle[key]}
-                        onChange={handleInputChange}
-                      >
-                        {vehicleTypeList.map((type) => (
-                          <option key={type.id} value={type.id}>
-                            {type.name}
-                          </option>
-                        ))}
-                      </Form.Select>
-                    ) : key === "isAcAvailable" ? (
-                      <Form.Select
-                        name={key}
-                        value={newVehicle[key]}
-                        onChange={handleInputChange}
-                      >
-                        <option value="true">Yes</option>
-                        <option value="false">No</option>
-                      </Form.Select>
-                    ) : (
-                      <Form.Control
-                        type={
-                          [
-                            "costPerKm",
-                            "maxLoad",
-                            "passengerSeats",
-                            "driver_id",
-                            "vehicleTypeId",
-                          ].includes(key)
-                            ? "number"
-                            : "text"
-                        }
-                        name={key}
-                        value={newVehicle[key]}
-                        onChange={handleInputChange}
-                      />
-                    )}
-                  </Form.Group>
-                )
-            )}
+            <Form.Group className="mb-3">
+              <Form.Label>VEHICLE TYPE ID</Form.Label>
+              <Form.Select
+                name="vehicleTypeId"
+                value={newVehicle.vehicleTypeId}
+                onChange={handleInputChange}
+              >
+                {vehicleTypeList.map((type) => (
+                  <option key={type.id} value={type.id}>
+                    {type.name}
+                  </option>
+                ))}
+              </Form.Select>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>VEHICLE TYPE ID</Form.Label>
+              <Form.Select
+                name="vehicleTypeId"
+                value={newVehicle.vehicleTypeId}
+                onChange={handleInputChange}
+              >
+                {vehicleTypeList.map((type) => (
+                  <option key={type.id} value={type.id}>
+                    {type.name}
+                  </option>
+                ))}
+              </Form.Select>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>DESCRIPTION</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={3}
+                name="description"
+                value={newVehicle.description}
+                onChange={handleInputChange}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>COLOR</Form.Label>
+              <Form.Select
+                name="color"
+                value={newVehicle.color}
+                onChange={handleInputChange}
+              >
+                <option value="">Select a color</option>
+                <option value="red">Red</option>
+                <option value="blue">Blue</option>
+                <option value="green">Green</option>
+                <option value="yellow">Yellow</option>
+                <option value="black">Black</option>
+                <option value="white">White</option>
+                <option value="silver">Silver</option>
+                <option value="gray">Gray</option>
+                <option value="orange">Orange</option>
+                <option value="purple">Purple</option>
+                <option value="brown">Brown</option>
+              </Form.Select>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>COLOR</Form.Label>
+              <Form.Control
+                type="text"
+                name="color"
+                value={newVehicle.color}
+                onChange={handleInputChange}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>PASSENGER SEATS</Form.Label>
+              <Form.Control
+                type="number"
+                name="passengerSeats"
+                value={newVehicle.passengerSeats}
+                onChange={handleInputChange}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>IS AC AVAILABLE</Form.Label>
+              <Form.Select
+                name="isAcAvailable"
+                value={newVehicle.isAcAvailable}
+                onChange={handleInputChange}
+              >
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+              </Form.Select>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>MAX LOAD</Form.Label>
+              <Form.Control
+                type="number"
+                name="maxLoad"
+                value={newVehicle.maxLoad}
+                onChange={handleInputChange}
+              />
+            </Form.Group>
             <Form.Group className="mb-3" controlId="vehicleImage">
               <Form.Label>Vehicle Image</Form.Label>
               <Form.Control
@@ -347,10 +384,7 @@ function VehicleTabPanel() {
               />
             </Autocomplete>
           </div>
-          <Button
-            variant="primary"
-            onClick={handleLocationSubmit}  
-          >
+          <Button variant="primary" onClick={handleLocationSubmit}>
             Update Location
           </Button>
         </Modal.Body>

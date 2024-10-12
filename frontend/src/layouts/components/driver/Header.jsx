@@ -4,7 +4,7 @@ import partner from "./../../../assets/images/partner-img.webp";
 import { Dropdown } from "react-bootstrap";
 
 const Header = () => {
-  const userData = localStorage.getItem("user");
+  const userData = localStorage.getItem("driver");
   const user = JSON.parse(userData);
   const [bodyClass, setBodyClass] = useState("");
   useEffect(() => {

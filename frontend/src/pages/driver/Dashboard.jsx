@@ -1,7 +1,6 @@
 import Breadcrumb from "./components/Breadcrumb";
 import partner from "./../../assets/images/partner-img.webp";
 import React, { useEffect, useState } from 'react';
-import DashboardTabPanel from "./components/Dashboard/DashboardTabPanel";
 import PersonalInfoTabPanel from "./components/Dashboard/PersonalInfoTabPanel";
 import VehicleTabPanel from "./components/Dashboard/VehicleTabPanel";
 import RidesTabPanel from "./components/Dashboard/RidesTabPanel";
@@ -10,7 +9,7 @@ import BookingRequestTabPanel from "./components/Dashboard/BookingRequestTabPane
 import ContinueRideTabPanel from "./components/Dashboard/ContinueRideTabPanel";
 
 function TakeRide() {
-  const [activeTab, setActiveTab] = useState("dashboard");
+  const [activeTab, setActiveTab] = useState("request");
 
   const [messages, setMessages] = useState([]);
   const [isConnected, setIsConnected] = useState(false);
@@ -100,19 +99,6 @@ function TakeRide() {
               <div className="tab-dashboard">
                 <ul className="nav nav-tabs tab-navigation" role="tablist">
                   <li
-                    role="presentation"
-                    className={activeTab === "dashboard" ? "active" : ""}
-                  >
-                    <a
-                      href="#dashboard"
-                      aria-controls="dashboard"
-                      role="tab"
-                      onClick={() => handleTabClick("dashboard")}
-                    >
-                      Dashboard
-                    </a>
-                  </li>
-                  <li
                     role="continue-ride"
                     className={activeTab === "continue-ride" ? "active" : ""}
                   >
@@ -179,15 +165,6 @@ function TakeRide() {
                   </li>
                 </ul>
                 <div className="tab-content">
-                  {activeTab === "dashboard" && (
-                    <div
-                      role="tabpanel"
-                      className="tab-pane active"
-                      id="dashboard"
-                    >
-                      <DashboardTabPanel />
-                    </div>
-                  )}
                   {activeTab === "continue-ride" && (
                     <div
                       role="continue-ride"
