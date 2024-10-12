@@ -10,64 +10,7 @@ import ContinueRideTabPanel from "./components/Dashboard/ContinueRideTabPanel";
 
 function TakeRide() {
   const [activeTab, setActiveTab] = useState("request");
-
-  const [messages, setMessages] = useState([]);
-  const [isConnected, setIsConnected] = useState(false);
-
-  useEffect(() => {
-    // Create WebSocket connection to your backend
-    const ws = new WebSocket("ws://localhost:5000/ws"); // Replace with your actual WebSocket URL
-
-    // When the WebSocket connection opens
-    ws.onopen = () => {
-      console.log("Connected to WebSocket");
-      setIsConnected(true);
-    };
-
-    // When a message is received from the WebSocket server
-    ws.onmessage = (event) => {
-      const newMessage = event.data;
-      console.log("Received message:", newMessage);
-      setMessages((prevMessages) => [...prevMessages, newMessage]);
-
-      // Show browser notification
-      showNotification(newMessage);
-    };
-
-    // When the WebSocket connection is closed
-    ws.onclose = () => {
-      console.log("Disconnected from WebSocket");
-      setIsConnected(false);
-    };
-
-    return () => {
-      ws.close(); // Clean up WebSocket connection on component unmount
-    };
-  }, []);
-
-  // Function to show browser notification
-  const showNotification = (message) => {
-    if (Notification.permission === "granted") {
-      new Notification("New WebSocket Message", {
-        body: message,
-      });
-    } else {
-      console.log("Notification permission not granted");
-    }
-  };
-
-  // Request notification permission when the component mounts
-  useEffect(() => {
-    if (Notification.permission !== "granted") {
-      Notification.requestPermission().then((permission) => {
-        if (permission === "granted") {
-          console.log("Notification permission granted");
-        } else {
-          console.log("Notification permission denied");
-        }
-      });
-    }
-  }, []);
+   
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
