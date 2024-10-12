@@ -4,6 +4,8 @@ import partner from "./../../../assets/images/partner-img.webp";
 import { Dropdown } from "react-bootstrap";
 
 const Header = () => {
+  const userData = localStorage.getItem("user");
+  const user = JSON.parse(userData);
   const [bodyClass, setBodyClass] = useState("");
   useEffect(() => {
     if (bodyClass) {
@@ -70,9 +72,8 @@ const Header = () => {
                         />
                         <div className="media-body">
                           <h6 className="m-0">
-                            John Doe <i className="fas fa-angle-down"></i>
+                            {user.name} <i className="fas fa-angle-down"></i>
                           </h6>
-                          <p className="m-0">India</p>
                         </div>
                       </div>
                     </Dropdown.Toggle>
