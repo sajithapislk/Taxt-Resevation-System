@@ -46,7 +46,7 @@ const Vehicle = () => {
                       <Card.Text>
                         <strong>Seats:</strong> {item.passengerSeats} <br />
                         <strong>Vehicle NO:</strong> {item.vehicleNumber} <br />
-                        <strong>Price per km:</strong> ${item.costPerKm}
+                        <strong>Price per km:</strong> LKR{item.costPerKm}
                       </Card.Text>
                     </Card.Body>
                   </Card>
