@@ -1,10 +1,19 @@
 ﻿using backend.Schema.Entity;
 using backend.Schema.Model;
+using System.Globalization;
 
 namespace backend.Helpers
 {
     public static class TemplateGenerator
     {
+        public static CultureInfo cultureInfo = new("si-LK")
+        { 
+            NumberFormat = new NumberFormatInfo
+            {
+                CurrencySymbol = "LKR",
+            },
+        }; // Set culture to Sri Lanka
+
         public static string BuildRegistrationCompletedEmailBody(SmtpSettings smtpSettings, UserRegisterRequestModel model)
         {
             return $@"
@@ -254,7 +263,7 @@ namespace backend.Helpers
                             <strong>Drop-off Location:</strong> {model.DropOffPlace}<br />
                             <strong>Driver:</strong> {model.Vehicle.Driver.Name}<br />
                             <strong>Booking ID:</strong> {model.Id}<br />
-                            <strong>Total Fare:</strong> {model.Price:C}
+                            <strong>Total Fare:</strong> {string.Format(cultureInfo, "{0:C}", model.Price)}
                         </p>
 
                         <div style='margin-top: 30px; padding: 15px; background-color: #2e6c80; color: white; text-align: center; border-radius: 8px;'>
@@ -286,7 +295,7 @@ namespace backend.Helpers
                             <strong>Drop-off Location:</strong> {model.DropOffPlace}<br />
                             <strong>Passenger:</strong> {model.User.Name}<br />
                             <strong>Booking ID:</strong> {model.Id}<br />
-                            <strong>Total Fare:</strong> {model.Price:C}
+                            <strong>Total Fare:</strong> {string.Format(cultureInfo, "{0:C}", model.Price)}
                         </p>
 
                         <div style='margin-top: 30px; padding: 15px; background-color: #2e6c80; color: white; text-align: center; border-radius: 8px;'>
@@ -399,12 +408,12 @@ namespace backend.Helpers
 
         public static string BuildBookingCompletedUserSms(Booking model)
         {
-            return $"Your ride is complete! Total fare: {model.Price:C}. Thanks for riding with CarrGo. Booking ID: {model.Id}. We hope to see you again!";
+            return $"Your ride is complete! Total fare: {string.Format(cultureInfo, "{0:C}", model.Price)}. Thanks for riding with CarrGo. Booking ID: {model.Id}. We hope to see you again!";
         }
 
         public static string BuildBookingCompletedDriverSms(Booking model)
         {
-            return $"Ride completed! Passenger: {model.User.Name}. Booking ID: {model.Id}. Fare: {model.Price:C}. Thanks for providing excellent service!";
+            return $"Ride completed! Passenger: {model.User.Name}. Booking ID: {model.Id}. Fare: {string.Format(cultureInfo, "{0:C}", model.Price)}. Thanks for providing excellent service!";
         }
 
         public static string BuildBookingCancelledUserSms(Booking model)
