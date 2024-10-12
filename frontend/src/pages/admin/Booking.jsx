@@ -6,17 +6,22 @@ const Booking = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const res = await BookingService.List();
-      console.log(res);
-      if (!res.error) {
-        setBookingList(res);
-      } else {
-        console.error(res.error);
-      }
+        try {
+            const res = await BookingService.List();
+            console.log('Booking response:', res);
+
+            if (res && Array.isArray(res)) {
+                setBookingList(res);
+            } else {
+                console.error('Unexpected response format:', res);
+            }
+        } catch (error) {
+            console.error('Error fetching booking list:', error);
+        }
     };
 
     fetchUser();
-  }, []);
+}, []);
 
   return (
     <div class="main-container">

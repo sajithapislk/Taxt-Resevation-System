@@ -22,17 +22,22 @@ const User = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const res = await UserService.List();
-      console.log(res);
-      if (!res.error) {
-        setUserList(res);
-      } else {
-        console.error(res.error);
-      }
+        try {
+            const res = await UserService.List();
+            console.log('User response:', res);
+
+            if (res && Array.isArray(res)) {
+                setUserList(res);
+            } else {
+                console.error('Unexpected response format:', res);
+            }
+        } catch (error) {
+            console.error('Error fetching user list:', error);
+        }
     };
 
     fetchUser();
-  }, []);
+}, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

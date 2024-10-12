@@ -27,17 +27,22 @@ const Vehicle = () => {
 
   useEffect(() => {
     const fetchVehicle = async () => {
-      const res = await VehicleService.List();
-      console.log(res);
-      if (!res.error) {
-        setVehicleList(res);
-      } else {
-        console.error(res.error);
-      }
+        try {
+            const res = await VehicleService.List();
+            console.log('Vehicles fetched:', res);
+
+            if (res && Array.isArray(res)) {
+                setVehicleList(res);
+            } else {
+                console.error('Unexpected response format:', res);
+            }
+        } catch (error) {
+            console.error('Error fetching vehicle list:', error);
+        }
     };
 
     fetchVehicle();
-  }, []);
+}, []);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];

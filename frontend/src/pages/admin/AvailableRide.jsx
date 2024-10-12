@@ -17,23 +17,28 @@ const AvailableRide = () => {
 
   useEffect(() => {
     const fetchAvailableDriver = async () => {
-      const data = {
-        radiusInKm: 100,
-        longitude: formData.pickUpLongitude,
-        latitude: formData.pickUpLatitude,
-        vehicleTypeId: formData.vehicleTypeId,
-      };
-      const res = await VehicleService.AvailableList(data);
-      console.log(res);
-      if (!res.error) {
-        setVehicleList(res);
-      } else {
-        console.error(res.error);
-      }
+        try {
+            const data = {
+                radiusInKm: 100,
+                longitude: formData.pickUpLongitude,
+                latitude: formData.pickUpLatitude,
+                vehicleTypeId: formData.vehicleTypeId,
+            };
+
+            const res = await VehicleService.AvailableList(data);
+            
+            if (res && Array.isArray(res)) {
+                setVehicleList(res);
+            } else {
+                console.error('Unexpected response format:', res);
+            }
+        } catch (error) {
+            console.error('Error fetching available drivers:', error);
+        }
     };
 
     fetchAvailableDriver();
-  }, []);
+}, [formData]);
 
   const handleSubmit = (vehicleId) => {
     // console.log(vehicleId);
