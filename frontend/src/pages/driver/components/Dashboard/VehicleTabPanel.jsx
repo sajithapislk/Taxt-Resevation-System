@@ -261,9 +261,12 @@ function VehicleTabPanel() {
                 onChange={handleInputChange}
               >
                 {vehicleTypeList.map((type) => (
-                  <option key={type.id} value={type.id}>
-                    {type.name}
-                  </option>
+                  <>
+                    <option>select type</option>
+                    <option key={type.id} value={type.id}>
+                      {type.name}
+                    </option>
+                  </>
                 ))}
               </Form.Select>
             </Form.Group>
