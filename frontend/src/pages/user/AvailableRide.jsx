@@ -122,7 +122,7 @@ const AvailableRide = () => {
                 </Col>
               ))
             ) : (
-              <Alert variant="info">No bookings found.</Alert>
+              <Alert variant="info">No vehicles found.</Alert>
             )}
           </Row>
           {/* Bootstrap Modal */}

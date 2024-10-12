@@ -63,7 +63,17 @@ const Booking = () => {
                     <td>{item.duration}</td>
                     <td>{item.distance}KM</td>
                     <td>{item.price}</td>
-                    <td>{item.status}</td>
+                    <td>
+                      {item.status === 1
+                        ? "Pending"
+                        : item.status === 2
+                        ? "Confirmed"
+                        : item.status === 3
+                        ? "In Progress"
+                        : item.status === 4
+                        ? "Completed"
+                        : "Cancelled"}
+                    </td>
                   </tr>
                 ))}
               </tbody>

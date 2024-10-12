@@ -369,7 +369,6 @@ function VehicleTabPanel() {
         </Modal.Header>
         <Modal.Body>
           <div className="form-group destination">
-            <label htmlFor="inputFrom">From</label>
             <Autocomplete
               onLoad={(autoc) => (locationRef.current = autoc)}
               onPlaceChanged={handlePickupPlaceSelect}

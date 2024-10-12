@@ -109,17 +109,25 @@ const RidesTabPanel = () => {
                       <td>
                         <span
                           className={`badge ${
-                            booking.status === 4
-                              ? "bg-success"
-                              : booking.status === 1
-                              ? "bg-warning"
-                              : "bg-danger"
+                            booking.status === 1 ? "bg-success" : // Available
+                            booking.status === 2 ? "bg-primary" : // InService
+                            booking.status === 5 ? "bg-warning" : // Maintenance
+                            booking.status === 3 ? "bg-danger" : // Offline
+                            "bg-secondary" // Retired
                           }`}
                         >
-                          {booking.status}
+                          {booking.status === 1
+                            ? "Pending"
+                            : booking.status === 2
+                            ? "Confirmed"
+                            : booking.status === 3
+                            ? "In Progress"
+                            : booking.status === 4
+                            ? "Completed"
+                            : "Cancelled"}
                         </span>
                       </td>
-                      <td>{booking.price}</td>
+                      <td>LKR {booking.price.toFixed(2)}</td>
                       <td>
                         <Button
                           variant="primary"

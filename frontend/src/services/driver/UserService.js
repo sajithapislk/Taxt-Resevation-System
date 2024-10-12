@@ -36,7 +36,7 @@ const UserService = {
   },
   Update: async (userData) => {
     try {
-      const response = await axios.put(`${API_URL}/drivers/update`, userData, config);
+      const response = await axios.put(`${API_URL}/drivers/${userData.id}`, userData, config);
       return response.data; // Return the response data (success message)
     } catch (error) {
       // Handle the error response

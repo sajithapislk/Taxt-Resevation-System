@@ -1,17 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import UserService from '../../../../services/driver/UserService';
+import React, { useState, useEffect } from "react";
+import UserService from "../../../../services/driver/UserService";
 
 function TabPanel2() {
   const [userData, setUserData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    website: '',
-    birthday: '',
-    phoneNumber: '',
-    gender: '',
-    status: '',
-    description: ''
+    name: "",
+    email: "",
+    website: "",
+    birthday: "",
+    phoneNumber: "",
+    gender: "",
+    status: "",
+    description: "",
   });
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -24,19 +23,30 @@ function TabPanel2() {
     try {
       setIsLoading(true);
       const response = await UserService.Info();
-      setUserData(response);
+      setUserData((prev) => ({
+        ...prev,
+        id: response.id,
+        name: response.name,
+        email: response.email,
+        website: response.website,
+        birthday: response.birthday,
+        phoneNumber: response.phoneNumber,
+        gender: response.gender,
+        status: response.status,
+        description: response.description,
+      }));
       setIsLoading(false);
     } catch (error) {
-      console.error('Error fetching user data:', error);
+      console.error("Error fetching user data:", error);
       setIsLoading(false);
     }
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setUserData(prevData => ({
+    setUserData((prevData) => ({
       ...prevData,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -49,7 +59,7 @@ function TabPanel2() {
       await UserService.Update(userData);
       setIsEditing(false);
     } catch (error) {
-      console.error('Error updating user data:', error);
+      console.error("Error updating user data:", error);
     }
   };
 
@@ -77,27 +87,13 @@ function TabPanel2() {
         <div className="row">
           <div className="col-lg-6">
             <div className="form-group">
-              <label htmlFor="firstName">First Name</label>
+              <label htmlFor="name">Name</label>
               <input
                 type="text"
                 className="form-control"
-                id="firstName"
-                name="firstName"
-                value={userData.firstName}
-                onChange={handleInputChange}
-                readOnly={!isEditing}
-              />
-            </div>
-          </div>
-          <div className="col-lg-6">
-            <div className="form-group">
-              <label htmlFor="lastName">Last Name</label>
-              <input
-                type="text"
-                className="form-control"
-                id="lastName"
-                name="lastName"
-                value={userData.lastName}
+                id="name"
+                name="name"
+                value={userData.name}
                 onChange={handleInputChange}
                 readOnly={!isEditing}
               />
@@ -135,7 +131,7 @@ function TabPanel2() {
             <div className="form-group">
               <label htmlFor="birthday">Your Birthday</label>
               <input
-                type="text"
+                type="date"
                 className="form-control"
                 id="birthday"
                 name="birthday"
@@ -149,7 +145,7 @@ function TabPanel2() {
             <div className="form-group">
               <label htmlFor="phoneNumber">Your Phone Number</label>
               <input
-                type="text"
+                type="tel"
                 className="form-control"
                 id="phoneNumber"
                 name="phoneNumber"
@@ -162,29 +158,39 @@ function TabPanel2() {
           <div className="col-lg-6">
             <div className="form-group">
               <label htmlFor="gender">Your Gender</label>
-              <input
-                type="text"
+              <select
                 className="form-control"
                 id="gender"
                 name="gender"
                 value={userData.gender}
                 onChange={handleInputChange}
-                readOnly={!isEditing}
-              />
+                disabled={!isEditing}
+              >
+                <option value="">Select a gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
             </div>
           </div>
           <div className="col-lg-6">
             <div className="form-group">
               <label htmlFor="status">Status</label>
-              <input
-                type="text"
+              <select
                 className="form-control"
                 id="status"
                 name="status"
                 value={userData.status}
                 onChange={handleInputChange}
-                readOnly={!isEditing}
-              />
+                disabled={!isEditing}
+              >
+                <option value="">Select a status</option>
+                <option value="1">Single</option>
+                <option value="2">Married</option>
+                <option value="3">Divorced</option>
+                <option value="4">Widowed</option>
+                <option value="5">Separated</option>
+              </select>
             </div>
           </div>
           <div className="col-lg-12">
