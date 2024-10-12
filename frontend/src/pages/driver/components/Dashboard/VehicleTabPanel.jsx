@@ -268,26 +268,30 @@ function VehicleTabPanel() {
               </Form.Select>
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label>VEHICLE TYPE ID</Form.Label>
-              <Form.Select
-                name="vehicleTypeId"
-                value={newVehicle.vehicleTypeId}
-                onChange={handleInputChange}
-              >
-                {vehicleTypeList.map((type) => (
-                  <option key={type.id} value={type.id}>
-                    {type.name}
-                  </option>
-                ))}
-              </Form.Select>
-            </Form.Group>
-            <Form.Group className="mb-3">
               <Form.Label>DESCRIPTION</Form.Label>
               <Form.Control
                 as="textarea"
                 rows={3}
                 name="description"
                 value={newVehicle.description}
+                onChange={handleInputChange}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>COST PER KM</Form.Label>
+              <Form.Control
+                type="number"
+                name="costPerKm"
+                value={newVehicle.costPerKm}
+                onChange={handleInputChange}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>VEHICLE NUMBER</Form.Label>
+              <Form.Control
+                type="text"
+                name="vehicleNumber"
+                value={newVehicle.vehicleNumber}
                 onChange={handleInputChange}
               />
             </Form.Group>
@@ -311,15 +315,6 @@ function VehicleTabPanel() {
                 <option value="purple">Purple</option>
                 <option value="brown">Brown</option>
               </Form.Select>
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>COLOR</Form.Label>
-              <Form.Control
-                type="text"
-                name="color"
-                value={newVehicle.color}
-                onChange={handleInputChange}
-              />
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>PASSENGER SEATS</Form.Label>
