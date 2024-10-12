@@ -43,16 +43,16 @@ const ContinueRideTabPanel = () => {
 
   // Handle starting the ride
   const handleStartRide = async () => {
-    const data = await BookingService.Start(activeRide);
+    const data = await BookingService.Start(activeRide.id);
     setRideStatus("started");
   };
 
   // Handle ending the ride and fetching the price
   const handleEndRide = async () => {
     setRideStatus("ended");
-    setLoadingPrice(true); // Simulate price calculation from backend
-    const price = await fetchPriceFromBackend();
-    setRidePrice(price);
+    setLoadingPrice(true);
+    const data = await BookingService.Complete(activeRide.id);
+    setRidePrice(data.price.toFixed(2));
     setLoadingPrice(false);
   };
 
@@ -72,17 +72,17 @@ const ContinueRideTabPanel = () => {
                     <div className="card-body">
                       <h5 className="card-title">Request #{request.id}</h5>
                       <p className="card-text">
-                        <strong>Pickup Location:</strong> {request.pickupLocation}
+                        <strong>Pickup Location:</strong> {request.pickUpPlace}
                       </p>
                       <p className="card-text">
-                        <strong>Dropoff Location:</strong> {request.dropoffLocation}
+                        <strong>Dropoff Location:</strong> {request.dropOffPlace}
                       </p>
                       <p className="card-text">
-                        <strong>Pickup Time:</strong> {new Date(request.pickupTime).toLocaleString()}
+                        <strong>Pickup Time:</strong> {new Date(request.pickUpTime).toLocaleString()}
                       </p>
                       <button
                         className="btn btn-primary"
-                        onClick={() => handleAcceptRequest(request.id)}
+                        onClick={() => handleAcceptRequest(request)}
                       >
                         Continue Ride
                       </button>
@@ -102,13 +102,13 @@ const ContinueRideTabPanel = () => {
             <div className="card-body">
               <h5 className="card-title">Ride #{activeRide.id}</h5>
               <p className="card-text">
-                <strong>Pickup Location:</strong> {activeRide.pickupLocation}
+                <strong>Pickup Location:</strong> {activeRide.pickUpPlace}
               </p>
               <p className="card-text">
-                <strong>Dropoff Location:</strong> {activeRide.dropoffLocation}
+                <strong>Dropoff Location:</strong> {activeRide.dropOffPlace}
               </p>
               <p className="card-text">
-                <strong>Pickup Time:</strong> {new Date(activeRide.pickupTime).toLocaleString()}
+                <strong>Pickup Time:</strong> {new Date(activeRide.pickUpTime).toLocaleString()}
               </p>
               <p className="card-text">
                 <strong>Ride Status:</strong> {rideStatus}
@@ -133,7 +133,7 @@ const ContinueRideTabPanel = () => {
                     <p>Calculating price...</p>
                   ) : (
                     <p>
-                      <strong>Total Price:</strong> ${ridePrice}
+                      <strong>Total Price:</strong> LKR {ridePrice}
                     </p>
                   )}
                 </div>
