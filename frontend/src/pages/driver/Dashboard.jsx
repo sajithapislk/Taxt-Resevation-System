@@ -9,6 +9,8 @@ import BookingRequestTabPanel from "./components/Dashboard/BookingRequestTabPane
 import ContinueRideTabPanel from "./components/Dashboard/ContinueRideTabPanel";
 
 function TakeRide() {
+  const userData = localStorage.getItem("driver");
+  const user = JSON.parse(userData);
   const [activeTab, setActiveTab] = useState("request");
    
   const handleTabClick = (tab) => {
@@ -24,11 +26,10 @@ function TakeRide() {
             <div className="col-sm-6">
               <div className="passanger-name">
                 <div className="media">
-                  <img className="me-3" src={partner} alt="partner-img" />
+                  <img className="me-3" width="100px" src={user.image || "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-image-182145777.jpg"} alt="partner-img" />
                   <div className="media-body">
-                    <h2 className="mt-0">Johnson Smith</h2>
-                    <p>ID 1234567890</p>
-                    <a href="#">Edit Profile</a>
+                    <h2 className="mt-0">{user.name}</h2>
+                    <p>{user.id}</p>
                   </div>
                 </div>
               </div>
