@@ -19,7 +19,7 @@ const AvailableRide = () => {
     const fetchAvailableDriver = async () => {
         try {
             const data = {
-                radiusInKm: 100,
+                radiusInKm: 3,
                 longitude: formData.pickUpLongitude,
                 latitude: formData.pickUpLatitude,
                 vehicleTypeId: formData.vehicleTypeId,
@@ -77,8 +77,9 @@ const AvailableRide = () => {
                       alt={`${item.driver.name}'s vehicle`}
                     />
                     <Card.Body>
-                      <Card.Title>{item.driver.name}</Card.Title>
+                    <Card.Title>{item.description}</Card.Title>
                       <Card.Text>
+                        <strong>Driver:</strong> {item.driver.name} <br />
                         <strong>Seats:</strong> {item.passengerSeats} <br />
                         <strong>Vehicle NO:</strong> {item.vehicleNumber} <br />
                         <strong>Distance from current location:</strong> {item.distance.toFixed(2)}km

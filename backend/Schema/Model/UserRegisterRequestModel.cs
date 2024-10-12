@@ -28,6 +28,6 @@ namespace backend.Schema.Model
         [EnumValidation(typeof(MaritalStatus?))]
         public MaritalStatus? Status { get; set; }
         public string? Description { get; set; }
-        public LocationModel? Location { get; set; }
+        //public LocationModel? Location { get; set; }
     }
 }
