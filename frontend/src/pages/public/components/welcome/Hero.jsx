@@ -143,17 +143,17 @@ function Hero() {
                               type="text"
                               className="form-control"
                               name="name"
-                              placeholder="First Name"
+                              placeholder="Full Name"
                               value={rideForm.name}
                               onChange={(e) => handleInputChange("ride", e)}
                             />
                           </div>
                           <div className="form-group col-12">
                             <input
-                              type="text"
+                              type="tel"
                               className="form-control"
                               name="mobileNo"
-                              placeholder="Phone mobileNo"
+                              placeholder="Mobile No"
                               value={rideForm.mobileNo}
                               onChange={(e) => handleInputChange("ride", e)}
                             />

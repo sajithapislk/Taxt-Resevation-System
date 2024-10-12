@@ -227,7 +227,7 @@ const Header = () => {
             </a>
             <div className="p-3 my-lg-0 d-inline-flex">
               <a href="sign-in.html" className="button button-light big">
-                Get Started
+                Login
               </a>
             </div>
           </div>
