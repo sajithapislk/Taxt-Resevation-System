@@ -31,7 +31,7 @@ const Header = ({ onMenuClick }) => {
               <span className="user-name">Admin</span>
             </a>
             <div className={"dropdown-menu dropdown-menu-right dropdown-menu-icon-list " + dropdownClass}>
-              <a className="dropdown-item" href="login.html">
+              <a className="dropdown-item" href="/logout">
                 <i className="dw dw-logout"></i> Log Out
               </a>
             </div>

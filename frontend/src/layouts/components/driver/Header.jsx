@@ -67,7 +67,7 @@ const Header = () => {
                           height="30"
                           width="30"
                           className="me-3"
-                          src={partner}
+                          src={user.image || "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-image-182145777.jpg"}
                           alt="Partner"
                         />
                         <div className="media-body">

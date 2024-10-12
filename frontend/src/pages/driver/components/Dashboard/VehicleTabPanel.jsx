@@ -254,7 +254,7 @@ function VehicleTabPanel() {
         <Modal.Body>
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3">
-              <Form.Label>VEHICLE TYPE ID</Form.Label>
+              <Form.Label>VEHICLE TYPE</Form.Label>
               <Form.Select
                 name="vehicleTypeId"
                 value={newVehicle.vehicleTypeId}
@@ -326,7 +326,7 @@ function VehicleTabPanel() {
               />
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label>IS AC AVAILABLE</Form.Label>
+              <Form.Label>AC AVAILABLE</Form.Label>
               <Form.Select
                 name="isAcAvailable"
                 value={newVehicle.isAcAvailable}
