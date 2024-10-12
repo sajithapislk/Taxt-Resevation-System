@@ -37,7 +37,7 @@ const About = () => {
               alt="Team Member 1"
             />
             <div className="card-body">
-              <h5 className="card-title">Jane Doe</h5>
+              <h5 className="card-title">Nifras</h5>
               <p className="card-text">Lead Developer</p>
             </div>
           </div>
@@ -50,7 +50,7 @@ const About = () => {
               alt="Team Member 2"
             />
             <div className="card-body">
-              <h5 className="card-title">John Smith</h5>
+              <h5 className="card-title">Sajith</h5>
               <p className="card-text">UI/UX Designer</p>
             </div>
           </div>
@@ -63,7 +63,7 @@ const About = () => {
               alt="Team Member 3"
             />
             <div className="card-body">
-              <h5 className="card-title">Emily Johnson</h5>
+              <h5 className="card-title">Saheer</h5>
               <p className="card-text">Project Manager</p>
             </div>
           </div>

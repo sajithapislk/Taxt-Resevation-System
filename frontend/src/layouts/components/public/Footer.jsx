@@ -37,7 +37,7 @@ const Footer = () => {
                 <h3 className="mb-0">
                   Toll Free <span>Helpline</span>
                 </h3>
-                <p className="mb-0">(+1) 123 4567 890</p>
+                <p className="mb-0"> (+94) 77 123 4567</p>
               </div>
             </div>
             <div className="col-lg-3 col-sm-6">
@@ -96,9 +96,9 @@ const Footer = () => {
               <address className="company-address">
                 <p className="m-b-20">
                   15 Street No, Ox Building,
-                  <span className="d-block">Near Station, 1356.</span>
+                  <span className="d-block">Main Street, Matale</span>
                 </p>
-                <p className="m-b-8">Phone number: (+1) 123 4567 890</p>
+                <p className="m-b-8">Phone number: (+94) 77 123 4567</p>
                 <p className="m-b-8">
                   Email Address:{" "}
                   <a
@@ -109,7 +109,7 @@ const Footer = () => {
                     [email&#160;protected]
                   </a>
                 </p>
-                <p className="m-b-8">
+                {/* <p className="m-b-8">
                   Fax :{" "}
                   <a
                     href="/cdn-cgi/l/email-protection"
@@ -118,7 +118,7 @@ const Footer = () => {
                   >
                     [email&#160;protected]
                   </a>
-                </p>
+                </p> */}
               </address>
             </div>
             <div className="col-lg-3 col-sm-6">
@@ -201,7 +201,7 @@ const Footer = () => {
         <div className="gmap_canvas">
           <iframe
             id="gmap_canvas"
-            src="https://maps.google.com/maps?q=2880%20Broadway,%20New%20York&t=&z=13&ie=UTF8&iwloc=&output=embed"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31648.497097609295!2d80.60810522032514!3d7.4583783763871025!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae344d7d465445d%3A0xd6f70562e8850dbc!2sMatale%2C%20Sri%20Lanka!5e0!3m2!1sen!2ssg!4v1728716129498!5m2!1sen!2ssg"
             title="google-map"
           ></iframe>
         </div>
