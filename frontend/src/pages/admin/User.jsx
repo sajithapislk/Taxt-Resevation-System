@@ -34,14 +34,17 @@ const User = () => {
     fetchUser();
   }, []);
 
-  const handleSubmit = async (id) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
       if (formType === "update") {
-        const response = await UserService.Update(vehicleData);
+        const response = await UserService.Update(userData);
+        window.location.reload();
         console.log("Vehicle saved successfully:", response.data);
       } else {
         console.log(formType);
-        const response = await UserService.Delete(vehicleData);
+        const response = await UserService.Delete(userData);
+        window.location.reload();
         console.log("Vehicle saved successfully:", response.data);
       }
     } catch (error) {
@@ -91,15 +94,6 @@ const User = () => {
                     </li>
                   </ol>
                 </nav>
-              </div>
-              <div class="col-md-6 col-sm-12 text-right">
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  onClick={openModal}
-                >
-                  Create
-                </button>
               </div>
             </div>
           </div>

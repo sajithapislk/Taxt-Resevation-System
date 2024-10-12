@@ -85,13 +85,8 @@ const Header = () => {
                         </Link>
                       </li>
                       <li className="nav-item">
-                        <Link to={"/"} className="nav-link">
+                        <Link to={"/vehicles"} className="nav-link">
                           <i className="fas fa-taxi"></i>Our Vehicles
-                        </Link>
-                      </li>
-                      <li className="nav-item">
-                        <Link to={"/contact"} className="nav-link">
-                          <i className="fas fa-map-marker-alt"></i>Contact
                         </Link>
                       </li>
                     </ul>

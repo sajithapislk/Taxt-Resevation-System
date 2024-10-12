@@ -48,7 +48,7 @@ const UserService = {
   },
   Update: async (userData) => {
     try {
-      const response = await axios.post(`${API_URL}/admin/user/update`, userData, config);
+      const response = await axios.put(`${API_URL}/users/${userData.id}`, userData, config);
       return response.data; // Return the response data (success message)
     } catch (error) {
       // Handle the error response
@@ -63,7 +63,7 @@ const UserService = {
   },
   Delete: async (data) => {
     try {
-      const response = await axios.post(`${API_URL}/admin/user/delete`, data, config);
+      const response = await axios.delete(`${API_URL}/users/${data.id}`, config);
       return response.data;
     } catch (error) {
       if (error.response && error.response.data) {

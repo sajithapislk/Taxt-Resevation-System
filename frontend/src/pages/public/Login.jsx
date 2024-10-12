@@ -6,11 +6,13 @@ import { useNavigate  } from "react-router-dom";
 const Login = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("rider"); // To handle active tab (Rider/Driver)
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
     rememberMe: false,
   });
+
   const [loading, setLoading] = useState(false); // To handle loading state
   const [errorMessage, setErrorMessage] = useState(""); // To handle error messages
   const [successMessage, setSuccessMessage] = useState(""); // To handle success messages
@@ -93,7 +95,7 @@ const Login = () => {
                     role="tab"
                     onClick={() => handleTabChange("rider")}
                   >
-                    Rider
+                    User
                   </a>
                 </li>
                 <li
@@ -189,13 +191,8 @@ const Login = () => {
                     <p className="text-success">{successMessage}</p>
                   )}
                   <p className="acclink">
-                    Don't have an account? <a href="sign-up.html">Sign up</a>
+                    Don't have an account? <a href="/">Sign up</a>
                   </p>
-                  <div className="externel-signup">
-                    <a href="#" className="btn-block google">
-                      <i className="fab fa-google"></i> Sign up with Google
-                    </a>
-                  </div>
                 </div>
 
                 {/* Driver Login Form */}

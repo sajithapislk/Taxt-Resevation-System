@@ -63,6 +63,7 @@ const AvailableRide = () => {
                   xs={12}
                   key={item.id}
                   className="mb-4"
+                  onClick={() => handleSubmit(item.id)}
                 >
                   <Card>
                     <Card.Img
@@ -75,10 +76,9 @@ const AvailableRide = () => {
                       <Card.Text>
                         <strong>Seats:</strong> {item.passengerSeats} <br />
                         <strong>Vehicle NO:</strong> {item.vehicleNumber} <br />
-                        <strong>Distance from current location:</strong> 1KM
-                        {item.distance}
+                        <strong>Distance from current location:</strong> {item.distance.toFixed(2)}km
                         <br />
-                        <strong>Price per km:</strong> ${item.costPerKm}
+                        <strong>Price per km:</strong> LKR{item.costPerKm.toFixed(2)}
                       </Card.Text>
                       <Button
                         variant="primary"

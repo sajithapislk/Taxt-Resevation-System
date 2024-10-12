@@ -26,7 +26,7 @@ const AvailableRide = () => {
 
   const [combinedFormData, setCombinedFormData] = useState({
     ...formData,
-    vehicleId: "",
+    vehicleId: null,
   });
 
   useEffect(() => {
@@ -53,6 +53,7 @@ const AvailableRide = () => {
       ...prevData,
       vehicleId: vehicleId,
     }));
+    console.log(combinedFormData);
     const res = BookingService.Request(combinedFormData);
     console.log(res);
     if (!res.error) {
@@ -105,10 +106,9 @@ const AvailableRide = () => {
                       <Card.Text>
                         <strong>Seats:</strong> {item.passengerSeats} <br />
                         <strong>Vehicle NO:</strong> {item.vehicleNumber} <br />
-                        <strong>Distance from current location:</strong> 1KM
-                        {item.distance}
+                        <strong>Distance from current location:</strong> {item.distance.toFixed(2)}km
                         <br />
-                        <strong>Price per km:</strong> ${item.costPerKm}
+                        <strong>Price per km:</strong> LKR{item.costPerKm.toFixed(2)}
                       </Card.Text>
                       <Button
                         variant="primary"
